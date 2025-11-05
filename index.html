@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            text-align: center; 
+            background: linear-gradient(135deg, #ffe4c4 0%, #ffa07a 100%);
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }     
+        .nav-buttons {
+            display: inline-block;
+            margin: 30px auto;
+        }
+        
+        button {
+            font-size: 18px;
+            border: 3px solid #ca5400;
+            border-radius: 12px;
+            padding: 12px 20px;
+            margin: 8px;
+            transition: 0.35s;
+            cursor: pointer;
+            color: #ca5400;
+            background: white;
+            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+        }
+        
+        button:hover {
+            font-size: 20px;
+            transform: scale(1.05);
+            background: #ca5400;
+            color: white;
+            box-shadow: 8px 8px 20px rgba(202, 84, 0, 0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff9447;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            text-align: center;
+            border: 3px solid #ca5400;
+            border-radius: 16px;
+            padding: 15px 30px;
+            width: 250px;
+            margin: 20px auto;
+            background: white;
+            color: #ca5400;
+            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+        }
+        
+        h3 {
+            text-align: left;
+            color: #ca5400;
+            margin-left: 20px;
+            border-left: 4px solid #ca5400;
+            padding-left: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 15px 20px;
+            box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        h3:hover {
+            transform: translateX(5px);
+            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+        }
+        
+        p {
+            text-align: left;
+            line-height: 1.7;
+            margin-left: 20px;
+            color: #333;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 20px;
+            box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.2);
+        }
+        
+        .content-section {
+            display: none; 
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ca5400;
+            border-radius: 15px;
+            box-shadow: 8px 8px 25px rgba(202, 84, 0, 0.4);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease-in-out;
+        }
+        
+        .content-section.active {
+            display: block; 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .social-links a {
+            text-decoration: none;
+            color: #ca5400;
+            font-size: 18px;
+            display: block;
+            padding: 12px 20px;
+            margin: 10px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border: 2px solid #ca5400;
+            transition: 0.3s;
+            box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
+        }
+
+        .social-links a:hover {
+            background: #ca5400;
+            color: white;
+            transform: translateX(10px);
+            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.4);
+        }
+        
+        .contacts-list {
+            list-style: none;
+            padding: 0;
+            font-size: 18px;
+        }
+        
+        .contacts-list li {
+            margin: 12px 0;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border-left: 4px solid #ca5400;
+            box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        .contacts-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+        }
+
+        .main-header {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(45deg, #ca5400, #ff8c00);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 5px 5px 20px rgba(202, 84, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .menu-category {
+            background: rgba(252, 140, 43, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 4px 4px 15px rgba(202, 84, 0, 0.25);
+            border: 2px solid #ffa07a;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ca5400;
+            box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.15);
+            transition: 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateX(5px);
+            box-shadow: 4px 4px 12px rgba(202, 84, 0, 0.25);
+        }
+
+        .price {
+            font-weight: bold;
+            color: #ca5400;
+            font-size: 18px;
+        }
+
+        .mountains-background {
+            width: 100%;
+            height: 300px;
+            background-image: url('https://images.unsplash.com/photo-1594736797933-d0d69bc71c4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mountains-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(202, 84, 0, 0.2), rgba(255, 140, 0, 0.3));
+            border-radius: 15px;
+        }
+
+        .mountains-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            z-index: 2;
+        }
+
+        
+        @keyframes buttonClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        .button-clicked {
+            animation: buttonClick 0.3s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <button onclick="showSection('main', this)">🏠 Главная</button>
+        <button onclick="showSection('menu', this)">🍽️ Меню</button>
+        <button onclick="showSection('contacts', this)">📞 Контакты</button>
+        <button onclick="showSection('social', this)">📱 Соцсети</button>
+    </div>
+    
+    <div id="main" class="content-section active fade-in-up">
+        <header class="main-header">
+            <h1>⛰️ Ресторан <br>"Уют"</h1>
+        </header>
+
+        <!-- Картинка гор Кыргызстана -->
+        <div class="mountains-background">
+            <div class="mountains-text">Горы Тянь-Шаня • Кыргызстан</div>
+        </div>
+        
+        <h2>О нас</h2>
+        <p>От сытного бешбармака до ароматного курута. Наш ресторан — это
+        путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое
+        настоящее гостеприимство по-кыргызски, где гостя угощают лучшим
+        куском мяса, а чайник никогда не пустует.</p>
+        
+        <h2>Какие же у нас услуги?</h2>
+        
+        <h3>🎪 Юрты</h3>
+        <p>Гастрономическое путешествие: Почувствуйте вкус Кыргызстана через наше основное меню, где каждое блюдо — от бешбармака до боорсоков — готовится по традиционным рецептам с использованием свежайших продуктов.</p>
+        
+        <h3>🎉 Организаций мероприятий (банкеты и корпоративы)</h3>
+        <p>Ваш праздник в нашем стиле: Хотите удивить гостей? Организуем для вас незабываемый банкет, фуршет или корпоратив в душевной атмосфере. Предложим специальное меню, поможем с планировкой и развлечениями.<br><br>
+        Вместимость: до 50 человек.</p>
+        
+        <h3>🚚 Вынос еды (доставка)</h3>
+        <p>Вкус Кыргызстана у вас дома: Не можете к нам приехать? Мы приедем к вам! Закажите ваши любимые блюда через сайт или по телефону и наслаждайтесь ими в уюте.</p>
+        
+        <h3>🍽️ Дегустационые сеты</h3>
+        <p>«Знакомство с Кыргызстаном»: Не знаете, с чего начать? Попробуйте наш сет-дегустацию из нескольких мини-порций самых главных блюд национальной кухни. Идеально для новичков.</p>
+    </div>
+    
+    <div id="menu" class="content-section">
+        <h1>🍽️ Наше меню</h1>
+        
+        <div class="menu-category">
+            <h2>🍳 Завтрак</h2>
+            <div class="menu-item">
+                <span>🥣 Каша овсянка</span>
+                <span class="price">200р</span>
+            </div>
+            <div class="menu-item">
+                <span>🍳 Яичница</span>
+                <span class="price">150р</span>
+            </div>
+            <div class="menu-item">
+                <span>🥞 Блинчики</span>
+                <span class="price">180р</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2>🍛 Обед</h2>
+            <div class="menu-item">
+                <span>🍜 Лагман</span>
+                <span class="price">250р</span>
+            </div>
+            <div class="menu-item">
+                <span>🍚 Плов</span>
+                <span class="price">300р</span>
+            </div>
+            <div class="menu-item">
+                <span>🥘 Бешбармак</span>
+                <span class="price">350р</span>
+            </div>
+        </div>
+        
+        <div class="menu-category">
+            <h2>🍰 Десерт</h2>
+            <div class="menu-item">
+                <span>🍰 Торт</span>
+                <span class="price">250р</span>
+            </div>
+            <div class="menu-item">
+                <span>🍮 Чак-чак</span>
+                <span class="price">200р</span>
+            </div>
+            <div class="menu-item">
+                <span>🍨 Мороженое</span>
+                <span class="price">150р</span>
+            </div>
+        </div>
+    </div>
+    
+    <div id="social" class="content-section">
+        <h1>📱 Наши соцсети</h1>
+        <div class="social-links">
+            <a href="#">📸 Instagram</a>
+            <a href="#">🎵 TikTok</a>
+            <a href="https://wa.me/79620742140">💬 WhatsApp</a>
+            <a href="#">📘 Facebook</a>
+            <a href="#">🐦 Twitter</a>
+        </div>
+    </div>
+    
+    <div id="contacts" class="content-section">
+        <h1>📞 Наши контакты</h1>
+        <ul class="contacts-list">
+            <li>📞 Номер: +7 (999) 123-45-67</li>
+            <li>📍 Адрес: ул. Горная, д. 15</li>
+            <li>✉️ Email: goton-tala@restaurant.kg</li>
+            <li>🕒 Время работы: 10:00 - 22:00</li>
+        </ul>
+    </div>
+
+    <script>
+        function showSection(sectionId, buttonElement) {
+            // Анимация нажатия кнопки
+            buttonElement.classList.add('button-clicked');
+            setTimeout(() => {
+                buttonElement.classList.remove('button-clicked');
+            }, 300);
+
+            // Скрываем все секции
+            var sections = document.querySelectorAll('.content-section');
+            sections.forEach(function(section) {
+                section.classList.remove('active');
+                section.classList.remove('fade-in-up');
+            });
+            
+            // Показываем выбранную секцию с анимацией
+            setTimeout(() => {
+                var activeSection = document.getElementById(sectionId);
+                activeSection.classList.add('active');
+                activeSection.classList.add('fade-in-up');
+            }, 50);
+        }
+
+        // Добавляем анимацию при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('main').classList.add('fade-in-up');
+        });
+    </script>
+</body>
+</html>
