@@ -2,46 +2,72 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресторан "Уют"</title>
     <style>
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            text-align: center; 
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
             background: linear-gradient(135deg, #ffe4c4 0%, #ffa07a 100%);
             min-height: 100vh;
-            font-family: Arial, Helvetica, sans-serif;
-        }     
+            padding: 20px;
+        }
+        
         .nav-buttons {
-            display: inline-block;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
             margin: 30px auto;
+            flex-wrap: wrap;
         }
         
         button {
-            font-size: 18px;
             border: 3px solid #ca5400;
-            border-radius: 12px;
-            padding: 12px 20px;
-            margin: 8px;
-            transition: 0.35s;
+            border-radius: 15px;
+            transition: all 0.3s ease;
             cursor: pointer;
             color: #ca5400;
             background: white;
             box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+            font-weight: bold;
         }
         
         button:hover {
-            font-size: 20px;
-            transform: scale(1.05);
             background: #ca5400;
             color: white;
+            transform: translateY(-2px);
             box-shadow: 8px 8px 20px rgba(202, 84, 0, 0.5);
+        }
+        
+        .content-section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #ca5400;
+            border-radius: 20px;
+            box-shadow: 8px 8px 25px rgba(202, 84, 0, 0.4);
+            margin: 20px auto;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+        
+        .content-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeInUp 0.6s ease-out;
         }
         
         h1 {
             text-align: center;
-            color: #ff9447;
+            color: #ca5400;
             margin-bottom: 30px;
-            font-size: 2.5em;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
@@ -50,109 +76,93 @@
             border: 3px solid #ca5400;
             border-radius: 16px;
             padding: 15px 30px;
-            width: 250px;
-            margin: 20px auto;
             background: white;
             color: #ca5400;
             box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+            margin: 20px auto;
+            transition: all 0.3s ease;
+        }
+        
+        h2:hover {
+            transform: scale(1.05);
+            box-shadow: 8px 8px 20px rgba(202, 84, 0, 0.4);
         }
         
         h3 {
-            text-align: left;
             color: #ca5400;
-            margin-left: 20px;
             border-left: 4px solid #ca5400;
             padding-left: 15px;
             background: rgba(255, 255, 255, 0.8);
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 8px;
-            margin: 15px 20px;
+            margin: 15px;
             box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
         h3:hover {
-            transform: translateX(5px);
+            transform: translateX(10px);
             box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
         }
         
         p {
-            text-align: left;
             line-height: 1.7;
-            margin-left: 20px;
             color: #333;
-            font-size: 16px;
             background: rgba(255, 255, 255, 0.7);
             padding: 15px;
             border-radius: 10px;
-            margin: 15px 20px;
+            margin: 15px;
             box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.2);
+            transition: all 0.3s ease;
         }
-        
-        .content-section {
-            display: none; 
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: left;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border: 2px solid #ca5400;
-            border-radius: 15px;
-            box-shadow: 8px 8px 25px rgba(202, 84, 0, 0.4);
-            padding: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease-in-out;
-        }
-        
-        .content-section.active {
-            display: block; 
-            opacity: 1;
-            transform: translateY(0);
+
+        p:hover {
+            transform: translateX(5px);
+            box-shadow: 4px 4px 12px rgba(202, 84, 0, 0.3);
         }
         
         .social-links a {
             text-decoration: none;
             color: #ca5400;
-            font-size: 18px;
             display: block;
-            padding: 12px 20px;
-            margin: 10px 20px;
+            padding: 15px 20px;
+            margin: 10px 15px;
             background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             border: 2px solid #ca5400;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
         }
-
+        
         .social-links a:hover {
             background: #ca5400;
             color: white;
-            transform: translateX(10px);
-            box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.4);
+            transform: translateX(15px) scale(1.05);
+            box-shadow: 8px 8px 20px rgba(202, 84, 0, 0.4);
         }
         
         .contacts-list {
             list-style: none;
             padding: 0;
-            font-size: 18px;
         }
         
         .contacts-list li {
             margin: 12px 0;
-            padding: 12px 20px;
+            padding: 15px 20px;
             background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
             border-left: 4px solid #ca5400;
             box-shadow: 3px 3px 10px rgba(202, 84, 0, 0.2);
-            transition: 0.3s;
+            margin: 12px 15px;
+            transition: all 0.3s ease;
         }
 
         .contacts-list li:hover {
-            transform: translateX(5px);
+            transform: translateX(10px);
             box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+            background: rgba(255, 248, 220, 0.9);
         }
-
+        
         .main-header {
             text-align: center;
             padding: 25px;
@@ -161,46 +171,13 @@
             border-radius: 15px;
             margin-bottom: 25px;
             box-shadow: 5px 5px 20px rgba(202, 84, 0, 0.5);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: headerGlow 3s ease-in-out infinite alternate;
         }
         
-        .menu-category {
-            background: rgba(252, 140, 43, 0.7);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 4px 4px 15px rgba(202, 84, 0, 0.25);
-            border: 2px solid #ffa07a;
-        }
-
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            margin: 8px 0;
-            background: white;
-            border-radius: 8px;
-            border-left: 4px solid #ca5400;
-            box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.15);
-            transition: 0.3s;
-        }
-
-        .menu-item:hover {
-            transform: translateX(5px);
-            box-shadow: 4px 4px 12px rgba(202, 84, 0, 0.25);
-        }
-
-        .price {
-            font-weight: bold;
-            color: #ca5400;
-            font-size: 18px;
-        }
-
         .mountains-background {
             width: 100%;
-            height: 300px;
-            background-image: url('https://images.unsplash.com/photo-1594736797933-d0d69bc71c4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            height: 250px;
+            background-image: url('https://images.unsplash.com/photo-1594736797933-d0d69bc71c4a');
             background-size: cover;
             background-position: center;
             border-radius: 15px;
@@ -208,8 +185,14 @@
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
+            transition: all 0.5s ease;
         }
 
+        .mountains-background:hover {
+            transform: scale(1.02);
+            box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
         .mountains-background::before {
             content: '';
             position: absolute;
@@ -219,34 +202,182 @@
             bottom: 0;
             background: linear-gradient(to bottom, rgba(202, 84, 0, 0.2), rgba(255, 140, 0, 0.3));
             border-radius: 15px;
+            transition: all 0.5s ease;
         }
 
+        .mountains-background:hover::before {
+            background: linear-gradient(to bottom, rgba(202, 84, 0, 0.3), rgba(255, 140, 0, 0.4));
+        }
+        
         .mountains-text {
             position: absolute;
             bottom: 20px;
             left: 20px;
             color: white;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-            z-index: 2;
+            transition: all 0.3s ease;
         }
 
+        .mountains-background:hover .mountains-text {
+            transform: translateY(-5px);
+            text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.9);
+        }
         
-        @keyframes buttonClick {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.95); }
-            100% { transform: scale(1); }
+        .menu-category {
+            background: rgba(255, 248, 220, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 15px;
+            box-shadow: 4px 4px 15px rgba(202, 84, 0, 0.25);
+            transition: all 0.3s ease;
         }
 
-        .button-clicked {
-            animation: buttonClick 0.3s ease-in-out;
+        .menu-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 20px rgba(202, 84, 0, 0.35);
+            background: rgba(255, 248, 220, 0.9);
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ca5400;
+            box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateX(10px) scale(1.02);
+            box-shadow: 4px 4px 15px rgba(202, 84, 0, 0.25);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #ca5400;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover .price {
+            transform: scale(1.1);
+            color: #ff8c00;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+                margin: 20px auto;
+                width: 100%;
+            }
+            
+            button {
+                font-size: 20px;
+                padding: 20px 25px;
+                min-height: 65px;
+                width: 100%;
+            }
+            
+            .content-section {
+                width: 100%;
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+            
+            h2 {
+                width: 90%;
+                font-size: 1.3em;
+                padding: 15px 20px;
+            }
+            
+            h3 {
+                font-size: 1.1em;
+                margin: 12px 10px;
+                padding: 10px 12px;
+            }
+            
+            p {
+                margin: 12px 10px;
+                padding: 12px;
+                font-size: 16px;
+            }
+            
+            .mountains-background {
+                height: 200px;
+            }
+            
+            .mountains-text {
+                font-size: 18px;
+                bottom: 15px;
+                left: 15px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .nav-buttons {
+                flex-direction: row;
+                max-width: 800px;
+            }
+            
+            button {
+                font-size: 18px;
+                padding: 15px 25px;
+                min-width: 160px;
+            }
+            
+            .content-section {
+                max-width: 800px;
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            h2 {
+                width: 250px;
+                font-size: 1.5em;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+                margin: 15px 20px;
+            }
+            
+            p {
+                margin: 15px 20px;
+                font-size: 16px;
+            }
+            
+            .mountains-background {
+                height: 300px;
+            }
+            
+            .mountains-text {
+                font-size: 24px;
+            }
         }
 
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -254,8 +385,57 @@
             }
         }
 
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
+        @keyframes buttonClick {
+            0% { 
+                transform: scale(1); 
+                box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+            }
+            50% { 
+                transform: scale(0.92); 
+                box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.2);
+            }
+            100% { 
+                transform: scale(1); 
+                box-shadow: 5px 5px 15px rgba(202, 84, 0, 0.3);
+            }
+        }
+
+        @keyframes headerGlow {
+            from {
+                box-shadow: 5px 5px 20px rgba(202, 84, 0, 0.5);
+            }
+            to {
+                box-shadow: 8px 8px 30px rgba(202, 84, 0, 0.7);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .button-clicked {
+            animation: buttonClick 0.4s ease-in-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-buttons {
+            animation: slideInFromTop 0.8s ease-out;
         }
     </style>
 </head>
@@ -267,21 +447,17 @@
         <button onclick="showSection('social', this)">📱 Соцсети</button>
     </div>
     
-    <div id="main" class="content-section active fade-in-up">
-        <header class="main-header">
-            <h1>⛰️ Ресторан <br>"Уют"</h1>
+    <div id="main" class="content-section active">
+        <header class="main-header pulse">
+            <h1>⛰️ Ресторан "Уют"</h1>
         </header>
 
-        <!-- Картинка гор Кыргызстана -->
         <div class="mountains-background">
             <div class="mountains-text">Горы Тянь-Шаня • Кыргызстан</div>
         </div>
         
         <h2>О нас</h2>
-        <p>От сытного бешбармака до ароматного курута. Наш ресторан — это
-        путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое
-        настоящее гостеприимство по-кыргызски, где гостя угощают лучшим
-        куском мяса, а чайник никогда не пустует.</p>
+        <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
         
         <h2>Какие же у нас услуги?</h2>
         
@@ -374,30 +550,24 @@
 
     <script>
         function showSection(sectionId, buttonElement) {
-            // Анимация нажатия кнопки
             buttonElement.classList.add('button-clicked');
             setTimeout(() => {
                 buttonElement.classList.remove('button-clicked');
-            }, 300);
+            }, 400);
 
             // Скрываем все секции
             var sections = document.querySelectorAll('.content-section');
             sections.forEach(function(section) {
                 section.classList.remove('active');
-                section.classList.remove('fade-in-up');
             });
             
-            // Показываем выбранную секцию с анимацией
             setTimeout(() => {
-                var activeSection = document.getElementById(sectionId);
-                activeSection.classList.add('active');
-                activeSection.classList.add('fade-in-up');
-            }, 50);
+                document.getElementById(sectionId).classList.add('active');
+            }, 200);
         }
 
-        // Добавляем анимацию при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('main').classList.add('fade-in-up');
+            document.getElementById('main').classList.add('active');
         });
     </script>
 </body>
