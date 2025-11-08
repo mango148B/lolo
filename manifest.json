@@ -1,0 +1,10 @@
+{
+  "name": "Ресторан Кочевник",
+  "short_name": "Кочевник",
+  "description": "Ресторан национальной кухни Кыргызстана",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffa07a",
+  "theme_color": "#ca5400",
+  "icons": []
+}
