@@ -75,7 +75,7 @@
         
         h1 {
             text-align: center;
-            color: #ca5400;
+            color: #ff9c55;
             margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
@@ -260,13 +260,33 @@
             border-left: 4px solid #ca5400;
             box-shadow: 2px 2px 8px rgba(202, 84, 0, 0.15);
             transition: all 0.3s ease;
+            position: relative;
+            padding-right: 90px;
         }
 
         .menu-item:hover {
             transform: translateX(10px) scale(1.02);
             box-shadow: 4px 4px 15px rgba(202, 84, 0, 0.25);
             background: rgba(255, 255, 255, 0.95);
+        } 
+        .dish-image {
+            position: absolute;
+            right: -100px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 130px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            border: 2px solid #ca5400;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            object-fit: cover;
         }
+
+        .menu-item:hover .dish-image {
+            opacity: 1;
+        }         
         
         .price {
             font-weight: bold;
@@ -357,7 +377,25 @@
                 bottom: 15px;
                 left: 15px;
             }
-        }
+            .dish-image {
+                position: static;
+                width: 100px;
+                height: 100px;
+                margin-left: 10px;
+                opacity: 1; 
+                transform: none;
+            }  
+    
+            .menu-item {
+                        padding-right: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+    }
+    
+            .menu-item:hover .dish-image {
+    }
+}
 
         @media (min-width: 769px) {
             .nav-buttons {
@@ -535,6 +573,14 @@
         .clickable-image:hover {
             transform: scale(1.02);
         }
+        .foto {
+            width: 250px;  
+            height: 150px;   
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -578,9 +624,7 @@
                 <h1>⛰️ Ресторан "Кочевник"</h1>
             </header>
 
-            <div class="mountains-background">
-                <div class="mountains-text">Горы Тянь-Шаня • Кыргызстан</div>
-            </div>
+             <img src="logo.png" alt="логотип" class="foto">
             
             <h2>О нас</h2>
             <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
@@ -603,56 +647,78 @@
         
         <div id="menu" class="content-section">
             <h1>🍽️ Наше меню</h1>
-            
             <div class="menu-category">
-                <h2>🍳 Завтрак</h2>
-                <div class="menu-item">
-                    <span>🥣 Каша овсянка</span>
-                    <span class="price">200р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍳 Яичница</span>
-                    <span class="price">150р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🥞 Блинчики</span>
-                    <span class="price">180р</span>
-                </div>
-            </div>
-            
-            <div class="menu-category">
-                <h2>🍛 Обед</h2>
-                <div class="menu-item">
-                    <span>🍜 Лагман</span>
-                    <span class="price">250р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍚 Плов</span>
-                    <span class="price">300р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🥘 Бешбармак</span>
-                    <span class="price">350р</span>
-                </div>
-            </div>
-            
-            <div class="menu-category">
-                <h2>🍰 Десерт</h2>
-                <div class="menu-item">
-                    <span>🍰 Торт</span>
-                    <span class="price">250р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍮 Чак-чак</span>
-                    <span class="price">200р</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍨 Мороженое</span>
-                    <span class="price">150р</span>
-                </div>
-            </div>
-        </div>
-        
+    <h2>🍽️ Блюдо</h2>
+    <div class="menu-item">
+        <span>🥞 Куймак</span>
+        <span class="price">50р</span>
+        <img src="kuymak.jpg" class="dish-image" alt="Куймак">
+    </div>
+    <div class="menu-item">
+        <span>🍖 Куурдак</span>
+        <span class="price">2000р</span>
+        <img src="куурдак.jpeg" class="dish-image" alt="Куурдак">
+    </div>
+    <div class="menu-item">
+        <span>🥛 Кымыз</span>
+        <span class="price">200р</span>
+        <img src="кымыз.png" class="dish-image" alt="Кымыз">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>🍔 Фаст фуд</h2>
+    <div class="menu-item">
+        <span>🍗 Крылышки</span>
+        <span class="price">650р</span>
+        <img src="крылышки.jpeg" class="dish-image" alt="Крылышки">
+    </div>
+    <div class="menu-item">
+        <span>🍕 Пицца</span>
+        <span class="price">350р</span>
+        <img src="пицца.jpeg" class="dish-image" alt="Пицца">
+    </div>
+    <div class="menu-item">
+        <span>🍟 Картошка фри</span>
+        <span class="price">200р</span>
+        <img src="картошка.jpg" class="dish-image" alt="Картошка фри">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>🥤 Напитки</h2>
+    <div class="menu-item">
+        <span>🥤 Кола</span>
+        <span class="price">190р</span>
+        <img src="cola.jpg" class="dish-image" alt="Кола">
+    </div>
+    <div class="menu-item">
+        <span>🥤 Пепси</span>
+        <span class="price">190р</span>
+        <img src="pepsi.webp" class="dish-image" alt="Пепси">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>⚡ Энергетики</h2>
+    <div class="menu-item">
+        <span>⚡ Нитро</span>
+        <span class="price">80р</span>
+        <img src="nitro.jpeg" class="dish-image" alt="Нитро">
+    </div>
+    <div class="menu-item">
+        <span>⚡ Флэш</span>
+        <span class="price">80р</span>
+        <img src="flash.jpeg" class="dish-image" alt="Флэш">
+    </div>
+    <div class="menu-item">
+        <span>⚡ Драйв</span>
+        <span class="price">80р</span>
+        <img src="drive.webp" class="dish-image" alt="Драйв">
+    </div>
+</div>
+        </div>   
+
         <div id="social" class="content-section">
             <h1>📱 Наши соцсети</h1>
             <div class="social-links">
@@ -697,11 +763,9 @@
             <header class="main-header pulse">
                 <h1>⛰️ "Кочевник" рестораны</h1>
             </header>
-
-            <div class="mountains-background">
-                <div class="mountains-text">Тянь-Шань тоолору • Кыргызстан</div>
-            </div>
             
+            <img src="logo.png" alt="логотип" class="foto">
+
             <h2>Биз жөнүндө</h2>
             <p>Ысык бешбармактан аромдуу куруттка чейин. Биздин ресторан - Тянь-Шань тоолорунун этегиндеги саякат. Бул жерде сиз чыныгы кыргыздардын коноккорчулугун табасыз, мында конокко эң жакшы эт бөлүгү тартууланат, чайнек эч качан бош калбайт.</p>
             
@@ -724,53 +788,76 @@
         <div id="menu-kyrg" class="content-section">
             <h1>🍽️ Биздин меню</h1>
             
-            <div class="menu-category">
-                <h2>🍳 Эртең мененки тамак</h2>
-                <div class="menu-item">
-                    <span>🥣 Геркулес боткосу</span>
-                    <span class="price">200с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍳 Куурмак жумуртка</span>
-                    <span class="price">150с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🥞 Куймак</span>
-                    <span class="price">180с</span>
-                </div>
-            </div>
-            
-            <div class="menu-category">
-                <h2>🍛 Түшкү тамак</h2>
-                <div class="menu-item">
-                    <span>🍜 Лагман</span>
-                    <span class="price">250с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍚 Аш</span>
-                    <span class="price">300с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🥘 Бешбармак</span>
-                    <span class="price">350с</span>
-                </div>
-            </div>
-            
-            <div class="menu-category">
-                <h2>🍰 Таттуулар</h2>
-                <div class="menu-item">
-                    <span>🍰 Торт</span>
-                    <span class="price">250с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍮 Как-чак</span>
-                    <span class="price">200с</span>
-                </div>
-                <div class="menu-item">
-                    <span>🍨 Мороженое</span>
-                    <span class="price">150с</span>
-                </div>
-            </div>
+           <div class="menu-category">
+    <h2>🍽️ Блюдо</h2>
+    <div class="menu-item">
+        <span>🥞 Куймак</span>
+        <span class="price">50р</span>
+        <img src="kuymak.jpg" class="dish-image" alt="Куймак">
+    </div>
+    <div class="menu-item">
+        <span>🍖 Куурдак</span>
+        <span class="price">2000р</span>
+        <img src="куурдак.jpeg" class="dish-image" alt="Куурдак">
+    </div>
+    <div class="menu-item">
+        <span>🥛 Кымыз</span>
+        <span class="price">200р</span>
+        <img src="кымыз.png" class="dish-image" alt="Кымыз">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>🍔 Фаст фуд</h2>
+    <div class="menu-item">
+        <span>🍗 Крылышки</span>
+        <span class="price">650р</span>
+        <img src="крылышки.jpeg" class="dish-image" alt="Крылышки">
+    </div>
+    <div class="menu-item">
+        <span>🍕 Пицца</span>
+        <span class="price">350р</span>
+        <img src="пицца.jpeg" class="dish-image" alt="Пицца">
+    </div>
+    <div class="menu-item">
+        <span>🍟 Картошка фри</span>
+        <span class="price">200р</span>
+        <img src="картошка.jpg" class="dish-image" alt="Картошка фри">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>🥤 Напитки</h2>
+    <div class="menu-item">
+        <span>🥤 Кола</span>
+        <span class="price">190р</span>
+        <img src="cola.jpg" class="dish-image" alt="Кола">
+    </div>
+    <div class="menu-item">
+        <span>🥤 Пепси</span>
+        <span class="price">190р</span>
+        <img src="pepsi.webp" class="dish-image" alt="Пепси">
+    </div>
+</div>
+
+<div class="menu-category">
+    <h2>⚡ Энергетики</h2>
+    <div class="menu-item">
+        <span>⚡ Нитро</span>
+        <span class="price">80р</span>
+        <img src="nitro.jpeg" class="dish-image" alt="Нитро">
+    </div>
+    <div class="menu-item">
+        <span>⚡ Флэш</span>
+        <span class="price">80р</span>
+        <img src="flash.jpeg" class="dish-image" alt="Флэш">
+    </div>
+    <div class="menu-item">
+        <span>⚡ Драйв</span>
+        <span class="price">80р</span>
+        <img src="drive.webp" class="dish-image" alt="Драйв">
+    </div>
+</div>
         </div>
         
         <div id="social-kyrg" class="content-section">
