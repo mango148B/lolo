@@ -9,6 +9,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Кочевник">
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">   
     <style>
         * {
             box-sizing: border-box;
@@ -890,7 +892,14 @@
                 <li>🕒 Иш убактысы: 10:00 - 22:00</li>
             </ul>
         </div>
-    </div>    
+    </div> 
+    <script>
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(() => console.log('Service Worker registered'))
+    .catch(err => console.log('Error:', err));
+}
+</script>   
     <script>
         function selectLanguage(lang) {
             var sections = document.querySelectorAll('.content-section');
