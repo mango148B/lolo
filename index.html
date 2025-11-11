@@ -24,7 +24,6 @@
             color: #FFF;
             min-height: 100vh;
             padding: 20px;
-            overflow-x: hidden;
         }
         
         .nav-buttons {
@@ -33,26 +32,45 @@
             gap: 15px;
             margin: 30px auto;
             flex-wrap: wrap;
+            max-width: 100%;
         }
         
         button {
             border: 3px solid #00E676;
             border-radius: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             color: #00E676;
             background: rgba(255, 107, 53, 0.9);
             box-shadow: 0 6px 20px rgba(0, 230, 118, 0.5);
             font-weight: bold;
-            padding: 18px 30px;
+            padding: 18px 25px;
             font-size: 18px;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
         }
         
         button:hover {
             background: #00E676;
             color: #FF6B35;
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.8);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 15px 35px rgba(0, 230, 118, 0.8);
+        }
+        
+        button:hover::before {
+            left: 100%;
         }
         
         .content-section {
@@ -74,7 +92,14 @@
             display: block;
             opacity: 1;
             transform: translateY(0);
-            animation: fadeInUp 0.6s ease-out;
+            animation: sectionAppear 0.8s ease-out forwards;
+        }
+        
+        @keyframes sectionAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         h1 {
@@ -84,6 +109,16 @@
             text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
             font-family: 'Times New Roman', serif;
             font-size: 2.8em;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from {
+                text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5), 0 0 10px #00E5FF;
+            }
+            to {
+                text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5), 0 0 20px #00E5FF, 0 0 30px #00E5FF;
+            }
         }
         
         h2 {
@@ -95,14 +130,31 @@
             color: #FFEB3B;
             box-shadow: 0 6px 20px rgba(255, 235, 59, 0.5);
             margin: 25px auto;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             font-family: 'Times New Roman', serif;
             font-size: 1.6em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
         }
         
         h2:hover {
-            transform: scale(1.08) rotate(-1deg);
-            box-shadow: 0 10px 30px rgba(255, 235, 59, 0.7);
+            transform: scale(1.1) rotate(-2deg);
+            box-shadow: 0 12px 30px rgba(255, 235, 59, 0.7);
+        }
+        
+        h2:hover::after {
+            left: 100%;
         }
         
         h3 {
@@ -117,11 +169,28 @@
             transition: all 0.4s ease;
             font-family: 'Times New Roman', serif;
             font-size: 1.3em;
+            position: relative;
+            overflow: hidden;
         }
 
+        h3::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,229,255,0.3), transparent);
+            transition: width 0.4s ease;
+        }
+        
         h3:hover {
-            transform: translateX(15px) scale(1.03);
+            transform: translateX(15px) scale(1.05);
             box-shadow: 0 8px 25px rgba(0, 229, 255, 0.6);
+        }
+        
+        h3:hover::before {
+            width: 100%;
         }
         
         p {
@@ -135,12 +204,29 @@
             transition: all 0.4s ease;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
+        p::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
         p:hover {
-            transform: translateX(8px) scale(1.02);
+            transform: translateX(10px) scale(1.02);
             box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.25);
+        }
+        
+        p:hover::before {
+            left: 100%;
         }
         
         .social-links a {
@@ -152,16 +238,33 @@
             background: linear-gradient(45deg, rgba(255, 107, 53, 0.8), rgba(255, 64, 129, 0.8));
             border-radius: 15px;
             border: 2px solid #FFEB3B;
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             box-shadow: 0 4px 15px rgba(255, 235, 59, 0.4);
             font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,235,59,0.3), transparent);
+            transition: left 0.6s ease;
         }
         
         .social-links a:hover {
             background: #FFEB3B;
             color: #FF4081;
-            transform: translateX(20px) scale(1.08);
+            transform: translateX(20px) scale(1.1);
             box-shadow: 0 10px 30px rgba(255, 235, 59, 0.7);
+        }
+        
+        .social-links a:hover::before {
+            left: 100%;
         }
         
         .contacts-list {
@@ -180,12 +283,29 @@
             transition: all 0.4s ease;
             color: #FFF;
             font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
         }
 
+        .contacts-list li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,230,118,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .contacts-list li:hover {
             transform: translateX(15px) scale(1.05);
             box-shadow: 0 8px 25px rgba(0, 230, 118, 0.6);
             background: linear-gradient(45deg, rgba(255, 64, 129, 0.8), rgba(255, 107, 53, 0.8));
+        }
+        
+        .contacts-list li:hover::before {
+            left: 100%;
         }
         
         .main-header {
@@ -196,8 +316,19 @@
             border-radius: 20px;
             margin-bottom: 30px;
             box-shadow: 0 8px 30px rgba(255, 235, 59, 0.6);
-            animation: headerGlow 3s ease-in-out infinite alternate;
+            animation: headerPulse 3s ease-in-out infinite;
             border: 3px solid #FFEB3B;
+        }
+        
+        @keyframes headerPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 30px rgba(255, 235, 59, 0.6);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 12px 40px rgba(255, 235, 59, 0.8);
+            }
         }
         
         .mountains-background {
@@ -213,8 +344,18 @@
             overflow: hidden;
             transition: all 0.6s ease;
             border: 3px solid #00E5FF;
+            animation: float 6s ease-in-out infinite;
         }
 
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
         .mountains-background:hover {
             transform: scale(1.03) rotate(0.5deg);
             box-shadow: 0 12px 40px rgba(0, 229, 255, 0.8);
@@ -252,50 +393,48 @@
             transform: translateY(-8px) scale(1.05);
             text-shadow: 4px 4px 15px rgba(0, 0, 0, 1);
         }
-
-        /* Стили для меню с категориями */
-        .menu-category {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 18px;
-            padding: 20px;
-            margin: 18px;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
-            transition: all 0.4s ease;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            overflow: hidden;
-        }
-
-        .menu-category:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.25);
-        }
-
+        
         .category-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
-            padding: 20px;
+            padding: 25px;
             background: linear-gradient(45deg, #FF6B35, #FF4081);
-            border-radius: 15px;
-            margin: -20px -20px 20px -20px;
+            border-radius: 18px;
+            margin: 18px 0;
             border: 3px solid #FFEB3B;
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             color: #FFEB3B;
+            position: relative;
+            overflow: hidden;
         }
 
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .category-header:hover {
             background: linear-gradient(45deg, #FF4081, #FF6B35);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.6);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(255, 235, 59, 0.7);
+        }
+        
+        .category-header:hover::before {
+            left: 100%;
         }
 
         .category-content {
             max-height: 0;
             overflow: hidden;
-            transition: all 0.6s ease-in-out;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0;
         }
 
@@ -305,14 +444,42 @@
             animation: slideDown 0.6s ease-out;
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .arrow {
-            transition: transform 0.6s ease;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-size: 24px;
             color: #FFEB3B;
         }
 
         .category-header.active .arrow {
             transform: rotate(180deg);
+        }
+
+        .menu-category {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            padding: 20px;
+            margin: 18px;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .menu-category:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.25);
         }
         
         .menu-item {
@@ -325,17 +492,33 @@
             border-radius: 12px;
             border-left: 5px solid #00E676;
             box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             color: #FFF;
             backdrop-filter: blur(5px);
-            animation: slideInRight 0.5s ease-out;
+            position: relative;
+            overflow: hidden;
         }
 
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,230,118,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .menu-item:hover {
-            transform: translateX(12px) scale(1.03);
+            transform: translateX(15px) scale(1.04);
             box-shadow: 0 8px 25px rgba(0, 230, 118, 0.5);
             background: rgba(0, 230, 118, 0.2);
-        } 
+        }
+        
+        .menu-item:hover::before {
+            left: 100%;
+        }
         
         .dish-image {
             width: 90px;
@@ -344,13 +527,14 @@
             border: 2px solid #FFEB3B;
             object-fit: cover;
             margin-left: 15px;
-            transition: transform 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             flex-shrink: 0;
             box-shadow: 0 4px 15px rgba(255, 235, 59, 0.4);
         }
 
         .menu-item:hover .dish-image {
-            transform: scale(1.4) rotate(2deg);
+            transform: scale(1.4) rotate(3deg);
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.6);
         }         
         
         .price {
@@ -362,7 +546,7 @@
         }
 
         .menu-item:hover .price {
-            transform: scale(1.2);
+            transform: scale(1.3);
             color: #00FF88;
         }
 
@@ -377,14 +561,14 @@
             width: 100%;
             border-radius: 18px;
             box-shadow: 0 8px 25px rgba(0, 229, 255, 0.5);
-            transition: all 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             border: 3px solid #00E5FF;
         }
         
         .guest-photo:hover {
-            transform: scale(1.03) rotate(0.5deg);
-            box-shadow: 0 12px 35px rgba(0, 229, 255, 0.7);
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(0, 229, 255, 0.7);
         }
 
         .booking-container {
@@ -400,14 +584,30 @@
             padding: 25px;
             border: 3px solid #00E5FF;
             box-shadow: 0 8px 30px rgba(0, 229, 255, 0.5);
-            transition: all 0.4s ease;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             text-align: center;
-            animation: bounceIn 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
         }
 
+        .booking-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .booking-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 229, 255, 0.8);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 18px 40px rgba(0, 229, 255, 0.8);
+        }
+        
+        .booking-card:hover::before {
+            left: 100%;
         }
 
         .booking-image {
@@ -417,6 +617,12 @@
             border-radius: 15px;
             margin-bottom: 15px;
             border: 2px solid #FFEB3B;
+            transition: all 0.4s ease;
+        }
+
+        .booking-card:hover .booking-image {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.6);
         }
 
         .booking-title {
@@ -424,12 +630,22 @@
             font-size: 1.4em;
             margin-bottom: 10px;
             font-family: 'Times New Roman', serif;
+            transition: all 0.3s ease;
+        }
+
+        .booking-card:hover .booking-title {
+            transform: scale(1.1);
         }
 
         .booking-description {
             color: #FFF;
             margin-bottom: 15px;
             line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .booking-card:hover .booking-description {
+            transform: translateY(-3px);
         }
 
         .booking-price {
@@ -437,6 +653,12 @@
             font-size: 1.3em;
             font-weight: bold;
             margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .booking-card:hover .booking-price {
+            transform: scale(1.2);
+            color: #00FF88;
         }
 
         .book-button {
@@ -447,13 +669,31 @@
             border-radius: 15px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             font-size: 1.1em;
+            position: relative;
+            overflow: hidden;
         }
 
+        .book-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        
         .book-button:hover {
             background: #00FF88;
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.6);
+        }
+        
+        .book-button:hover::before {
+            left: 100%;
         }
 
         .form-group {
@@ -476,6 +716,15 @@
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.9);
             font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+            outline: none;
         }
 
         .form-group textarea {
@@ -493,18 +742,21 @@
                 gap: 12px;
                 margin: 25px auto;
                 width: 100%;
+                max-width: 400px;
             }
             
             button {
-                font-size: 20px;
-                padding: 22px 28px;
+                font-size: 18px;
+                padding: 20px 15px;
                 min-height: 70px;
                 width: 100%;
+                min-width: auto;
             }
             
             .content-section {
                 width: 100%;
-                padding: 25px 18px;
+                padding: 25px 15px;
+                margin: 15px auto;
             }
             
             h1 {
@@ -520,18 +772,18 @@
             
             h3 {
                 font-size: 1.2em;
-                margin: 15px 12px;
+                margin: 15px 10px;
                 padding: 12px 15px;
             }
             
             p {
-                margin: 15px 12px;
+                margin: 15px 10px;
                 padding: 15px;
                 font-size: 16px;
             }
             
             .mountains-background {
-                height: 220px;
+                height: 200px;
             }
             
             .mountains-text {
@@ -561,12 +813,15 @@
             .nav-buttons {
                 flex-direction: row;
                 max-width: 800px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
             button {
                 font-size: 18px;
-                padding: 18px 28px;
-                min-width: 170px;
+                padding: 18px 25px;
+                min-width: 160px;
+                max-width: 200px;
             }
             
             .content-section {
@@ -602,134 +857,12 @@
             }
         }
 
-        /* Анимации */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.3);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            70% {
-                transform: scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes buttonClick {
-            0% { 
-                transform: scale(1); 
-                box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
-            }
-            50% { 
-                transform: scale(0.95); 
-                box-shadow: 0 3px 12px rgba(0, 229, 255, 0.3);
-            }
-            100% { 
-                transform: scale(1); 
-                box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
-            }
-        }
-
-        @keyframes headerGlow {
-            from {
-                box-shadow: 0 8px 30px rgba(255, 235, 59, 0.6);
-            }
-            to {
-                box-shadow: 0 12px 40px rgba(255, 235, 59, 0.9);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.06); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 5px #00E5FF; }
-            50% { box-shadow: 0 0 20px #00E5FF, 0 0 30px #00E5FF; }
-        }
-
-        .button-clicked {
-            animation: buttonClick 0.5s ease-in-out;
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        .floating-element {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .glow-element {
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        .nav-buttons {
-            animation: slideInFromTop 1s ease-out;
-        }
-
-        @keyframes slideInFromTop {
-            from {
-                opacity: 0;
-                transform: translateY(-60px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         .language-buttons {
             display: flex;
             justify-content: center;
             gap: 25px;
             margin: 35px 0;
+            flex-wrap: wrap;
         }
         
         .fullscreen-overlay {
@@ -747,6 +880,11 @@
             animation: fadeIn 0.3s ease-out;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         .fullscreen-img {
             max-width: 96%;
             max-height: 96%;
@@ -755,6 +893,17 @@
             border: 4px solid #00E5FF;
             box-shadow: 0 0 50px rgba(0, 229, 255, 0.8);
             animation: zoomIn 0.3s ease-out;
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
         
         .close-fullscreen {
@@ -819,20 +968,23 @@
         .glow-text {
             text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        .button-clicked {
+            animation: buttonClick 0.5s ease-in-out;
         }
 
-        @keyframes zoomIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5);
+        @keyframes buttonClick {
+            0% { 
+                transform: scale(1); 
+                box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
             }
-            to {
-                opacity: 1;
-                transform: scale(1);
+            50% { 
+                transform: scale(0.95); 
+                box-shadow: 0 3px 12px rgba(0, 229, 255, 0.3);
+            }
+            100% { 
+                transform: scale(1); 
+                box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
             }
         }
     </style>
@@ -844,6 +996,7 @@
             <h1 class="glow-text"> Добро пожаловать в Кочевник </h1>
         </header>
         <h2>Выберите язык</h2>
+        <img src="logo.png" alt="логотип" class="foto">
         <div class="language-buttons">
             <button onclick="selectLanguage('RUS')">🌏 Русский</button>
             <button onclick="selectLanguage('KYRG')">🌏 Киргизский</button>
@@ -867,6 +1020,7 @@
 
         <div id="guest" class="content-section">
             <h1>Наши гости</h1>
+            <img src="logo.png" alt="логотип" class="foto">
             <div class="guest-photos RUS">  
                  <img src="klk.jpg" alt="Наши гости" class="clickable-image" onclick="openFullscreen(this.src)" style="width: 100%; margin: 15px 0;">
                  <img src="pop.jpg" alt="Наши гости" class="clickable-image" onclick="openFullscreen(this.src)" style="width: 100%; margin: 15px 0;">
@@ -876,6 +1030,7 @@
 
         <div id="places" class="content-section">
             <h1>Забронировать место</h1>
+            <img src="logo.png" alt="логотип" class="foto">
             <div class="booking-container">
                 <div class="booking-card">
                     <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3" alt="Юрта VIP" class="booking-image">
@@ -947,10 +1102,11 @@
         </div>
         
         <div id="main" class="content-section">
-            <header class="main-header pulse">
+            <header class="main-header">
                 <h1>⛰️ Ресторан "Кочевник"</h1>
             </header>
-            <img src="logo.png" alt="логотип" class="foto floating-element">
+            <img src="logo.png" alt="логотип" class="foto">
+            
             <h2>О нас</h2>
             <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
             
@@ -972,7 +1128,7 @@
         
         <div id="menu" class="content-section">
             <h1>🍽️ Наше меню</h1>
-            
+            <img src="logo.png" alt="кочевник">
             <div class="menu-category">
                 <div class="category-header" onclick="toggleCategory(this)">
                     <h2>🍽️ Блюдо</h2>
@@ -995,9 +1151,9 @@
                         <img src="kymyz.png" class="dish-image" alt="Кымыз">
                     </div>
                     <div class="menu-item">
-                        <span>🍵 Сладкий чай</span>
+                        <span>🍵сладкий чай</span>
                         <span class="price">0р</span>
-                        <img src="tea.jpg" class="dish-image" alt="Чай">
+                        <img src="tea.jpg" class="dish-image" alt="Куймак">
                     </div>
                 </div>
             </div>
@@ -1068,21 +1224,23 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>   
 
         <div id="social" class="content-section">
             <h1>📱 Наши соцсети</h1>
+            <img src="logo.png" alt="логотип" class="foto">
             <div class="social-links">
-                <a href="#" class="glow-element">📸 Instagram</a>
-                <a href="#" class="glow-element">🎵 TikTok</a>
-                <a href="https://wa.me/79620742140" class="glow-element">💬 WhatsApp</a>
-                <a href="#" class="glow-element">📘 Facebook</a>
-                <a href="#" class="glow-element">🐦 Twitter</a>
+                <a href="#">📸 Instagram</a>
+                <a href="#">🎵 TikTok</a>
+                <a href="https://wa.me/79620742140">💬 WhatsApp</a>
+                <a href="#">📘 Facebook</a>
+                <a href="#">🐦 Twitter</a>
             </div>
         </div>
         
         <div id="contacts" class="content-section">
             <h1>📞 Наши контакты</h1>
+            <img src="logo.png" alt="логотип" class="foto">
             <ul class="contacts-list">
                 <li>📞 Номер: +7 (999) 123-45-67</li>
                 <li>📍 Адрес: ул. Горная, д. 15</li>
@@ -1104,7 +1262,7 @@
 
         <div id="places-kyrg" class="content-section">
             <h1>Орундарды брондоо</h1>
-            <img src="logo.png" alt="логотип" class="foto floating-element">
+            <img src="logo.png" alt="логотип" class="foto">
 
             <div class="booking-container">
                 <div class="booking-card">
@@ -1178,6 +1336,7 @@
 
         <div id="guest-kyrg" class="content-section">
             <h1>Коноктор</h1>
+             <img src="logo.png" alt="логотип" class="foto">
             <div class="guest-photos kyrg"> 
                 <img src="klk.jpg" alt="Наши гости" class="clickable-image" onclick="openFullscreen(this.src)" style="width: 100%; margin: 15px 0;">
                 <img src="pop.jpg" alt="Наши гости" class="clickable-image" onclick="openFullscreen(this.src)" style="width: 100%; margin: 15px 0;">
@@ -1186,8 +1345,9 @@
         </div>
         
         <div id="main-kyrg" class="content-section">
-            <header class="main-header pulse">
+            <header class="main-header">
                 <h1>⛰️ "Кочевник" рестораны</h1>
+                 <img src="logo.png" alt="логотип" class="foto">
             </header>
             <h2>Биз жөнүндө</h2>
             <p>Ысык бешбармактан аромдуу куруттка чейин. Биздин ресторан - Тянь-Шань тоолорунун этегиндеги саякат. Бул жерде сиз чыныгы кыргыздардын коноккорчулугун табасыз, мында конокко эң жакшы эт бөлүгү тартууланат, чайнек эч качан бош калбайт.</p>
@@ -1210,7 +1370,7 @@
         
         <div id="menu-kyrg" class="content-section">
             <h1>🍽️ Биздин меню</h1>
-            
+             <img src="logo.png" alt="логотип" class="foto">
             <div class="menu-category">
                 <div class="category-header" onclick="toggleCategory(this)">
                     <h2>🍽️ Блюдо</h2>
@@ -1233,9 +1393,9 @@
                         <img src="kymyz.png" class="dish-image" alt="Кымыз">
                     </div>
                     <div class="menu-item">
-                        <span>🍵 Сладкий чай</span>
+                        <span>🍵сладкий чай</span>
                         <span class="price">0р</span>
-                        <img src="tea.jpg" class="dish-image" alt="Чай">
+                        <img src="tea.jpg" class="dish-image" alt="Куймак">
                     </div>
                 </div>
             </div>
@@ -1310,17 +1470,19 @@
         
         <div id="social-kyrg" class="content-section">
             <h1>📱 Биздин социалдык тармактар</h1>
+             <img src="logo.png" alt="логотип" class="foto">
             <div class="social-links">
-                <a href="#" class="glow-element">📸 Instagram</a>
-                <a href="#" class="glow-element">🎵 TikTok</a>
-                <a href="https://wa.me/79620742140" class="glow-element">💬 WhatsApp</a>
-                <a href="#" class="glow-element">📘 Facebook</a>
-                <a href="#" class="glow-element">🐦 Twitter</a>
+                <a href="#">📸 Instagram</a>
+                <a href="#">🎵 TikTok</a>
+                <a href="https://wa.me/79620742140">💬 WhatsApp</a>
+                <a href="#">📘 Facebook</a>
+                <a href="#">🐦 Twitter</a>
             </div>
         </div>
         
         <div id="contacts-kyrg" class="content-section">
             <h1>📞 Байланыш маалыматтар</h1>
+             <img src="logo.png" alt="логотип" class="foto">
             <ul class="contacts-list">
                 <li>📞 Номер: +7 (999) 123-45-67</li>
                 <li>📍 Дарек: Тоолуу көчөсү, 15-үй</li>
@@ -1459,11 +1621,6 @@
         });
         
         document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.foto, h2, .booking-card');
-            animatedElements.forEach(el => {
-                el.classList.add('floating-element');
-            });
-            
             const firstCategory = document.querySelector('.category-header');
             if (firstCategory) {
                 toggleCategory(firstCategory);
