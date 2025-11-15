@@ -732,6 +732,23 @@
             resize: vertical;
         }
 
+        .foto {
+            width: 200px;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+            margin: 20px auto;
+            border: 4px solid #FFEB3B;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.6);
+            transition: all 0.4s ease;
+        }
+
+        .foto:hover {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.8);
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 15px;
@@ -807,6 +824,11 @@
             .booking-container {
                 grid-template-columns: 1fr;
             }
+
+            .foto {
+                width: 150px;
+                height: 90px;
+            }
         }
 
         @media (min-width: 769px) {
@@ -854,6 +876,11 @@
             
             .mountains-text {
                 font-size: 26px;
+            }
+
+            .foto {
+                width: 200px;
+                height: 120px;
             }
         }
 
@@ -940,23 +967,6 @@
             transform: scale(1.03);
         }
         
-        .foto {
-            width: 280px;  
-            height: 160px;   
-            object-fit: cover;
-            display: block;
-            margin: 20px auto;
-            border: 4px solid #FFEB3B;
-            border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.6);
-            transition: all 0.4s ease;
-        }
-
-        .foto:hover {
-            transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.8);
-        }
-
         .section-divider {
             height: 4px;
             background: linear-gradient(90deg, #FF6B35, #00E5FF, #FF4081, #00E676);
@@ -1128,7 +1138,7 @@
         
         <div id="menu" class="content-section">
             <h1>🍽️ Наше меню</h1>
-            <img src="logo.png" alt="кочевник">
+            <img src="logo.png" alt="кочевник" class="foto">
             <div class="menu-category">
                 <div class="category-header" onclick="toggleCategory(this)">
                     <h2>🍽️ Блюдо</h2>
