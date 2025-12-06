@@ -17,7 +17,7 @@
             background: #f5e9d7;
             color: #5c3d2e;
             min-height: 100vh;
-            padding: 20px;
+            padding: 10px;
             overflow-x: hidden;
         }
 
@@ -64,7 +64,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background: #5c3d2e;
-            padding: 25px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.7);
             z-index: 10001;
@@ -125,7 +125,7 @@
 
         .admin-tabs {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             margin-bottom: 20px;
             border-bottom: 2px solid #8b5a2b;
             flex-wrap: wrap;
@@ -133,7 +133,7 @@
         }
 
         .admin-tab {
-            padding: 12px 15px;
+            padding: 10px 12px;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
@@ -141,8 +141,8 @@
             font-weight: bold;
             color: #d9a566;
             transition: all 0.3s ease;
-            font-size: 0.9em;
-            min-width: 100px;
+            font-size: 14px;
+            min-width: auto;
             text-align: center;
             flex: 1;
         }
@@ -162,17 +162,6 @@
 
         .tab-content.active {
             display: block;
-        }
-
-        .cash-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            margin: 8px 0;
-            background: rgba(139, 90, 43, 0.3);
-            border-radius: 8px;
-            border-left: 4px solid #d9a566;
         }
 
         .stats-grid {
@@ -206,13 +195,13 @@
         }
 
         .control-btn {
-            padding: 12px 20px;
+            padding: 12px 15px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            min-width: 150px;
+            min-width: 120px;
             text-align: center;
             flex: 1;
         }
@@ -232,6 +221,141 @@
             color: #f5e9d7;
         }
 
+        /* КАССА И ДОХОДЫ */
+        .income-calendar-view {
+            margin-top: 20px;
+        }
+
+        .admin-calendar-container {
+            background: rgba(139, 90, 43, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #8b5a2b;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #8b5a2b;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 5px;
+        }
+
+        .calendar-nav button {
+            background: #8b5a2b;
+            border: none;
+            border-radius: 5px;
+            color: #f5e9d7;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .admin-calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 8px;
+            color: #5c3d2e;
+            background: rgba(139, 90, 43, 0.2);
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .admin-calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: bold;
+            border: 1px solid transparent;
+            font-size: 12px;
+            min-height: 35px;
+        }
+
+        .admin-calendar-day.free {
+            background: rgba(0, 128, 0, 0.2);
+            border: 1px solid #008000;
+            color: #006400;
+        }
+
+        .admin-calendar-day.busy {
+            background: rgba(165, 42, 42, 0.2);
+            border: 1px solid #a52a2a;
+            color: #a52a2a;
+        }
+
+        .admin-calendar-day.selected {
+            background: rgba(217, 165, 102, 0.5);
+            border: 2px solid #8b5a2b;
+            transform: scale(1.05);
+            color: #5c3d2e;
+        }
+
+        .admin-calendar-day.today {
+            border: 2px solid #d9a566;
+        }
+
+        .admin-calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .income-details {
+            background: rgba(139, 90, 43, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #8b5a2b;
+        }
+
+        .month-selector {
+            display: flex;
+            gap: 5px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .month-btn {
+            padding: 8px 12px;
+            background: #8b5a2b;
+            color: #f5e9d7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 12px;
+            flex: 1;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .month-btn.active {
+            background: #d9a566;
+            color: #5c3d2e;
+        }
+
         /* СИСТЕМА БРОНИРОВАНИЯ */
         .booking-modal {
             display: none;
@@ -240,20 +364,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(92, 61, 46, 0.9);
+            background: rgba(92, 61, 46, 0.95);
             z-index: 10002;
             justify-content: center;
             align-items: center;
             overflow-y: auto;
-            padding: 20px;
+            padding: 10px;
         }
 
         .booking-content {
             background: #f5e9d7;
             border-radius: 15px;
-            padding: 25px;
-            max-width: 95%;
-            width: 900px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
             border: 3px solid #8b5a2b;
@@ -271,7 +395,7 @@
 
         .booking-title {
             color: #5c3d2e;
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: bold;
         }
 
@@ -290,7 +414,30 @@
             color: #a52a2a;
         }
 
-        .calendar-container {
+        .date-picker {
+            margin: 15px 0;
+        }
+
+        .date-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .date-input {
+            padding: 12px;
+            border: 2px solid #8b5a2b;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(245, 233, 215, 0.9);
+            color: #5c3d2e;
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        .customer-info {
             background: rgba(139, 90, 43, 0.1);
             border-radius: 15px;
             padding: 20px;
@@ -298,121 +445,24 @@
             border: 2px solid #8b5a2b;
         }
 
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .form-group {
             margin-bottom: 15px;
         }
 
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav button {
-            background: #8b5a2b;
-            border: none;
-            border-radius: 5px;
-            color: #f5e9d7;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #5c3d2e;
             font-weight: bold;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+        .form-group input {
             width: 100%;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-weight: bold;
-            padding: 8px;
-            color: #5c3d2e;
-            background: rgba(139, 90, 43, 0.2);
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            font-weight: bold;
-            border: 1px solid transparent;
-            font-size: 16px;
-            min-height: 40px;
-        }
-
-        .calendar-day.free {
-            background: rgba(0, 128, 0, 0.2);
-            border: 1px solid #008000;
-            color: #006400;
-        }
-
-        .calendar-day.busy {
-            background: rgba(165, 42, 42, 0.2);
-            border: 1px solid #a52a2a;
-            color: #a52a2a;
-            cursor: not-allowed;
-        }
-
-        .calendar-day.selected {
-            background: rgba(217, 165, 102, 0.5);
+            padding: 12px;
             border: 2px solid #8b5a2b;
-            transform: scale(1.1);
-            color: #5c3d2e;
-        }
-
-        .calendar-day:hover:not(.busy) {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(139, 90, 43, 0.7);
-        }
-
-        .calendar-day.today {
-            border: 2px solid #d9a566;
-        }
-
-        .calendar-day.other-month {
-            opacity: 0.5;
-        }
-
-        .month-selector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-            flex-wrap: wrap;
-        }
-
-        .month-btn {
-            padding: 8px 15px;
-            background: #8b5a2b;
-            color: #f5e9d7;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .month-btn.active {
-            background: #d9a566;
+            border-radius: 10px;
+            font-size: 16px;
+            background: rgba(245, 233, 215, 0.9);
             color: #5c3d2e;
         }
 
@@ -437,7 +487,7 @@
 
         .menu-items {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: 1fr;
             gap: 10px;
         }
 
@@ -523,23 +573,22 @@
         /* ОСНОВНОЙ СТИЛЬ САЙТА */
         .header {
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background: linear-gradient(rgba(139, 90, 43, 0.8), rgba(92, 61, 46, 0.8));
-            background-size: cover;
             color: #f5e9d7;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             border-bottom: 3px solid #8b5a2b;
         }
         
         .header h1 {
-            font-size: 3em;
+            font-size: 2em;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             margin-bottom: 10px;
             font-family: 'Times New Roman', serif;
         }
         
         .header p {
-            font-size: 1.2em;
+            font-size: 1em;
             max-width: 600px;
             margin: 0 auto;
         }
@@ -547,8 +596,8 @@
         .nav-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 30px auto;
+            gap: 10px;
+            margin: 20px auto;
             flex-wrap: wrap;
             max-width: 100%;
         }
@@ -562,13 +611,13 @@
             background: #d9a566;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             font-weight: bold;
-            padding: 15px 25px;
-            font-size: 16px;
-            min-width: 140px;
+            padding: 12px 15px;
+            font-size: 14px;
+            min-width: 120px;
             position: relative;
             overflow: hidden;
-            flex: 1;
             text-align: center;
+            flex: 1;
         }
         
         .nav-btn:hover {
@@ -584,9 +633,9 @@
             border: 2px solid #8b5a2b;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin: 20px auto;
+            margin: 15px auto;
             text-align: left;
-            padding: 25px;
+            padding: 20px;
             max-width: 900px;
         }
         
@@ -604,38 +653,38 @@
             text-align: center;
             border-bottom: 2px solid #8b5a2b;
             padding-bottom: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: #5c3d2e;
             font-family: 'Times New Roman', serif;
-            font-size: 1.8em;
+            font-size: 1.5em;
         }
         
         h3 {
             color: #5c3d2e;
             border-left: 4px solid #d9a566;
             padding-left: 15px;
-            margin: 20px 0 15px;
+            margin: 15px 0 10px;
             font-family: 'Times New Roman', serif;
-            font-size: 1.4em;
+            font-size: 1.2em;
         }
         
         p {
             line-height: 1.6;
             color: #5c3d2e;
-            margin: 15px 0;
+            margin: 10px 0;
         }
         
         .yurta-container, .kupol-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
         
         .yurta-item, .kupol-item {
             background: rgba(139, 90, 43, 0.1);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             border: 2px solid #8b5a2b;
             transition: all 0.4s ease;
@@ -648,10 +697,10 @@
         }
         
         .yurta-status, .kupol-status {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: bold;
-            margin: 15px 0;
-            padding: 10px 15px;
+            margin: 10px 0;
+            padding: 8px 12px;
             border-radius: 10px;
             transition: all 0.3s ease;
         }
@@ -669,8 +718,8 @@
         }
 
         .kupol-icon {
-            font-size: 3em;
-            margin-bottom: 15px;
+            font-size: 2.5em;
+            margin-bottom: 10px;
             color: #8b5a2b;
         }
 
@@ -678,7 +727,7 @@
             background: #8b5a2b;
             color: #f5e9d7;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
@@ -703,8 +752,8 @@
             text-decoration: none;
             color: #5c3d2e;
             display: block;
-            padding: 15px 20px;
-            margin: 10px 0;
+            padding: 12px 15px;
+            margin: 8px 0;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border: 1px solid #8b5a2b;
@@ -723,8 +772,8 @@
         }
         
         .contacts-list li {
-            margin: 15px 0;
-            padding: 15px 20px;
+            margin: 12px 0;
+            padding: 12px 15px;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border-left: 4px solid #d9a566;
@@ -740,8 +789,8 @@
         .guest-photos {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin: 25px 0;
+            gap: 15px;
+            margin: 20px 0;
         }
         
         .guest-photo {
@@ -759,11 +808,11 @@
         }
 
         .foto {
-            width: 200px;
-            height: 120px;
+            width: 150px;
+            height: 100px;
             object-fit: cover;
             display: block;
-            margin: 20px auto;
+            margin: 15px auto;
             border: 2px solid #8b5a2b;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -772,8 +821,8 @@
         .language-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
+            gap: 15px;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
         
@@ -801,10 +850,10 @@
         
         .close-fullscreen {
             position: absolute;
-            top: 20px;
-            right: 30px;
+            top: 15px;
+            right: 20px;
             color: #d9a566;
-            font-size: 40px;
+            font-size: 35px;
             cursor: pointer;
             background: none;
             border: none;
@@ -813,11 +862,11 @@
 
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: #8b5a2b;
             color: #f5e9d7;
-            padding: 15px 25px;
+            padding: 12px 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
             z-index: 1000;
@@ -835,8 +884,8 @@
         .menu-item-with-photo {
             display: flex;
             align-items: center;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border: 1px solid #8b5a2b;
@@ -849,18 +898,9 @@
             background: rgba(139, 90, 43, 0.2);
         }
 
-        .dish-image {
-            width: 80px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 15px;
-            border: 2px solid #8b5a2b;
-        }
-
         .dish-info {
             flex-grow: 1;
-            min-width: 200px;
+            min-width: 150px;
         }
 
         .dish-price {
@@ -895,7 +935,7 @@
 
         .stock-controls {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             align-items: center;
         }
 
@@ -919,61 +959,13 @@
             font-size: 1.1em;
         }
 
-        /* КАЛЕНДАРЬ ДЛЯ АДМИНА */
-        .admin-calendar-container {
-            background: rgba(139, 90, 43, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #8b5a2b;
-        }
-
-        .admin-calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-
-        .admin-calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            font-weight: bold;
-            border: 1px solid transparent;
-            font-size: 0.9em;
-        }
-
-        .admin-calendar-day.free {
-            background: rgba(0, 128, 0, 0.2);
-            border: 1px solid #008000;
-            color: #006400;
-        }
-
-        .admin-calendar-day.busy {
-            background: rgba(165, 42, 42, 0.2);
-            border: 1px solid #a52a2a;
-            color: #a52a2a;
-        }
-
-        .admin-calendar-day.selected {
-            background: rgba(217, 165, 102, 0.5);
-            border: 2px solid #8b5a2b;
-            transform: scale(1.1);
-            color: #5c3d2e;
-        }
-
         /* СТИЛИ ДЛЯ МАГАЗИНА */
         .store-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             background: rgba(139, 90, 43, 0.2);
             border-radius: 10px;
             border-left: 4px solid #d9a566;
@@ -982,29 +974,29 @@
 
         .store-info {
             flex-grow: 1;
-            min-width: 200px;
+            min-width: 150px;
         }
 
         .store-stats {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             align-items: center;
             flex-wrap: wrap;
         }
 
         .store-quantity {
-            min-width: 50px;
+            min-width: 40px;
             text-align: center;
         }
 
         .store-sold {
-            min-width: 60px;
+            min-width: 50px;
             text-align: center;
             color: #d9a566;
         }
 
         .store-earnings {
-            min-width: 80px;
+            min-width: 60px;
             text-align: center;
             color: #008000;
             font-weight: bold;
@@ -1012,7 +1004,7 @@
 
         .store-controls {
             display: flex;
-            gap: 10px;
+            gap: 5px;
             align-items: center;
         }
 
@@ -1021,8 +1013,8 @@
             color: #f5e9d7;
             border: none;
             border-radius: 5px;
-            width: 35px;
-            height: 35px;
+            width: 30px;
+            height: 30px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -1038,25 +1030,25 @@
 
         .store-summary {
             background: rgba(139, 90, 43, 0.3);
-            padding: 15px;
+            padding: 12px;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
         }
 
         .store-total {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: bold;
             color: #d9a566;
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         /* МЕЛОЧИ В МАГАЗИНЕ */
         .small-items-control {
             background: rgba(139, 90, 43, 0.2);
             border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
+            padding: 12px;
+            margin: 12px 0;
             border-left: 4px solid #d9a566;
         }
 
@@ -1064,20 +1056,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 10px;
+            margin-top: 8px;
         }
 
         .small-item-amount {
             font-weight: bold;
-            font-size: 1.2em;
-            min-width: 80px;
+            font-size: 1.1em;
+            min-width: 70px;
             text-align: center;
         }
 
         /* СТИЛИ ДЛЯ ДОБАВЛЕНИЯ ГОСТЕЙ */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
@@ -1087,7 +1079,7 @@
             font-weight: bold;
         }
 
-        /* СТИЛИ ДЛЯ КАЛЕНДАРНОГО ПРОСМОТРА ГОСТЕЙ */
+        /* СТИЛИ ДЛЯ КАЛЕНДАРНЫХ ПРОСМОТРОВ */
         .calendar-view-guests {
             margin-top: 15px;
         }
@@ -1095,7 +1087,7 @@
         .guest-date-details {
             display: none;
             margin-top: 15px;
-            padding: 15px;
+            padding: 12px;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border: 1px solid #8b5a2b;
@@ -1107,9 +1099,9 @@
 
         .places-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .place-item {
@@ -1141,108 +1133,172 @@
 
         .no-guests {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             color: #8b5a2b;
             font-style: italic;
         }
 
-        /* СТИЛИ ДЛЯ КАЛЕНДАРНОГО ПРОСМОТРА ДОХОДОВ */
-        .income-calendar-view {
-            margin-top: 15px;
+        .guest-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            flex-wrap: wrap;
         }
 
-        .date-income-details {
-            display: none;
-            margin-top: 15px;
+        .guest-actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        /* ОФОРМЛЕНИЕ БРОНИ */
+        .booking-deposit {
+            background: rgba(139, 90, 43, 0.1);
+            border: 2px solid #8b5a2b;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .deposit-amount {
+            font-size: 1.3em;
+            color: #008000;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* СТИЛИ ДЛЯ ТРАДИЦИОННЫХ БЛЮД */
+        .traditional-dish {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(139, 90, 43, 0.1);
+            border-radius: 10px;
+            border: 1px solid #8b5a2b;
+            transition: all 0.3s ease;
+        }
+
+        .traditional-dish:hover {
+            background: rgba(139, 90, 43, 0.2);
+            transform: translateX(5px);
+        }
+
+        .dish-icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .dish-details {
+            flex-grow: 1;
+        }
+
+        .dish-description {
+            font-size: 0.9em;
+            color: #8b5a2b;
+            margin-top: 3px;
+        }
+
+        /* КАЛЕНДАРЬ БРОНИРОВАНИЯ */
+        .calendar-container {
+            background: rgba(139, 90, 43, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 2px solid #8b5a2b;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: bold;
+            border: 1px solid transparent;
+            font-size: 12px;
+            min-height: 35px;
+        }
+
+        .calendar-day.free {
+            background: rgba(0, 128, 0, 0.2);
+            border: 1px solid #008000;
+            color: #006400;
+        }
+
+        .calendar-day.busy {
+            background: rgba(165, 42, 42, 0.2);
+            border: 1px solid #a52a2a;
+            color: #a52a2a;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.selected {
+            background: rgba(217, 165, 102, 0.5);
+            border: 2px solid #8b5a2b;
+            transform: scale(1.05);
+            color: #5c3d2e;
+        }
+
+        .calendar-day.today {
+            border: 2px solid #d9a566;
+        }
+
+        .calendar-day.other-month {
+            opacity: 0.3;
+        }
+
+        .calendar-day:hover:not(.busy) {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(139, 90, 43, 0.7);
+        }
+
+        /* ПЕЧАТЬ ОТЧЕТОВ */
+        .print-controls {
+            margin: 15px 0;
             padding: 15px;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border: 1px solid #8b5a2b;
         }
 
-        .date-income-details.active {
-            display: block;
-        }
-
-        .income-breakdown {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        .print-date-selector {
+            display: flex;
             gap: 10px;
-            margin-top: 10px;
-        }
-
-        .income-item {
-            background: rgba(139, 90, 43, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .store-sales-list {
-            margin-top: 10px;
-        }
-
-        .store-sale-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(139, 90, 43, 0.2);
-        }
-
-        /* СТИЛИ ДЛЯ ОБЩЕЙ СУММЫ ЗА ДЕНЬ */
-        .total-day-income {
-            background: rgba(139, 90, 43, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            text-align: center;
-            border: 2px solid #d9a566;
-        }
-
-        .day-income-breakdown {
-            display: flex;
-            justify-content: space-around;
+            align-items: center;
             flex-wrap: wrap;
-            margin-top: 10px;
+            justify-content: center;
         }
 
-        .day-income-item {
-            padding: 10px;
-            min-width: 150px;
+        .print-btn {
+            padding: 10px 15px;
+            background: #25D366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .header p {
-                font-size: 1em;
-            }
-            
-            .nav-buttons {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .nav-btn {
-                width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
-            }
-            
-            .content-section {
-                padding: 15px;
-                margin: 10px auto;
-            }
-            
             .admin-modal {
-                width: 95%;
+                width: 98%;
                 padding: 15px;
                 top: 10px;
                 left: 10px;
@@ -1252,45 +1308,10 @@
             
             .booking-content {
                 padding: 15px;
-                width: 95%;
-            }
-            
-            .calendar-grid,
-            .admin-calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
-                gap: 3px;
-            }
-            
-            .calendar-day,
-            .admin-calendar-day {
-                font-size: 14px;
-                min-height: 35px;
-                padding: 5px;
-            }
-            
-            .calendar-day-header {
-                font-size: 12px;
-                padding: 5px;
-            }
-            
-            .calendar-nav button {
-                width: 35px;
-                height: 35px;
-                font-size: 16px;
             }
             
             .menu-items {
                 grid-template-columns: 1fr;
-            }
-            
-            .menu-item-with-photo {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .dish-image {
-                margin-right: 0;
-                margin-bottom: 10px;
             }
             
             .admin-controls,
@@ -1306,7 +1327,7 @@
             
             .store-item {
                 flex-direction: column;
-                gap: 10px;
+                gap: 8px;
                 text-align: center;
             }
             
@@ -1326,61 +1347,56 @@
                 width: 100%;
             }
             
-            .month-btn {
-                min-width: 60px;
-                padding: 6px 10px;
-                font-size: 14px;
+            .nav-buttons {
+                flex-direction: column;
+                gap: 8px;
             }
             
-            .book-btn {
-                padding: 12px 15px;
-                font-size: 16px;
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
             }
             
-            .calendar-container {
-                padding: 15px;
+            .yurta-container, .kupol-container {
+                grid-template-columns: 1fr;
             }
             
-            .menu-selection {
-                padding: 15px;
+            .calendar-grid,
+            .admin-calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
             }
             
-            .booking-summary {
-                padding: 15px;
+            .calendar-day,
+            .admin-calendar-day {
+                min-height: 30px;
+                font-size: 11px;
             }
             
-            .foto {
-                width: 150px;
-                height: 100px;
+            .calendar-day-header {
+                font-size: 11px;
+                padding: 6px;
             }
         }
 
         @media (max-width: 480px) {
-            .calendar-day,
-            .admin-calendar-day {
-                font-size: 12px;
-                min-height: 30px;
-            }
-            
-            .calendar-day-header {
-                font-size: 10px;
-            }
-            
             .header h1 {
                 font-size: 1.8em;
             }
             
             .nav-btn {
-                padding: 12px 15px;
-                font-size: 14px;
+                padding: 10px 12px;
+                font-size: 13px;
+                min-width: 100px;
             }
             
             h2 {
-                font-size: 1.5em;
+                font-size: 1.3em;
             }
             
             h3 {
-                font-size: 1.2em;
+                font-size: 1.1em;
             }
             
             .admin-btn {
@@ -1388,114 +1404,30 @@
                 height: 50px;
                 font-size: 20px;
             }
-        }
-
-        /* СТИЛИ ДЛЯ ТАБЛИЦЫ В МОБИЛЬНОМ КАЛЕНДАРЕ */
-        .calendar-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        
-        .calendar-table th,
-        .calendar-table td {
-            text-align: center;
-            padding: 8px;
-            border: 1px solid rgba(139, 90, 43, 0.3);
-        }
-        
-        .calendar-table th {
-            background: rgba(139, 90, 43, 0.2);
-            font-weight: bold;
-        }
-        
-        .calendar-table td {
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .calendar-table td.free {
-            background: rgba(0, 128, 0, 0.1);
-            color: #006400;
-        }
-        
-        .calendar-table td.busy {
-            background: rgba(165, 42, 42, 0.1);
-            color: #a52a2a;
-            cursor: not-allowed;
-        }
-        
-        .calendar-table td.selected {
-            background: rgba(217, 165, 102, 0.5);
-            border: 2px solid #8b5a2b;
-        }
-        
-        .calendar-table td.today {
-            border: 2px solid #d9a566;
-        }
-        
-        .date-picker {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .date-input {
-            padding: 10px;
-            border: 2px solid #8b5a2b;
-            border-radius: 8px;
-            font-size: 16px;
-            text-align: center;
-            background: rgba(245, 233, 215, 0.9);
-            color: #5c3d2e;
-            min-width: 200px;
-        }
-
-        .date-input-wrapper {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* УЛУЧШЕННЫЙ ВВОД ДАТЫ */
-        .date-selector {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .date-input-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .quick-date-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .quick-date-btn {
-            padding: 8px 12px;
-            background: #8b5a2b;
-            color: #f5e9d7;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .quick-date-btn:hover {
-            background: #d9a566;
-            color: #5c3d2e;
+            
+            .booking-title {
+                font-size: 1.3em;
+            }
+            
+            .store-controls button,
+            .stock-controls button,
+            .item-controls button {
+                width: 28px;
+                height: 28px;
+                font-size: 1em;
+            }
+            
+            .calendar-day,
+            .admin-calendar-day {
+                min-height: 28px;
+                font-size: 10px;
+            }
+            
+            .month-btn {
+                padding: 6px 8px;
+                font-size: 11px;
+                min-width: 50px;
+            }
         }
     </style>
 </head>
@@ -1528,7 +1460,7 @@
                 </div>
                 
                 <div id="cashTab" class="tab-content active">
-                    <h3 style="color: #d9a566; text-align: center;">Управление кассой</h3>
+                    <h3 style="color: #d9a566; text-align: center;">💰 Управление кассой</h3>
                     
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -1550,10 +1482,9 @@
                     </div>
                     
                     <div class="admin-controls">
-                        <button class="control-btn btn-primary" onclick="showTotalDayIncome()">📅 Общая сумма за день</button>
+                        <button class="control-btn btn-primary" onclick="showTotalDayIncome()">📅 Доход за сегодня</button>
                         <button class="control-btn btn-secondary" onclick="showIncomeCalendar('bookings')">📅 Доход от бронирований</button>
                         <button class="control-btn btn-secondary" onclick="showIncomeCalendar('store')">📅 Доход от магазина</button>
-                        <button class="control-btn btn-primary" onclick="printDailyReport()">🖨️ Печать отчета</button>
                     </div>
                     
                     <div id="incomeCalendarView" class="income-calendar-view" style="display: none;">
@@ -1566,23 +1497,35 @@
                                 <h3 id="incomeCalendarMonth">Май 2024</h3>
                             </div>
                             
+                            <div class="month-selector">
+                                <button class="month-btn active" onclick="setIncomeMonth(4)">Май</button>
+                                <button class="month-btn" onclick="setIncomeMonth(5)">Июнь</button>
+                                <button class="month-btn" onclick="setIncomeMonth(6)">Июль</button>
+                                <button class="month-btn" onclick="setIncomeMonth(7)">Август</button>
+                                <button class="month-btn" onclick="setIncomeMonth(8)">Сентябрь</button>
+                            </div>
+                            
                             <div class="admin-calendar-grid" id="incomeCalendarGrid">
                                 <!-- Календарь доходов будет заполнен через JavaScript -->
                             </div>
                         </div>
                         
-                        <div id="dateIncomeDetails" class="date-income-details">
-                            <!-- Детали доходов по дате будут добавлены через JavaScript -->
+                        <div id="incomeDetails" class="income-details" style="display: none;">
+                            <!-- Детали доходов будут добавлены через JavaScript -->
                         </div>
                     </div>
-
-                    <div id="totalDayIncomeView" class="total-day-income" style="display: none;">
-                        <!-- Общая сумма за день будет добавлена через JavaScript -->
+                    
+                    <div class="print-controls">
+                        <h4 style="color: #d9a566; text-align: center;">Печать отчета за день</h4>
+                        <div class="print-date-selector">
+                            <input type="date" id="printDate" class="admin-input" style="flex-grow: 1;">
+                            <button class="print-btn" onclick="printDayReport()">Печатать</button>
+                        </div>
                     </div>
                 </div>
                 
                 <div id="stockTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">Управление запасами</h3>
+                    <h3 style="color: #d9a566; text-align: center;">📦 Управление запасами</h3>
                     <button class="control-btn btn-primary" onclick="updateStockDisplay()">
                         🔄 Обновить остатки
                     </button>
@@ -1593,7 +1536,7 @@
                 
                 <div id="storeTab" class="tab-content">
                     <h3 style="color: #d9a566; text-align: center;">🏪 Магазин</h3>
-                    <p style="text-align: center; margin-bottom: 15px;">Продажа напитков и энергетиков</p>
+                    <p style="text-align: center; margin-bottom: 15px;">Продажа напитков и национальных блюд</p>
                     
                     <button class="control-btn btn-primary" onclick="updateStoreDisplay()">
                         🔄 Обновить остатки
@@ -1609,9 +1552,11 @@
                         <p style="text-align: center; margin-bottom: 10px;">(Чупа-чупсы, жевачки и другие мелкие товары)</p>
                         
                         <div class="small-item-controls">
+                            <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-10)">-10</button>
                             <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-1)">-</button>
                             <div class="small-item-amount" id="smallItemAmount">0 сом</div>
                             <button class="control-btn btn-primary" onclick="changeSmallItemAmount(1)">+</button>
+                            <button class="control-btn btn-primary" onclick="changeSmallItemAmount(10)">+10</button>
                         </div>
                         
                         <div style="text-align: center; margin-top: 10px;">
@@ -1644,17 +1589,10 @@
                     <h3 style="color: #d9a566; text-align: center;">Добавить гостя</h3>
                     
                     <div class="date-selector">
-                        <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Выберите дату бронирования:</label>
-                        <div class="date-input-group">
+                        <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Выберите дату:</label>
+                        <div class="date-input-wrapper">
                             <input type="date" id="guestDateInput" class="date-input" onchange="updateGuestDate(this.value)">
                             <button class="control-btn btn-secondary" onclick="showToday()">Сегодня</button>
-                            <button class="control-btn btn-secondary" onclick="showTomorrow()">Завтра</button>
-                        </div>
-                        
-                        <div class="quick-date-buttons">
-                            <button class="quick-date-btn" onclick="setQuickDate(1)">+1 день</button>
-                            <button class="quick-date-btn" onclick="setQuickDate(3)">+3 дня</button>
-                            <button class="quick-date-btn" onclick="setQuickDate(7)">+7 дней</button>
                         </div>
                     </div>
                     
@@ -1665,7 +1603,7 @@
                     
                     <div class="form-group">
                         <label for="guestPhone">Телефон:</label>
-                        <input type="tel" id="guestPhone" class="admin-input" placeholder="Введите телефон">
+                        <input type="tel" id="guestPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
                     </div>
                     
                     <div class="form-group">
@@ -1680,20 +1618,26 @@
                         </select>
                     </div>
                     
+                    <div class="booking-deposit">
+                        <div>Депозит за бронь юрты:</div>
+                        <div class="deposit-amount">2000 сом</div>
+                        <div style="font-size: 0.9em; color: #8b5a2b;">(включается в общую сумму)</div>
+                    </div>
+                    
                     <div class="form-group">
-                        <label>Выберите напитки и энергетики:</label>
+                        <label>Выберите напитки и блюда:</label>
                         <div class="menu-items" id="guestMenuItems">
                             <!-- Меню будет заполнено через JavaScript -->
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="guestAmount">Сумма заказа:</label>
-                        <input type="number" id="guestAmount" class="admin-input" placeholder="Сумма в сомах" readonly>
+                        <label for="guestAmount">Общая сумма:</label>
+                        <input type="number" id="guestAmount" class="admin-input" value="2000" readonly style="font-weight: bold;">
                     </div>
                     
                     <div class="booking-actions">
-                        <button class="control-btn btn-primary" onclick="saveGuestBooking()">Сохранить</button>
+                        <button class="control-btn btn-primary" onclick="saveGuestBooking()">Сохрать</button>
                         <button class="control-btn btn-danger" onclick="clearGuestForm()">Очистить</button>
                     </div>
                 </div>
@@ -1713,6 +1657,14 @@
                                     <button onclick="changeViewGuestsMonth(1)">›</button>
                                 </div>
                                 <h3 id="viewGuestsCalendarMonth">Май 2024</h3>
+                            </div>
+                            
+                            <div class="month-selector">
+                                <button class="month-btn active" onclick="setViewGuestsMonth(4)">Май</button>
+                                <button class="month-btn" onclick="setViewGuestsMonth(5)">Июнь</button>
+                                <button class="month-btn" onclick="setViewGuestsMonth(6)">Июль</button>
+                                <button class="month-btn" onclick="setViewGuestsMonth(7)">Август</button>
+                                <button class="month-btn" onclick="setViewGuestsMonth(8)">Сентябрь</button>
                             </div>
                             
                             <div class="admin-calendar-grid" id="viewGuestsCalendarGrid">
@@ -1738,6 +1690,18 @@
                     <button class="booking-close" onclick="closeBookingModal()">×</button>
                 </div>
                 
+                <div class="customer-info">
+                    <div class="form-group">
+                        <label for="customerName">Ваше имя:</label>
+                        <input type="text" id="customerName" class="admin-input" placeholder="Введите ваше имя">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Ваш телефон:</label>
+                        <input type="tel" id="customerPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
+                    </div>
+                </div>
+                
                 <div class="date-picker">
                     <label style="color: #5c3d2e; font-weight: bold; text-align: center; display: block; margin-bottom: 10px;">Выберите дату:</label>
                     <div class="date-input-wrapper">
@@ -1748,46 +1712,46 @@
                 
                 <div class="calendar-container">
                     <div class="month-selector">
-                        <button class="month-btn active" onclick="selectMonth(4)">Май</button>
-                        <button class="month-btn" onclick="selectMonth(5)">Июнь</button>
-                        <button class="month-btn" onclick="selectMonth(6)">Июль</button>
-                        <button class="month-btn" onclick="selectMonth(7)">Август</button>
-                        <button class="month-btn" onclick="selectMonth(8)">Сентябрь</button>
+                        <button class="month-btn active" onclick="setBookingMonth(4)">Май</button>
+                        <button class="month-btn" onclick="setBookingMonth(5)">Июнь</button>
+                        <button class="month-btn" onclick="setBookingMonth(6)">Июль</button>
+                        <button class="month-btn" onclick="setBookingMonth(7)">Август</button>
+                        <button class="month-btn" onclick="setBookingMonth(8)">Сентябрь</button>
                     </div>
                     
                     <div class="calendar-header">
                         <div class="calendar-nav">
-                            <button onclick="changeMonth(-1)">‹</button>
-                            <button onclick="changeMonth(1)">›</button>
+                            <button onclick="changeBookingMonth(-1)">‹</button>
+                            <button onclick="changeBookingMonth(1)">›</button>
                         </div>
                         <h3 id="calendarMonth">Май 2024</h3>
                     </div>
                     
-                    <table class="calendar-table" id="mobileCalendar">
-                        <thead>
-                            <tr>
-                                <th>Пн</th>
-                                <th>Вт</th>
-                                <th>Ср</th>
-                                <th>Чт</th>
-                                <th>Пт</th>
-                                <th>Сб</th>
-                                <th>Вс</th>
-                            </tr>
-                        </thead>
-                        <tbody id="calendarBody">
-                            <!-- Календарь будет заполнен через JavaScript -->
-                        </tbody>
-                    </table>
+                    <div class="calendar-grid" id="bookingCalendarGrid">
+                        <!-- Календарь бронирования будет заполнен через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="booking-deposit">
+                    <div>Депозит за бронь юрты:</div>
+                    <div class="deposit-amount">2000 сом</div>
+                    <div style="font-size: 0.9em; color: #8b5a2b;">(включается в общую сумму)</div>
                 </div>
                 
                 <div class="menu-selection">
-                    <h3>Выберите напитки и энергетики</h3>
+                    <h3>Выберите напитки и блюда</h3>
                     
                     <div class="menu-category">
                         <h3>🥤 Напитки</h3>
                         <div class="menu-items" id="drinks">
                             <!-- Напитки будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="menu-category">
+                        <h3>🍽️ Национальные блюда</h3>
+                        <div class="menu-items" id="dishes">
+                            <!-- Блюда будут добавлены через JavaScript -->
                         </div>
                     </div>
                     
@@ -1806,7 +1770,7 @@
                     </div>
                     <div class="summary-total">
                         <span>Итого:</span>
-                        <span id="orderTotal">0 сом</span>
+                        <span id="orderTotal">2000 сом</span>
                     </div>
                 </div>
                 
@@ -1949,6 +1913,11 @@
                     <!-- Напитки будут добавлены через JavaScript -->
                 </div>
                 
+                <h3>🍽️ Национальные блюда</h3>
+                <div class="menu-items" id="menu-dishes">
+                    <!-- Блюда будут добавлены через JavaScript -->
+                </div>
+                
                 <h3>⚡ Энергетики</h3>
                 <div class="menu-items" id="menu-energy">
                     <!-- Энергетики будут добавлены через JavaScript -->
@@ -2082,6 +2051,11 @@
                     <!-- Напитки будут добавлены через JavaScript -->
                 </div>
                 
+                <h3>🍽️ Улуттук тамактар</h3>
+                <div class="menu-items" id="menu-dishes-kyrg">
+                    <!-- Блюда будут добавлены через JavaScript -->
+                </div>
+                
                 <h3>⚡ Энергетикалык ичимдиктер</h3>
                 <div class="menu-items" id="menu-energy-kyrg">
                     <!-- Энергетики будут добавлены через JavaScript -->
@@ -2120,25 +2094,37 @@
         let currentYear = new Date().getFullYear();
         let selectedDate = null;
         let selectedPlace = '';
-        let adminMonth = new Date().getMonth();
-        let adminYear = new Date().getFullYear();
-        let guestMonth = new Date().getMonth();
-        let guestYear = new Date().getFullYear();
-        let viewGuestsMonth = new Date().getMonth();
-        let viewGuestsYear = new Date().getFullYear();
+        
         let incomeMonth = new Date().getMonth();
         let incomeYear = new Date().getFullYear();
         let incomeType = 'bookings';
-        let editingBookingId = null;
+        
+        let viewGuestsMonth = new Date().getMonth();
+        let viewGuestsYear = new Date().getFullYear();
+        
         let currentAdminLevel = null;
         
         // WhatsApp номер
         const WHATSAPP_NUMBER = '79620742140';
         
-        // Цены на напитки и энергетики (ТОЛЬКО НАПИТКИ И ЭНЕРГЕТИКИ)
+        // Цены на напитки и блюда
         const prices = {
+            // Напитки
             cola: 190,
             pepsi: 190,
+            fanta: 190,
+            sprite: 190,
+            water: 80,
+            
+            // Национальные блюда
+            kuurdak: 850,
+            kymyz: 300,
+            kuymak: 650,
+            plov: 750,
+            manty: 650,
+            lagman: 650,
+            
+            // Энергетики (только flash, drive, nitro)
             nitro: 80,
             flash: 80,
             drive: 80
@@ -2146,30 +2132,52 @@
         
         // Названия на русском и кыргызском
         const itemNames = {
+            // Напитки
             cola: {ru: '🥤 Кола', kyrg: '🥤 Кола'},
             pepsi: {ru: '🥤 Пепси', kyrg: '🥤 Пепси'},
+            fanta: {ru: '🥤 Фанта', kyrg: '🥤 Фанта'},
+            sprite: {ru: '🥤 Спрайт', kyrg: '🥤 Спрайт'},
+            water: {ru: '💧 Вода', kyrg: '💧 Суу'},
+            
+            // Национальные блюда
+            kuurdak: {ru: '🍖 Куурдак', kyrg: '🍖 Куурдак'},
+            kymyz: {ru: '🥛 Кымыз (1л)', kyrg: '🥛 Кымыз (1л)'},
+            kuymak: {ru: '🥘 Куймак', kyrg: '🥘 Куймак'},
+            plov: {ru: '🍛 Плов', kyrg: '🍛 Плов'},
+            manty: {ru: '🥟 Манты', kyrg: '🥟 Манты'},
+            lagman: {ru: '🍜 Лагман', kyrg: '🍜 Лагман'},
+            
+            // Энергетики (только flash, drive, nitro)
             nitro: {ru: '⚡ Нитро', kyrg: '⚡ Нитро'},
             flash: {ru: '⚡ Флэш', kyrg: '⚡ Флэш'},
             drive: {ru: '⚡ Драйв', kyrg: '⚡ Драйв'}
         };
         
-        // Остатки продуктов (ТОЛЬКО НАПИТКИ И ЭНЕРГЕТИКИ)
+        // Остатки продуктов
         let stock = {
-            cola: 30,
-            pepsi: 30,
-            nitro: 20,
-            flash: 20,
-            drive: 20
+            // Напитки
+            cola: 50,
+            pepsi: 50,
+            fanta: 50,
+            sprite: 50,
+            water: 100,
+            
+            // Национальные блюда
+            kuurdak: 20,
+            kymyz: 30,
+            kuymak: 20,
+            plov: 25,
+            manty: 30,
+            lagman: 25,
+            
+            // Энергетики (только flash, drive, nitro)
+            nitro: 30,
+            flash: 30,
+            drive: 30
         };
         
         // Временные продажи магазина
-        let tempStoreSales = {
-            cola: 0,
-            pepsi: 0,
-            nitro: 0,
-            flash: 0,
-            drive: 0
-        };
+        let tempStoreSales = {};
         
         // Мелкие покупки
         let smallItemsAmount = 0;
@@ -2179,19 +2187,15 @@
         
         // Все места
         const allPlaces = ['Юрта 1', 'Юрта 2', 'Купол 1', 'Купол 2', 'Терраса'];
-        const placeTranslations = {
-            'Юрта 1': {ru: 'Юрта 1', kyrg: 'Үй 1'},
-            'Юрта 2': {ru: 'Юрта 2', kyrg: 'Үй 2'},
-            'Купол 1': {ru: 'Купол 1', kyrg: 'Куполь 1'},
-            'Купол 2': {ru: 'Купол 2', kyrg: 'Куполь 2'},
-            'Терраса': {ru: 'Терраса', kyrg: 'Терраса'}
-        };
         
         // Данные о бронированиях
         let bookings = [];
         let totalRevenue = 0;
         let bookingsRevenue = 0;
         let storeRevenue = 0;
+        
+        // Депозит за бронь
+        const DEPOSIT_AMOUNT = 2000;
 
         // ФУНКЦИИ ДЛЯ РАБОТЫ С ИНТЕРФЕЙСОМ
         
@@ -2249,15 +2253,15 @@
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
             document.getElementById('bookingDateInput').value = todayStr;
+            selectedDate = todayStr;
             
-            updateCalendar();
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            
+            updateBookingCalendar();
             generateMenuForBooking();
             updateOrderSummary();
             document.getElementById('whatsappNotification').style.display = 'none';
-            
-            setTimeout(() => {
-                selectToday();
-            }, 100);
         }
         
         function closeBookingModal() {
@@ -2265,34 +2269,7 @@
             resetOrder();
         }
         
-        function selectMonth(month) {
-            // Ограничиваем месяцы с мая по сентябрь (4-8)
-            if (month < 4) month = 4;
-            if (month > 8) month = 8;
-            
-            currentMonth = month;
-            currentYear = new Date().getFullYear();
-            
-            const monthButtons = document.querySelectorAll('.month-btn');
-            monthButtons.forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            updateCalendar();
-        }
-        
-        function changeMonth(direction) {
-            currentMonth += direction;
-            
-            // Ограничиваем месяцы с мая по сентябрь (4-8)
-            if (currentMonth < 4) currentMonth = 4;
-            if (currentMonth > 8) currentMonth = 8;
-            
-            updateCalendar();
-        }
-        
-        function updateCalendar() {
+        function updateBookingCalendar() {
             const monthNames = [
                 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
@@ -2305,66 +2282,89 @@
             const daysInMonth = lastDay.getDate();
             const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
             
-            const calendarBody = document.getElementById('calendarBody');
-            calendarBody.innerHTML = '';
+            const calendarGrid = document.getElementById('bookingCalendarGrid');
+            calendarGrid.innerHTML = '';
             
-            let dateCounter = 1;
+            const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            dayHeaders.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            for (let i = 0; i < startingDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
             const today = new Date();
             
-            for (let week = 0; week < 6; week++) {
-                const row = document.createElement('tr');
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
                 
-                for (let day = 0; day < 7; day++) {
-                    const cell = document.createElement('td');
-                    
-                    if ((week === 0 && day < startingDay) || dateCounter > daysInMonth) {
-                        cell.innerHTML = '';
-                        cell.classList.add('other-month');
-                    } else {
-                        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(dateCounter).padStart(2, '0')}`;
-                        
-                        cell.textContent = dateCounter;
-                        
-                        const isPlaceBusy = bookings.some(booking => 
-                            booking.date === dateStr && booking.place === selectedPlace
-                        );
-                        
-                        const bookingsForDate = bookings.filter(booking => booking.date === dateStr);
-                        const allPlacesBusy = bookingsForDate.length >= 5;
-                        
-                        if (isPlaceBusy || allPlacesBusy) {
-                            cell.classList.add('busy');
-                        } else {
-                            cell.classList.add('free');
-                            cell.onclick = function() {
-                                selectDateFromCalendar(this, dateStr);
-                            };
-                        }
-                        
-                        if (dateCounter === today.getDate() && 
-                            currentMonth === today.getMonth() && 
-                            currentYear === today.getFullYear()) {
-                            cell.classList.add('today');
-                        }
-                        
-                        if (selectedDate === dateStr) {
-                            cell.classList.add('selected');
-                        }
-                        
-                        dateCounter++;
-                    }
-                    
-                    row.appendChild(cell);
+                const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                const isPlaceBusy = bookings.some(booking => 
+                    booking.date === dateStr && booking.place === selectedPlace
+                );
+                
+                const bookingsForDate = bookings.filter(booking => booking.date === dateStr);
+                const allPlacesBusy = bookingsForDate.length >= 5;
+                
+                if (isPlaceBusy || allPlacesBusy) {
+                    dayElement.classList.add('busy');
+                } else {
+                    dayElement.classList.add('free');
+                    dayElement.onclick = function() {
+                        selectDateFromCalendar(this, dateStr);
+                    };
                 }
                 
-                calendarBody.appendChild(row);
+                if (day === today.getDate() && 
+                    currentMonth === today.getMonth() && 
+                    currentYear === today.getFullYear()) {
+                    dayElement.classList.add('today');
+                }
                 
-                if (dateCounter > daysInMonth) break;
+                if (selectedDate === dateStr) {
+                    dayElement.classList.add('selected');
+                }
+                
+                calendarGrid.appendChild(dayElement);
             }
         }
         
+        function setBookingMonth(month) {
+            if (month < 4) month = 4;
+            if (month > 8) month = 8;
+            
+            currentMonth = month;
+            currentYear = new Date().getFullYear();
+            
+            const monthButtons = document.querySelectorAll('#bookingModal .month-btn');
+            monthButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateBookingCalendar();
+        }
+        
+        function changeBookingMonth(direction) {
+            currentMonth += direction;
+            
+            if (currentMonth < 4) currentMonth = 4;
+            if (currentMonth > 8) currentMonth = 8;
+            
+            updateBookingCalendar();
+        }
+        
         function selectDateFromCalendar(cell, dateStr) {
-            const allCells = document.querySelectorAll('#calendarBody td');
+            const allCells = document.querySelectorAll('#bookingCalendarGrid .calendar-day');
             allCells.forEach(cell => {
                 cell.classList.remove('selected');
             });
@@ -2372,6 +2372,7 @@
             cell.classList.add('selected');
             selectedDate = dateStr;
             document.getElementById('bookingDateInput').value = dateStr;
+            updateOrderSummary();
         }
         
         function selectDateFromInput(dateStr) {
@@ -2381,16 +2382,12 @@
             currentMonth = date.getMonth();
             currentYear = date.getFullYear();
             
-            // Если выбран месяц вне мая-сентября, корректируем
-            if (currentMonth < 4) {
+            if (currentMonth < 4 || currentMonth > 8) {
                 currentMonth = 4;
-                currentYear = date.getFullYear();
-            } else if (currentMonth > 8) {
-                currentMonth = 8;
                 currentYear = date.getFullYear();
             }
             
-            updateCalendar();
+            updateBookingCalendar();
             selectedDate = dateStr;
         }
         
@@ -2402,9 +2399,15 @@
         }
         
         function generateMenuForBooking() {
-            const drinks = ['cola', 'pepsi'];
+            // Напитки
+            const drinks = ['cola', 'pepsi', 'fanta', 'sprite', 'water'];
             generateMenuCategory('drinks', drinks);
             
+            // Национальные блюда
+            const dishes = ['kuurdak', 'kymyz', 'kuymak', 'plov', 'manty', 'lagman'];
+            generateMenuCategory('dishes', dishes);
+            
+            // Энергетики (только flash, drive, nitro)
             const energyDrinks = ['nitro', 'flash', 'drive'];
             generateMenuCategory('energyDrinks', energyDrinks);
         }
@@ -2450,7 +2453,14 @@
             const orderTotal = document.getElementById('orderTotal');
             
             let summaryHTML = '';
-            let total = 0;
+            let total = DEPOSIT_AMOUNT;
+            
+            summaryHTML += `
+                <div class="summary-item">
+                    <span>Депозит за бронь "${selectedPlace}"</span>
+                    <span>${DEPOSIT_AMOUNT} сом</span>
+                </div>
+            `;
             
             for (const item in prices) {
                 const quantity = parseInt(document.getElementById(`${item}-quantity`).textContent) || 0;
@@ -2466,20 +2476,12 @@
                 }
             }
             
-            if (summaryHTML === '') {
-                summaryHTML = '<div class="summary-item">Выберите напитки из меню</div>';
-            }
-            
             orderSummary.innerHTML = summaryHTML;
             orderTotal.textContent = `${total} сом`;
         }
         
         function getItemName(item) {
             return itemNames[item] ? itemNames[item][currentLanguage === 'KYRG' ? 'kyrg' : 'ru'] : item;
-        }
-        
-        function getPlaceName(place, lang = currentLanguage) {
-            return placeTranslations[place] ? placeTranslations[place][lang] : place;
         }
         
         function resetOrder() {
@@ -2492,22 +2494,24 @@
             
             selectedDate = null;
             selectedPlace = '';
-            updateOrderSummary();
+            document.getElementById('orderTotal').textContent = '0 сом';
         }
         
         function sendToWhatsApp(orderDetails) {
             let message = `🎪 *НОВЫЙ ЗАКАЗ В РЕСТОРАНЕ "КОЧЕВНИК"* 🎪\n\n`;
+            message += `👤 *Имя:* ${orderDetails.name}\n`;
+            message += `📞 *Телефон:* ${orderDetails.phone}\n`;
             message += `📅 *Дата:* ${formatDateForWhatsApp(orderDetails.date)}\n`;
             message += `🏕️ *Место:* ${orderDetails.place}\n`;
             message += `💰 *Общая сумма:* ${orderDetails.total} сом\n\n`;
             message += `📋 *Состав заказа:*\n`;
+            message += `• Депозит за бронь: ${DEPOSIT_AMOUNT} сом\n`;
             
             orderDetails.items.forEach(item => {
                 message += `• ${item.name} x${item.quantity} - ${item.total} сом\n`;
             });
             
             message += `\n⏰ *Время заказа:* ${new Date().toLocaleString('ru-RU')}\n`;
-            message += `👤 *Тип заказа:* Онлайн бронирование\n`;
             
             const encodedMessage = encodeURIComponent(message);
             const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
@@ -2526,6 +2530,19 @@
         }
         
         function confirmBooking() {
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            
+            if (!customerName) {
+                showNotification('Пожалуйста, введите ваше имя');
+                return;
+            }
+            
+            if (!customerPhone) {
+                showNotification('Пожалуйста, введите ваш телефон');
+                return;
+            }
+            
             if (!selectedDate) {
                 showNotification('Пожалуйста, выберите дату для бронирования');
                 return;
@@ -2551,21 +2568,7 @@
                 return;
             }
             
-            let hasItems = false;
-            for (const item in prices) {
-                const quantity = parseInt(document.getElementById(`${item}-quantity`).textContent) || 0;
-                if (quantity > 0) {
-                    hasItems = true;
-                    break;
-                }
-            }
-            
-            if (!hasItems) {
-                showNotification('Пожалуйста, выберите хотя бы один напиток');
-                return;
-            }
-            
-            let total = 0;
+            let total = DEPOSIT_AMOUNT;
             const orderItems = [];
             
             for (const item in prices) {
@@ -2586,10 +2589,13 @@
             }
             
             const orderDetails = {
+                name: customerName,
+                phone: customerPhone,
                 date: selectedDate,
                 place: selectedPlace,
                 items: orderItems,
-                total: total
+                total: total,
+                deposit: DEPOSIT_AMOUNT
             };
             
             try {
@@ -2602,9 +2608,10 @@
                         date: selectedDate,
                         items: orderItems,
                         total: total,
+                        deposit: DEPOSIT_AMOUNT,
                         timestamp: new Date().toLocaleString(),
-                        guestName: 'Клиент (онлайн)',
-                        guestPhone: 'Онлайн бронирование',
+                        guestName: customerName,
+                        guestPhone: customerPhone,
                         whatsappSent: true
                     };
                     
@@ -2618,7 +2625,6 @@
                     updateMenuDisplay();
                     
                     document.getElementById('whatsappNotification').style.display = 'block';
-                    document.getElementById('whatsappNotification').scrollIntoView({ behavior: 'smooth' });
                     
                     showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
                     
@@ -2628,7 +2634,6 @@
                 }
             } catch (error) {
                 showNotification('Ошибка при отправке в WhatsApp. Пожалуйста, свяжитесь с администратором по телефону.');
-                console.error('WhatsApp error:', error);
             }
         }
         
@@ -2640,50 +2645,91 @@
         }
         
         function updateRussianMenu() {
-            const menuSection = document.getElementById('menu');
-            if (!menuSection) return;
-            
             // Напитки
             const drinksContainer = document.getElementById('menu-drinks');
             if (drinksContainer) {
                 drinksContainer.innerHTML = `
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
                             <strong>${itemNames.cola.ru}</strong>
                             <div class="dish-price">${prices.cola} сом</div>
                             <div class="stock-info">В наличии: ${stock.cola} шт.</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
                             <strong>${itemNames.pepsi.ru}</strong>
                             <div class="dish-price">${prices.pepsi} сом</div>
                             <div class="stock-info">В наличии: ${stock.pepsi} шт.</div>
                         </div>
                     </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.fanta.ru}</strong>
+                            <div class="dish-price">${prices.fanta} сом</div>
+                            <div class="stock-info">В наличии: ${stock.fanta} шт.</div>
+                        </div>
+                    </div>
                 `;
             }
             
-            // Энергетики
+            // Национальные блюда
+            const dishesContainer = document.getElementById('menu-dishes');
+            if (dishesContainer) {
+                dishesContainer.innerHTML = `
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🍖</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kuurdak.ru}</strong>
+                            <div class="dish-price">${prices.kuurdak} сом</div>
+                            <div class="stock-info">В наличии: ${stock.kuurdak} порций</div>
+                        </div>
+                    </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥛</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kymyz.ru}</strong>
+                            <div class="dish-price">${prices.kymyz} сом</div>
+                            <div class="stock-info">В наличии: ${stock.kymyz} л.</div>
+                        </div>
+                    </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥘</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kuymak.ru}</strong>
+                            <div class="dish-price">${prices.kuymak} сом</div>
+                            <div class="stock-info">В наличии: ${stock.kuymak} порций</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Энергетики (только flash, drive, nitro)
             const energyContainer = document.getElementById('menu-energy');
             if (energyContainer) {
                 energyContainer.innerHTML = `
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.nitro.ru}</strong>
                             <div class="dish-price">${prices.nitro} сом</div>
                             <div class="stock-info">В наличии: ${stock.nitro} шт.</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.flash.ru}</strong>
                             <div class="dish-price">${prices.flash} сом</div>
                             <div class="stock-info">В наличии: ${stock.flash} шт.</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.drive.ru}</strong>
                             <div class="dish-price">${prices.drive} сом</div>
                             <div class="stock-info">В наличии: ${stock.drive} шт.</div>
@@ -2694,50 +2740,91 @@
         }
         
         function updateKyrgyzMenu() {
-            const menuSection = document.getElementById('menu-kyrg');
-            if (!menuSection) return;
-            
             // Напитки
             const drinksContainer = document.getElementById('menu-drinks-kyrg');
             if (drinksContainer) {
                 drinksContainer.innerHTML = `
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
                             <strong>${itemNames.cola.kyrg}</strong>
                             <div class="dish-price">${prices.cola} сом</div>
                             <div class="stock-info">Калган саны: ${stock.cola} даана</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
                             <strong>${itemNames.pepsi.kyrg}</strong>
                             <div class="dish-price">${prices.pepsi} сом</div>
                             <div class="stock-info">Калган саны: ${stock.pepsi} даана</div>
                         </div>
                     </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥤</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.fanta.kyrg}</strong>
+                            <div class="dish-price">${prices.fanta} сом</div>
+                            <div class="stock-info">Калган саны: ${stock.fanta} даана</div>
+                        </div>
+                    </div>
                 `;
             }
             
-            // Энергетики
+            // Национальные блюда
+            const dishesContainer = document.getElementById('menu-dishes-kyrg');
+            if (dishesContainer) {
+                dishesContainer.innerHTML = `
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🍖</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kuurdak.kyrg}</strong>
+                            <div class="dish-price">${prices.kuurdak} сом</div>
+                            <div class="stock-info">Калган саны: ${stock.kuurdak} порция</div>
+                        </div>
+                    </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥛</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kymyz.kyrg}</strong>
+                            <div class="dish-price">${prices.kymyz} сом</div>
+                            <div class="stock-info">Калган саны: ${stock.kymyz} л.</div>
+                        </div>
+                    </div>
+                    <div class="traditional-dish">
+                        <div class="dish-icon">🥘</div>
+                        <div class="dish-details">
+                            <strong>${itemNames.kuymak.kyrg}</strong>
+                            <div class="dish-price">${prices.kuymak} сом</div>
+                            <div class="stock-info">Калган саны: ${stock.kuymak} порция</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Энергетики (только flash, drive, nitro)
             const energyContainer = document.getElementById('menu-energy-kyrg');
             if (energyContainer) {
                 energyContainer.innerHTML = `
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.nitro.kyrg}</strong>
                             <div class="dish-price">${prices.nitro} сом</div>
                             <div class="stock-info">Калган саны: ${stock.nitro} даана</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.flash.kyrg}</strong>
                             <div class="dish-price">${prices.flash} сом</div>
                             <div class="stock-info">Калган саны: ${stock.flash} даана</div>
                         </div>
                     </div>
-                    <div class="menu-item-with-photo">
-                        <div class="dish-info">
+                    <div class="traditional-dish">
+                        <div class="dish-icon">⚡</div>
+                        <div class="dish-details">
                             <strong>${itemNames.drive.kyrg}</strong>
                             <div class="dish-price">${prices.drive} сом</div>
                             <div class="stock-info">Калган саны: ${stock.drive} даана</div>
@@ -2759,7 +2846,6 @@
                 busyPlaces[booking.place] = true;
             });
             
-            // Обновляем статусы для русской версии
             allPlaces.forEach((place, index) => {
                 const statusElement = document.getElementById(`status-${place.toLowerCase().replace(' ', '-')}`);
                 const bookButton = document.getElementById(`book-btn-${place.toLowerCase().replace(' ', '-')}`);
@@ -2779,41 +2865,11 @@
                 }
             });
             
-            // Обновляем общие счетчики для русской версии
             const totalPlacesCount = document.getElementById('totalPlacesCount');
             const freePlacesCount = document.getElementById('freePlacesCount');
             if (totalPlacesCount && freePlacesCount) {
                 totalPlacesCount.textContent = allPlaces.length;
                 freePlacesCount.textContent = allPlaces.length - todayBookings.length;
-            }
-            
-            // Обновляем статусы для кыргызской версии
-            allPlaces.forEach((place, index) => {
-                const placeNameKyrg = getPlaceName(place, 'kyrg').replace(' ', '-').toLowerCase();
-                const statusElement = document.getElementById(`status-${placeNameKyrg}`);
-                const bookButton = document.getElementById(`book-btn-${placeNameKyrg}`);
-                
-                if (statusElement && bookButton) {
-                    if (busyPlaces[place]) {
-                        statusElement.className = 'yurta-status status-busy';
-                        statusElement.textContent = 'Бош эмес';
-                        bookButton.disabled = true;
-                        bookButton.textContent = 'Бош эмес';
-                    } else {
-                        statusElement.className = 'yurta-status status-free';
-                        statusElement.textContent = 'Бош';
-                        bookButton.disabled = false;
-                        bookButton.textContent = 'Брондоо';
-                    }
-                }
-            });
-            
-            // Обновляем общие счетчики для кыргызской версии
-            const totalPlacesCountKyrg = document.getElementById('totalPlacesCount-kyrg');
-            const freePlacesCountKyrg = document.getElementById('freePlacesCount-kyrg');
-            if (totalPlacesCountKyrg && freePlacesCountKyrg) {
-                totalPlacesCountKyrg.textContent = allPlaces.length;
-                freePlacesCountKyrg.textContent = allPlaces.length - todayBookings.length;
             }
         }
         
@@ -2835,45 +2891,15 @@
             
             const password = document.getElementById('adminPassword').value;
             
-            if (password === '8791') {
+            if (password === '8791' || password === '1234') {
                 currentAdminLevel = 'full';
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminControls').style.display = 'block';
-                
-                const adminTabs = document.querySelectorAll('.admin-tab');
-                adminTabs.forEach(tab => {
-                    tab.style.display = 'flex';
-                });
-                
                 switchAdminTab('cash');
                 updateAdminStats();
                 updateStockDisplay();
                 updateStoreDisplay();
-                updateViewGuestsCalendar();
-                
-                showNotification('Полный доступ администратора получен');
-                
-            } else if (password === '1234') {
-                currentAdminLevel = 'limited';
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('adminControls').style.display = 'block';
-                
-                const adminTabs = document.querySelectorAll('.admin-tab');
-                adminTabs.forEach(tab => {
-                    if (tab.textContent.includes('Магазин') || tab.textContent.includes('Просмотр гостей') || 
-                        tab.textContent.includes('🏪') || tab.textContent.includes('👥')) {
-                        tab.style.display = 'flex';
-                    } else {
-                        tab.style.display = 'none';
-                    }
-                });
-                
-                switchAdminTab('store');
-                updateStoreDisplay();
-                updateViewGuestsCalendar();
-                
-                showNotification('Доступ к магазину и просмотру гостей');
-                
+                showNotification('Доступ администратора получен');
             } else {
                 showNotification('Неверный пароль');
             }
@@ -2892,14 +2918,7 @@
             });
             
             document.getElementById(`${tabName}Tab`).classList.add('active');
-            
-            const activeTab = Array.from(tabs).find(tab => 
-                tab.textContent.includes(tabName.replace('cash', 'Касса').replace('stock', 'Запасы').replace('store', 'Магазин').replace('addGuest', 'Добавить гостя').replace('viewGuests', 'Просмотр гостей'))
-            );
-            
-            if (activeTab) {
-                activeTab.classList.add('active');
-            }
+            event.target.classList.add('active');
             
             if (tabName === 'cash') {
                 updateAdminStats();
@@ -2927,6 +2946,331 @@
             document.getElementById('totalBookings').textContent = bookings.length;
         }
         
+        // ФУНКЦИИ ДЛЯ КАССЫ (ДОХОДЫ)
+        function showIncomeCalendar(type) {
+            incomeType = type;
+            const incomeView = document.getElementById('incomeCalendarView');
+            incomeView.style.display = 'block';
+            updateIncomeCalendar();
+        }
+        
+        function updateIncomeCalendar() {
+            const monthNames = [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ];
+            
+            document.getElementById('incomeCalendarMonth').textContent = 
+                `${monthNames[incomeMonth]} ${incomeYear}`;
+            
+            updateCalendarGrid('incomeCalendarGrid', incomeMonth, incomeYear, true);
+            
+            // Обновляем активные кнопки месяцев
+            const monthButtons = document.querySelectorAll('#incomeCalendarView .month-btn');
+            monthButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.getAttribute('data-month')) === incomeMonth) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        function setIncomeMonth(month) {
+            if (month < 4) month = 4;
+            if (month > 8) month = 8;
+            
+            incomeMonth = month;
+            incomeYear = new Date().getFullYear();
+            
+            updateIncomeCalendar();
+        }
+        
+        function changeIncomeMonth(direction) {
+            incomeMonth += direction;
+            
+            if (incomeMonth < 4) {
+                incomeMonth = 8;
+                incomeYear--;
+            }
+            
+            if (incomeMonth > 8) {
+                incomeMonth = 4;
+                incomeYear++;
+            }
+            
+            updateIncomeCalendar();
+        }
+        
+        // ФУНКЦИИ ДЛЯ ПРОСМОТРА ГОСТЕЙ
+        function updateViewGuestsCalendar() {
+            const monthNames = [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ];
+            
+            document.getElementById('viewGuestsCalendarMonth').textContent = 
+                `${monthNames[viewGuestsMonth]} ${viewGuestsYear}`;
+            
+            updateCalendarGrid('viewGuestsCalendarGrid', viewGuestsMonth, viewGuestsYear, false);
+            
+            // Обновляем активные кнопки месяцев
+            const monthButtons = document.querySelectorAll('#viewGuestsCalendarView .month-btn');
+            monthButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.getAttribute('data-month')) === viewGuestsMonth) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        function setViewGuestsMonth(month) {
+            if (month < 4) month = 4;
+            if (month > 8) month = 8;
+            
+            viewGuestsMonth = month;
+            viewGuestsYear = new Date().getFullYear();
+            
+            updateViewGuestsCalendar();
+        }
+        
+        function changeViewGuestsMonth(direction) {
+            viewGuestsMonth += direction;
+            
+            if (viewGuestsMonth < 4) {
+                viewGuestsMonth = 8;
+                viewGuestsYear--;
+            }
+            
+            if (viewGuestsMonth > 8) {
+                viewGuestsMonth = 4;
+                viewGuestsYear++;
+            }
+            
+            updateViewGuestsCalendar();
+        }
+        
+        // ОБЩАЯ ФУНКЦИЯ ОБНОВЛЕНИЯ КАЛЕНДАРЯ
+        function updateCalendarGrid(gridId, month, year, isIncomeCalendar) {
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+            
+            const calendarGrid = document.getElementById(gridId);
+            calendarGrid.innerHTML = '';
+            
+            const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            dayHeaders.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            for (let i = 0; i < startingDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'admin-calendar-day other-month';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            const today = new Date();
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'admin-calendar-day';
+                dayElement.textContent = day;
+                
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                if (isIncomeCalendar) {
+                    let dateIncome = 0;
+                    
+                    if (incomeType === 'bookings') {
+                        const dateBookings = bookings.filter(booking => booking.date === dateStr);
+                        dateIncome = dateBookings.reduce((sum, booking) => sum + booking.total, 0);
+                    } else {
+                        if (storeSalesByDate[dateStr]) {
+                            dateIncome = storeSalesByDate[dateStr].reduce((sum, sale) => sum + sale.total, 0);
+                        }
+                    }
+                    
+                    if (dateIncome > 0) {
+                        dayElement.classList.add('busy');
+                        const intensity = Math.min(dateIncome / 5000, 1);
+                        dayElement.style.background = `rgba(217, 165, 102, ${0.2 + intensity * 0.6})`;
+                        dayElement.title = `${dateIncome} сом`;
+                    } else {
+                        dayElement.classList.add('free');
+                    }
+                    
+                    dayElement.onclick = function() {
+                        showIncomeDetails(dateStr, dateIncome);
+                        const allDays = document.querySelectorAll('#incomeCalendarGrid .admin-calendar-day');
+                        allDays.forEach(d => d.classList.remove('selected'));
+                        this.classList.add('selected');
+                    };
+                } else {
+                    const dateBookings = bookings.filter(booking => booking.date === dateStr);
+                    
+                    if (dateBookings.length > 0) {
+                        dayElement.classList.add('busy');
+                        dayElement.title = `Забронировано мест: ${dateBookings.length}`;
+                    } else {
+                        dayElement.classList.add('free');
+                    }
+                    
+                    dayElement.onclick = function() {
+                        showGuestDetails(dateStr, dateBookings);
+                        const allDays = document.querySelectorAll('#viewGuestsCalendarGrid .admin-calendar-day');
+                        allDays.forEach(d => d.classList.remove('selected'));
+                        this.classList.add('selected');
+                    };
+                }
+                
+                if (day === today.getDate() && 
+                    month === today.getMonth() && 
+                    year === today.getFullYear()) {
+                    dayElement.classList.add('today');
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+        
+        function showIncomeDetails(dateStr, dateIncome) {
+            const incomeDetails = document.getElementById('incomeDetails');
+            
+            if (dateIncome === 0) {
+                incomeDetails.innerHTML = `
+                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
+                    <div class="no-guests">
+                        На эту дату нет ${incomeType === 'bookings' ? 'бронирований' : 'продаж в магазине'}
+                    </div>
+                `;
+            } else {
+                let detailsHTML = `
+                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
+                    <div style="margin-bottom: 10px; font-size: 1.2em; font-weight: bold;">
+                        Общий доход: ${dateIncome} сом
+                    </div>
+                `;
+                
+                if (incomeType === 'bookings') {
+                    const dateBookings = bookings.filter(booking => booking.date === dateStr);
+                    detailsHTML += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                            <div style="background: rgba(139, 90, 43, 0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #d9a566;">Количество бронирований</div>
+                                <div style="font-size: 1.5em;">${dateBookings.length}</div>
+                            </div>
+                            <div style="background: rgba(139, 90, 43, 0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #d9a566;">Средний чек</div>
+                                <div style="font-size: 1.5em;">${Math.round(dateIncome / dateBookings.length)} сом</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const dateSales = storeSalesByDate[dateStr] || [];
+                    detailsHTML += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;">
+                            <div style="background: rgba(139, 90, 43, 0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #d9a566;">Количество продаж</div>
+                                <div style="font-size: 1.5em;">${dateSales.length}</div>
+                            </div>
+                            <div style="background: rgba(139, 90, 43, 0.2); padding: 10px; border-radius: 8px; text-align: center;">
+                                <div style="font-weight: bold; color: #d9a566;">Мелкие покупки</div>
+                                <div style="font-size: 1.5em;">${dateSales.reduce((sum, sale) => sum + (sale.smallItems || 0), 0)} сом</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                incomeDetails.innerHTML = detailsHTML;
+            }
+            
+            incomeDetails.style.display = 'block';
+        }
+        
+        function showGuestDetails(dateStr, dateBookings) {
+            const guestDateDetails = document.getElementById('guestDateDetails');
+            
+            if (dateBookings.length === 0) {
+                guestDateDetails.innerHTML = `
+                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
+                    <div class="no-guests">
+                        На эту дату нет бронирований
+                    </div>
+                `;
+            } else {
+                let guestsHTML = `
+                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Всего бронирований:</strong> ${dateBookings.length}
+                    </div>
+                    <div class="places-grid">
+                `;
+                
+                const places = {};
+                dateBookings.forEach(booking => {
+                    if (!places[booking.place]) {
+                        places[booking.place] = [];
+                    }
+                    places[booking.place].push(booking);
+                });
+                
+                for (const place in places) {
+                    guestsHTML += `
+                        <div class="place-item" onclick="togglePlaceDetails(this)">
+                            <div style="font-weight: bold; color: #d9a566;">
+                                ${place} (${places[place].length} гостей)
+                            </div>
+                            <div class="place-item-content">
+                                ${places[place].map(booking => `
+                                    <div style="background: rgba(139, 90, 43, 0.2); border-radius: 10px; padding: 12px; margin: 8px 0; border-left: 4px solid #d9a566;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+                                            <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
+                                            <div style="background: rgba(139, 90, 43, 0.3); padding: 5px 10px; border-radius: 5px; font-weight: bold;">${booking.total} сом</div>
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 8px;">
+                                            <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
+                                            <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">⏰ ${booking.timestamp}</div>
+                                        </div>
+                                        ${booking.items && booking.items.length > 0 ? `
+                                            <div style="grid-column: 1 / -1; background: rgba(139, 90, 43, 0.1); padding: 8px; border-radius: 5px; margin-top: 8px;">
+                                                <strong>Заказ:</strong>
+                                                <ul style="list-style: none; padding: 0; margin: 5px 0 0 0;">
+                                                    ${booking.items.map(item => `
+                                                        <li style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid rgba(139, 90, 43, 0.2); flex-wrap: wrap;">
+                                                            <span>${item.name}</span>
+                                                            <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
+                                                        </li>
+                                                    `).join('')}
+                                                </ul>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                guestsHTML += '</div>';
+                guestDateDetails.innerHTML = guestsHTML;
+            }
+            
+            guestDateDetails.classList.add('active');
+        }
+        
+        function togglePlaceDetails(element) {
+            const content = element.querySelector('.place-item-content');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+        
         // ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ЗАПАСАМИ
         function updateStockDisplay() {
             const stockManagement = document.querySelector('#stockTab .stock-management');
@@ -2943,11 +3287,9 @@
                             <div>Цена: ${prices[item]} сом</div>
                         </div>
                         <div class="stock-controls">
-                            <button onclick="updateStock('${item}', -5)">-5</button>
                             <button onclick="updateStock('${item}', -1)">-</button>
-                            <div class="stock-quantity" style="min-width: 60px; font-size: 1.2em;">${stock[item]}</div>
+                            <div class="stock-quantity">${stock[item]}</div>
                             <button onclick="updateStock('${item}', 1)">+</button>
-                            <button onclick="updateStock('${item}', 5)">+5</button>
                         </div>
                     </div>
                 `;
@@ -2957,11 +3299,6 @@
         }
         
         function updateStock(item, change) {
-            if (currentAdminLevel !== 'full') {
-                showNotification('Недостаточно прав для изменения запасов');
-                return;
-            }
-            
             stock[item] += change;
             if (stock[item] < 0) stock[item] = 0;
             
@@ -3000,10 +3337,8 @@
                             </div>
                         </div>
                         <div class="store-controls">
-                            <button onclick="sellStoreItem('${item}', -5)">-5</button>
                             <button onclick="sellStoreItem('${item}', -1)">-</button>
                             <button onclick="sellStoreItem('${item}', 1)">+</button>
-                            <button onclick="sellStoreItem('${item}', 5)">+5</button>
                         </div>
                     </div>
                 `;
@@ -3054,7 +3389,7 @@
         }
         
         function changeSmallItemAmount(change) {
-            smallItemsAmount += change * 10;
+            smallItemsAmount += change;
             if (smallItemsAmount < 0) smallItemsAmount = 0;
             
             document.getElementById('smallItemAmount').textContent = `${smallItemsAmount} сом`;
@@ -3169,7 +3504,7 @@
         }
         
         function updateGuestAmount() {
-            let total = 0;
+            let total = DEPOSIT_AMOUNT;
             
             for (const item in prices) {
                 const quantity = parseInt(document.getElementById(`guest-${item}-quantity`).textContent) || 0;
@@ -3216,28 +3551,7 @@
             updateAvailablePlaces(todayStr);
         }
         
-        function showTomorrow() {
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            const tomorrowStr = tomorrow.toISOString().split('T')[0];
-            document.getElementById('guestDateInput').value = tomorrowStr;
-            updateAvailablePlaces(tomorrowStr);
-        }
-        
-        function setQuickDate(days) {
-            const date = new Date();
-            date.setDate(date.getDate() + days);
-            const dateStr = date.toISOString().split('T')[0];
-            document.getElementById('guestDateInput').value = dateStr;
-            updateAvailablePlaces(dateStr);
-        }
-        
         function saveGuestBooking() {
-            if (currentAdminLevel !== 'full') {
-                showNotification('Недостаточно прав для добавления гостей');
-                return;
-            }
-            
             const guestName = document.getElementById('guestName').value.trim();
             const guestPhone = document.getElementById('guestPhone').value.trim();
             const guestPlace = document.getElementById('guestPlace').value;
@@ -3272,7 +3586,7 @@
                 return;
             }
             
-            let total = 0;
+            let total = DEPOSIT_AMOUNT;
             const orderItems = [];
             
             for (const item in prices) {
@@ -3292,17 +3606,13 @@
                 }
             }
             
-            if (orderItems.length === 0) {
-                showNotification('Выберите хотя бы один напиток');
-                return;
-            }
-            
             const booking = {
                 id: Date.now(),
                 place: guestPlace,
                 date: guestDate,
                 items: orderItems,
                 total: total,
+                deposit: DEPOSIT_AMOUNT,
                 timestamp: new Date().toLocaleString(),
                 guestName: guestName,
                 guestPhone: guestPhone,
@@ -3327,7 +3637,7 @@
             document.getElementById('guestName').value = '';
             document.getElementById('guestPhone').value = '';
             document.getElementById('guestPlace').value = '';
-            document.getElementById('guestAmount').value = '0';
+            document.getElementById('guestAmount').value = DEPOSIT_AMOUNT;
             
             for (const item in prices) {
                 const quantityElement = document.getElementById(`guest-${item}-quantity`);
@@ -3342,410 +3652,180 @@
             updateAvailablePlaces(todayStr);
         }
         
-        // ФУНКЦИИ ДЛЯ ПРОСМОТРА ГОСТЕЙ
-        function updateViewGuestsCalendar() {
-            const monthNames = [
-                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-            ];
-            
-            document.getElementById('viewGuestsCalendarMonth').textContent = 
-                `${monthNames[viewGuestsMonth]} ${viewGuestsYear}`;
-            
-            const firstDay = new Date(viewGuestsYear, viewGuestsMonth, 1);
-            const lastDay = new Date(viewGuestsYear, viewGuestsMonth + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            
-            const calendarGrid = document.getElementById('viewGuestsCalendarGrid');
-            calendarGrid.innerHTML = '';
-            
-            const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-            dayHeaders.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'calendar-day-header';
-                dayHeader.textContent = day;
-                calendarGrid.appendChild(dayHeader);
-            });
-            
-            for (let i = 0; i < startingDay; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day other-month';
-                calendarGrid.appendChild(emptyDay);
+        // ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА
+        function printDayReport() {
+            const printDate = document.getElementById('printDate').value;
+            if (!printDate) {
+                showNotification('Выберите дату для печати отчета');
+                return;
             }
             
-            const today = new Date();
+            const dateBookings = bookings.filter(booking => booking.date === printDate);
+            const dateSales = storeSalesByDate[printDate] || [];
             
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'admin-calendar-day';
-                dayElement.textContent = day;
-                
-                const dateStr = `${viewGuestsYear}-${String(viewGuestsMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                
-                const dateBookings = bookings.filter(booking => booking.date === dateStr);
-                
-                if (dateBookings.length > 0) {
-                    dayElement.classList.add('busy');
-                    dayElement.title = `Забронировано мест: ${dateBookings.length}`;
-                } else {
-                    dayElement.classList.add('free');
-                }
-                
-                if (day === today.getDate() && 
-                    viewGuestsMonth === today.getMonth() && 
-                    viewGuestsYear === today.getFullYear()) {
-                    dayElement.classList.add('today');
-                }
-                
-                dayElement.onclick = function() {
-                    showGuestDetails(dateStr, dateBookings);
-                    const allDays = document.querySelectorAll('#viewGuestsCalendarGrid .admin-calendar-day');
-                    allDays.forEach(d => d.classList.remove('selected'));
-                    this.classList.add('selected');
-                };
-                
-                calendarGrid.appendChild(dayElement);
-            }
-        }
-        
-        function changeViewGuestsMonth(direction) {
-            viewGuestsMonth += direction;
-            
-            if (viewGuestsMonth < 0) {
-                viewGuestsMonth = 11;
-                viewGuestsYear--;
-            }
-            
-            if (viewGuestsMonth > 11) {
-                viewGuestsMonth = 0;
-                viewGuestsYear++;
-            }
-            
-            updateViewGuestsCalendar();
-        }
-        
-        function showGuestDetails(dateStr, dateBookings) {
-            const guestDateDetails = document.getElementById('guestDateDetails');
-            
-            if (dateBookings.length === 0) {
-                guestDateDetails.innerHTML = `
-                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
-                    <div class="no-guests">
-                        На эту дату нет бронирований
-                    </div>
-                `;
-            } else {
-                let guestsHTML = `
-                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
-                    <div style="margin-bottom: 10px;">
-                        <strong>Всего бронирований:</strong> ${dateBookings.length}
-                    </div>
-                    <div class="places-grid">
-                `;
-                
-                const places = {};
-                dateBookings.forEach(booking => {
-                    if (!places[booking.place]) {
-                        places[booking.place] = [];
-                    }
-                    places[booking.place].push(booking);
-                });
-                
-                for (const place in places) {
-                    guestsHTML += `
-                        <div class="place-item" onclick="togglePlaceDetails(this)">
-                            <div style="font-weight: bold; color: #d9a566;">
-                                ${place} (${places[place].length} гостей)
-                            </div>
-                            <div class="place-item-content">
-                                ${places[place].map(booking => `
-                                    <div class="guest-item" style="background: rgba(139, 90, 43, 0.2); border-radius: 10px; padding: 15px; margin: 10px 0; border-left: 4px solid #d9a566;">
-                                        <div class="guest-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap;">
-                                            <div class="guest-name" style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
-                                            <div class="guest-amount" style="background: rgba(139, 90, 43, 0.3); padding: 5px 10px; border-radius: 5px; font-weight: bold;">${booking.total} сом</div>
-                                        </div>
-                                        <div class="guest-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin-top: 10px;">
-                                            <div class="guest-detail" style="background: rgba(139, 90, 43, 0.1); padding: 8px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
-                                            <div class="guest-detail" style="background: rgba(139, 90, 43, 0.1); padding: 8px; border-radius: 5px; font-size: 0.9em;">⏰ ${booking.timestamp}</div>
-                                        </div>
-                                        ${booking.items && booking.items.length > 0 ? `
-                                            <div class="booking-items" style="grid-column: 1 / -1; background: rgba(139, 90, 43, 0.1); padding: 10px; border-radius: 5px; margin-top: 10px;">
-                                                <strong>Заказ:</strong>
-                                                <ul class="booking-item-list" style="list-style: none; padding: 0; margin: 5px 0 0 0;">
-                                                    ${booking.items.map(item => `
-                                                        <li style="display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid rgba(139, 90, 43, 0.2); flex-wrap: wrap;">
-                                                            <span>${item.name}</span>
-                                                            <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
-                                                        </li>
-                                                    `).join('')}
-                                                </ul>
-                                            </div>
-                                        ` : ''}
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                guestsHTML += '</div>';
-                guestDateDetails.innerHTML = guestsHTML;
-            }
-            
-            guestDateDetails.classList.add('active');
-        }
-        
-        function togglePlaceDetails(element) {
-            const content = element.querySelector('.place-item-content');
-            if (content.style.display === 'block') {
-                content.style.display = 'none';
-            } else {
-                content.style.display = 'block';
-            }
-        }
-        
-        // ФУНКЦИИ ДЛЯ КАЛЕНДАРЯ ДОХОДОВ
-        function showIncomeCalendar(type) {
-            incomeType = type;
-            document.getElementById('incomeCalendarView').style.display = 'block';
-            document.getElementById('totalDayIncomeView').style.display = 'none';
-            updateIncomeCalendar();
-        }
-        
-        function updateIncomeCalendar() {
-            const monthNames = [
-                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-            ];
-            
-            document.getElementById('incomeCalendarMonth').textContent = 
-                `${monthNames[incomeMonth]} ${incomeYear}`;
-            
-            const firstDay = new Date(incomeYear, incomeMonth, 1);
-            const lastDay = new Date(incomeYear, incomeMonth + 1, 0);
-            const daysInMonth = lastDay.getDate();
-            const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-            
-            const calendarGrid = document.getElementById('incomeCalendarGrid');
-            calendarGrid.innerHTML = '';
-            
-            const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-            dayHeaders.forEach(day => {
-                const dayHeader = document.createElement('div');
-                dayHeader.className = 'calendar-day-header';
-                dayHeader.textContent = day;
-                calendarGrid.appendChild(dayHeader);
-            });
-            
-            for (let i = 0; i < startingDay; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'calendar-day other-month';
-                calendarGrid.appendChild(emptyDay);
-            }
-            
-            const today = new Date();
-            
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayElement = document.createElement('div');
-                dayElement.className = 'admin-calendar-day';
-                dayElement.textContent = day;
-                
-                const dateStr = `${incomeYear}-${String(incomeMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                
-                let dateIncome = 0;
-                
-                if (incomeType === 'bookings') {
-                    const dateBookings = bookings.filter(booking => booking.date === dateStr);
-                    dateIncome = dateBookings.reduce((sum, booking) => sum + booking.total, 0);
-                } else {
-                    if (storeSalesByDate[dateStr]) {
-                        dateIncome = storeSalesByDate[dateStr].reduce((sum, sale) => sum + sale.total, 0);
-                    }
-                }
-                
-                if (dateIncome > 0) {
-                    dayElement.classList.add('busy');
-                    const intensity = Math.min(dateIncome / 5000, 1);
-                    dayElement.style.background = `rgba(217, 165, 102, ${0.2 + intensity * 0.6})`;
-                    dayElement.title = `${dateIncome} сом`;
-                } else {
-                    dayElement.classList.add('free');
-                }
-                
-                if (day === today.getDate() && 
-                    incomeMonth === today.getMonth() && 
-                    incomeYear === today.getFullYear()) {
-                    dayElement.classList.add('today');
-                }
-                
-                dayElement.onclick = function() {
-                    showIncomeDetails(dateStr, dateIncome);
-                    const allDays = document.querySelectorAll('#incomeCalendarGrid .admin-calendar-day');
-                    allDays.forEach(d => d.classList.remove('selected'));
-                    this.classList.add('selected');
-                };
-                
-                calendarGrid.appendChild(dayElement);
-            }
-        }
-        
-        function changeIncomeMonth(direction) {
-            incomeMonth += direction;
-            
-            if (incomeMonth < 0) {
-                incomeMonth = 11;
-                incomeYear--;
-            }
-            
-            if (incomeMonth > 11) {
-                incomeMonth = 0;
-                incomeYear++;
-            }
-            
-            updateIncomeCalendar();
-        }
-        
-        function showIncomeDetails(dateStr, dateIncome) {
-            const dateIncomeDetails = document.getElementById('dateIncomeDetails');
-            
-            if (dateIncome === 0) {
-                dateIncomeDetails.innerHTML = `
-                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
-                    <div class="no-guests">
-                        На эту дату нет ${incomeType === 'bookings' ? 'бронирований' : 'продаж в магазине'}
-                    </div>
-                `;
-            } else {
-                let detailsHTML = `
-                    <h4 style="color: #d9a566;">${formatDate(dateStr)}</h4>
-                    <div style="margin-bottom: 10px; font-size: 1.2em; font-weight: bold;">
-                        Общий доход: ${dateIncome} сом
-                    </div>
-                `;
-                
-                if (incomeType === 'bookings') {
-                    const dateBookings = bookings.filter(booking => booking.date === dateStr);
-                    detailsHTML += `
-                        <div class="income-breakdown">
-                            <div class="income-item">
-                                <div style="font-weight: bold; color: #d9a566;">Количество бронирований</div>
-                                <div style="font-size: 1.5em;">${dateBookings.length}</div>
-                            </div>
-                            <div class="income-item">
-                                <div style="font-weight: bold; color: #d9a566;">Средний чек</div>
-                                <div style="font-size: 1.5em;">${Math.round(dateIncome / dateBookings.length)} сом</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    const dateSales = storeSalesByDate[dateStr] || [];
-                    detailsHTML += `
-                        <div class="income-breakdown">
-                            <div class="income-item">
-                                <div style="font-weight: bold; color: #d9a566;">Количество продаж</div>
-                                <div style="font-size: 1.5em;">${dateSales.length}</div>
-                            </div>
-                            <div class="income-item">
-                                <div style="font-weight: bold; color: #d9a566;">Мелкие покупки</div>
-                                <div style="font-size: 1.5em;">${dateSales.reduce((sum, sale) => sum + (sale.smallItems || 0), 0)} сом</div>
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                dateIncomeDetails.innerHTML = detailsHTML;
-            }
-            
-            dateIncomeDetails.classList.add('active');
-        }
-        
-        function showTotalDayIncome() {
-            document.getElementById('incomeCalendarView').style.display = 'none';
-            document.getElementById('totalDayIncomeView').style.display = 'block';
-            
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-            
-            const todayBookings = bookings.filter(booking => booking.date === todayStr);
-            const todayBookingsIncome = todayBookings.reduce((sum, booking) => sum + booking.total, 0);
-            
-            const todaySales = storeSalesByDate[todayStr] || [];
-            const todayStoreIncome = todaySales.reduce((sum, sale) => sum + sale.total, 0);
-            
-            const totalTodayIncome = todayBookingsIncome + todayStoreIncome;
-            
-            document.getElementById('totalDayIncomeView').innerHTML = `
-                <h3 style="color: #d9a566;">💰 Общий доход за сегодня (${formatDate(todayStr)})</h3>
-                
-                <div class="day-income-breakdown">
-                    <div class="day-income-item">
-                        <div style="font-weight: bold; color: #8b5a2b;">Бронирования</div>
-                        <div style="font-size: 1.5em; color: #008000;">${todayBookingsIncome} сом</div>
-                        <div style="font-size: 0.9em;">${todayBookings.length} заказов</div>
-                    </div>
-                    
-                    <div class="day-income-item">
-                        <div style="font-weight: bold; color: #8b5a2b;">Магазин</div>
-                        <div style="font-size: 1.5em; color: #25D366;">${todayStoreIncome} сом</div>
-                        <div style="font-size: 0.9em;">${todaySales.length} продаж</div>
-                    </div>
-                    
-                    <div class="day-income-item">
-                        <div style="font-weight: bold; color: #d9a566;">Итого за день</div>
-                        <div style="font-size: 2em; color: #d9a566; font-weight: bold;">${totalTodayIncome} сом</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // ФУНКЦИЯ ПЕЧАТИ
-        function printDailyReport() {
-            const today = new Date().toLocaleDateString('ru-RU');
-            const todayStr = new Date().toISOString().split('T')[0];
-            const todayBookings = bookings.filter(b => b.date === todayStr);
-            const todaySales = storeSalesByDate[todayStr] || [];
+            const bookingsTotal = dateBookings.reduce((sum, booking) => sum + booking.total, 0);
+            const storeTotal = dateSales.reduce((sum, sale) => sum + sale.total, 0);
+            const totalDay = bookingsTotal + storeTotal;
             
             const reportHTML = `
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Отчет - Кочевник</title>
+                    <title>Отчет за ${formatDate(printDate)} - Кочевник</title>
+                    <meta charset="UTF-8">
                     <style>
-                        body { font-family: Arial; padding: 20px; }
-                        h1 { color: #8b5a2b; text-align: center; }
-                        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
-                        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                        th { background: #f5e9d7; }
-                        .total { font-size: 18px; font-weight: bold; color: #008000; }
+                        body { 
+                            font-family: Arial, sans-serif; 
+                            padding: 20px; 
+                            background: white;
+                            color: black;
+                        }
+                        .header { 
+                            text-align: center; 
+                            margin-bottom: 20px;
+                            border-bottom: 2px solid #8b5a2b;
+                            padding-bottom: 10px;
+                        }
+                        h1 { 
+                            color: #8b5a2b; 
+                            margin: 0;
+                            font-size: 24px;
+                        }
+                        h2 { 
+                            color: #5c3d2e; 
+                            margin: 15px 0 10px;
+                            font-size: 18px;
+                        }
+                        .date { 
+                            font-size: 16px; 
+                            color: #666; 
+                            margin: 5px 0;
+                        }
+                        table { 
+                            width: 100%; 
+                            border-collapse: collapse; 
+                            margin: 10px 0;
+                            font-size: 14px;
+                        }
+                        th, td { 
+                            border: 1px solid #ddd; 
+                            padding: 8px; 
+                            text-align: left; 
+                        }
+                        th { 
+                            background: #f5e9d7; 
+                            font-weight: bold;
+                        }
+                        .total-row { 
+                            font-weight: bold; 
+                            background: #f0f0f0;
+                        }
+                        .section { 
+                            margin: 20px 0; 
+                            padding: 10px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                        }
+                        .amount { 
+                            font-size: 16px; 
+                            font-weight: bold; 
+                            color: #008000;
+                        }
+                        .footer { 
+                            margin-top: 30px; 
+                            padding-top: 10px;
+                            border-top: 2px solid #8b5a2b;
+                            text-align: center;
+                            font-size: 12px;
+                            color: #666;
+                        }
+                        @media print {
+                            body { padding: 10px; }
+                            .no-print { display: none; }
+                        }
                     </style>
                 </head>
                 <body>
-                    <h1>📊 Отчет ресторана "Кочевник"</h1>
-                    <p>Дата: ${today}</p>
+                    <div class="header">
+                        <h1>📊 Отчет ресторана "Кочевник"</h1>
+                        <div class="date">Дата: ${formatDate(printDate)}</div>
+                        <div class="date">Отчет сгенерирован: ${new Date().toLocaleString('ru-RU')}</div>
+                    </div>
                     
-                    <h2>💰 Финансы</h2>
-                    <table>
-                        <tr><td>Общая выручка:</td><td>${totalRevenue} сом</td></tr>
-                        <tr><td>Доход от бронирований:</td><td>${bookingsRevenue} сом</td></tr>
-                        <tr><td>Доход от магазина:</td><td>${storeRevenue} сом</td></tr>
-                        <tr><td>Количество бронирований:</td><td>${bookings.length}</td></tr>
-                    </table>
-                    
-                    <h2>📦 Остатки на складе</h2>
-                    <table>
-                        <tr><th>Товар</th><th>Остаток</th><th>Цена</th></tr>
-                        ${Object.keys(prices).map(item => `
+                    <div class="section">
+                        <h2>💰 Финансовый отчет</h2>
+                        <table>
                             <tr>
-                                <td>${getItemName(item)}</td>
-                                <td>${stock[item]} шт.</td>
-                                <td>${prices[item]} сом</td>
+                                <td>Доход от бронирований:</td>
+                                <td class="amount">${bookingsTotal} сом</td>
                             </tr>
-                        `).join('')}
-                    </table>
+                            <tr>
+                                <td>Доход от магазина:</td>
+                                <td class="amount">${storeTotal} сом</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>ОБЩИЙ ДОХОД ЗА ДЕНЬ:</td>
+                                <td class="amount">${totalDay} сом</td>
+                            </tr>
+                        </table>
+                    </div>
                     
-                    <div style="margin-top: 30px;">
-                        <p class="total">Отчет сгенерирован: ${new Date().toLocaleString('ru-RU')}</p>
+                    <div class="section">
+                        <h2>🎪 Бронирования (${dateBookings.length})</h2>
+                        ${dateBookings.length > 0 ? `
+                            <table>
+                                <tr>
+                                    <th>Место</th>
+                                    <th>Гость</th>
+                                    <th>Телефон</th>
+                                    <th>Сумма</th>
+                                    <th>Время</th>
+                                </tr>
+                                ${dateBookings.map(booking => `
+                                    <tr>
+                                        <td>${booking.place}</td>
+                                        <td>${booking.guestName}</td>
+                                        <td>${booking.guestPhone}</td>
+                                        <td>${booking.total} сом</td>
+                                        <td>${booking.timestamp}</td>
+                                    </tr>
+                                `).join('')}
+                            </table>
+                        ` : '<p>Нет бронирований</p>'}
+                    </div>
+                    
+                    <div class="section">
+                        <h2>🏪 Продажи магазина (${dateSales.length})</h2>
+                        ${dateSales.length > 0 ? `
+                            <table>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Мелкие покупки</th>
+                                    <th>Общая сумма</th>
+                                </tr>
+                                ${dateSales.map((sale, index) => `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${sale.smallItems || 0} сом</td>
+                                        <td class="amount">${sale.total} сом</td>
+                                    </tr>
+                                `).join('')}
+                            </table>
+                        ` : '<p>Нет продаж</p>'}
+                    </div>
+                    
+                    <div class="footer">
+                        <p>Ресторан "Кочевник" | ул. Горная, д. 15 | +7 (962) 074-21-40</p>
+                        <p>Отчет сгенерирован автоматически</p>
+                    </div>
+                    
+                    <div class="no-print" style="text-align: center; margin-top: 20px;">
+                        <button onclick="window.print()" style="padding: 10px 20px; background: #25D366; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            🖨️ Печать отчета
+                        </button>
+                        <button onclick="window.close()" style="padding: 10px 20px; background: #a52a2a; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                            ❌ Закрыть
+                        </button>
                     </div>
                 </body>
                 </html>
@@ -3754,9 +3834,26 @@
             const printWindow = window.open('', '_blank');
             printWindow.document.write(reportHTML);
             printWindow.document.close();
-            printWindow.print();
+            printWindow.focus();
             
-            showNotification('Отчет готов к печати');
+            showNotification('Отчет подготовлен. Нажмите кнопку печати в открывшемся окне.');
+        }
+        
+        function showTotalDayIncome() {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            
+            const dateBookings = bookings.filter(booking => booking.date === todayStr);
+            const dateSales = storeSalesByDate[todayStr] || [];
+            
+            const bookingsTotal = dateBookings.reduce((sum, booking) => sum + booking.total, 0);
+            const storeTotal = dateSales.reduce((sum, sale) => sum + sale.total, 0);
+            const totalDay = bookingsTotal + storeTotal;
+            
+            alert(`💰 Общий доход за сегодня (${formatDate(todayStr)}):\n\n` +
+                  `🎪 Бронирования: ${bookingsTotal} сом (${dateBookings.length} заказов)\n` +
+                  `🏪 Магазин: ${storeTotal} сом (${dateSales.length} продаж)\n` +
+                  `📊 ИТОГО: ${totalDay} сом`);
         }
         
         // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
@@ -3781,13 +3878,19 @@
         
         // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
         window.addEventListener('load', function() {
+            // Устанавливаем data-month для кнопок месяцев
+            document.querySelectorAll('.month-btn').forEach((btn, index) => {
+                const months = [4, 5, 6, 7, 8];
+                btn.setAttribute('data-month', months[index]);
+            });
+            
             updateMenuDisplay();
             updatePlaceStatuses();
-            updateCalendar();
             
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
             document.getElementById('storeSaleDate').value = todayStr;
+            document.getElementById('printDate').value = todayStr;
             
             loadSavedData();
             
@@ -3805,8 +3908,8 @@
                     
                     bookings = data.bookings || [];
                     stock = data.stock || stock;
-                    tempStoreSales = data.tempStoreSales || tempStoreSales;
-                    storeSalesByDate = data.storeSalesByDate || storeSalesByDate;
+                    tempStoreSales = data.tempStoreSales || {};
+                    storeSalesByDate = data.storeSalesByDate || {};
                     storeRevenue = data.storeRevenue || 0;
                     bookingsRevenue = data.bookingsRevenue || 0;
                     totalRevenue = data.totalRevenue || 0;
