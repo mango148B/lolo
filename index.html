@@ -2088,6 +2088,215 @@
     </div>
 
     <script>
+        // === FIREBASE CONFIG ===
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuLtQIjy7OWWugFdBLxc8fSr2z6T3Eg3U",
+            authDomain: "restoran-58790.firebaseapp.com",
+            projectId: "restoran-58790",
+            storageBucket: "restoran-58790.firebasestorage.app",
+            messagingSenderId: "246650619946",
+            appId: "1:246650619946:web:6c183d977dc69d6aeadb53",
+            measurementId: "G-4Z7WM31CBF"
+        };
+
+        // Firebase variables
+        let db;
+        let firebaseInitialized = false;
+        const firebaseModules = {};
+
+        // Firebase collections
+        const COLLECTIONS = {
+            BOOKINGS: "bookings",
+            STOCK: "stock",
+            STORE_SALES: "store_sales",
+            DAILY_INCOME: "daily_income",
+            SETTINGS: "settings"
+        };
+
+        // === FIREBASE INITIALIZATION ===
+        async function initializeFirebase() {
+            try {
+                if (!firebaseInitialized) {
+                    // Import Firebase modules
+                    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+                    const { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, getDoc, updateDoc, query, where, orderBy, Timestamp } = 
+                        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
+                    
+                    const app = initializeApp(firebaseConfig);
+                    db = getFirestore(app);
+                    
+                    // Store modules for later use
+                    Object.assign(firebaseModules, {
+                        collection, addDoc, getDocs, onSnapshot, doc, setDoc, 
+                        getDoc, updateDoc, query, where, orderBy, Timestamp
+                    });
+                    
+                    firebaseInitialized = true;
+                    console.log("✅ Firebase подключен!");
+                    
+                    // Load data from Firebase
+                    await loadDataFromFirebase();
+                    setupRealtimeListeners();
+                    
+                    showNotification("Firebase подключен! Данные загружены.");
+                }
+                return true;
+            } catch (error) {
+                console.error("❌ Ошибка Firebase:", error);
+                showNotification("Ошибка подключения к Firebase. Используется локальное хранилище.");
+                return false;
+            }
+        }
+
+        // === FIREBASE DATA FUNCTIONS ===
+        async function loadDataFromFirebase() {
+            if (!firebaseInitialized) return;
+            
+            try {
+                // Load bookings
+                const bookingsSnapshot = await firebaseModules.getDocs(firebaseModules.collection(db, COLLECTIONS.BOOKINGS));
+                bookings.length = 0;
+                bookingsSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    bookings.push({
+                        id: doc.id,
+                        ...data,
+                        date: data.date || '',
+                        place: data.place || '',
+                        total: data.total || 0,
+                        guestName: data.guestName || '',
+                        guestPhone: data.guestPhone || '',
+                        items: data.items || [],
+                        timestamp: data.timestamp || new Date().toLocaleString(),
+                        createdAt: data.createdAt || new Date()
+                    });
+                });
+                
+                // Load stock
+                const stockDoc = await firebaseModules.getDoc(firebaseModules.doc(db, COLLECTIONS.STOCK, "current"));
+                if (stockDoc.exists()) {
+                    Object.assign(stock, stockDoc.data());
+                }
+                
+                // Load store sales
+                const salesSnapshot = await firebaseModules.getDocs(firebaseModules.collection(db, COLLECTIONS.STORE_SALES));
+                storeSalesByDate = {};
+                salesSnapshot.forEach(doc => {
+                    const data = doc.data();
+                    if (data.date) {
+                        if (!storeSalesByDate[data.date]) {
+                            storeSalesByDate[data.date] = [];
+                        }
+                        storeSalesByDate[data.date].push(data);
+                    }
+                });
+                
+                // Calculate revenue
+                updateRevenue();
+                updatePlaceStatuses();
+                updateMenuDisplay();
+                updateAdminStats();
+                
+                console.log("📊 Данные загружены из Firebase");
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+            }
+        }
+
+        function setupRealtimeListeners() {
+            if (!firebaseInitialized) return;
+            
+            // Realtime listener for bookings
+            const bookingsQuery = firebaseModules.collection(db, COLLECTIONS.BOOKINGS);
+            firebaseModules.onSnapshot(bookingsQuery, (snapshot) => {
+                bookings.length = 0;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    bookings.push({
+                        id: doc.id,
+                        ...data,
+                        date: data.date || '',
+                        place: data.place || '',
+                        total: data.total || 0,
+                        guestName: data.guestName || '',
+                        guestPhone: data.guestPhone || '',
+                        items: data.items || [],
+                        timestamp: data.timestamp || new Date().toLocaleString(),
+                        createdAt: data.createdAt || new Date()
+                    });
+                });
+                
+                updateRevenue();
+                updatePlaceStatuses();
+                updateAdminStats();
+                console.log("🔄 Бронирования обновлены в реальном времени");
+            });
+            
+            // Realtime listener for stock
+            const stockDocRef = firebaseModules.doc(db, COLLECTIONS.STOCK, "current");
+            firebaseModules.onSnapshot(stockDocRef, (doc) => {
+                if (doc.exists()) {
+                    Object.assign(stock, doc.data());
+                    updateStockDisplay();
+                    updateMenuDisplay();
+                    console.log("🔄 Запасы обновлены в реальном времени");
+                }
+            });
+        }
+
+        async function saveBookingToFirebase(booking) {
+            try {
+                const docRef = await firebaseModules.addDoc(
+                    firebaseModules.collection(db, COLLECTIONS.BOOKINGS),
+                    {
+                        ...booking,
+                        createdAt: firebaseModules.Timestamp.now()
+                    }
+                );
+                console.log("✅ Бронирование сохранено в Firebase:", docRef.id);
+                return true;
+            } catch (error) {
+                console.error("❌ Ошибка сохранения бронирования:", error);
+                // Fallback to local storage
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        async function saveStockToFirebase() {
+            try {
+                await firebaseModules.setDoc(
+                    firebaseModules.doc(db, COLLECTIONS.STOCK, "current"),
+                    stock
+                );
+                console.log("✅ Запасы сохранены в Firebase");
+                return true;
+            } catch (error) {
+                console.error("❌ Ошибка сохранения запасов:", error);
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        async function saveStoreSalesToFirebase(salesData) {
+            try {
+                await firebaseModules.addDoc(
+                    firebaseModules.collection(db, COLLECTIONS.STORE_SALES),
+                    {
+                        ...salesData,
+                        timestamp: firebaseModules.Timestamp.now()
+                    }
+                );
+                console.log("✅ Продажи сохранены в Firebase");
+                return true;
+            } catch (error) {
+                console.error("❌ Ошибка сохранения продаж:", error);
+                saveToLocalStorage();
+                return false;
+            }
+        }
+
+        // === ORIGINAL CODE WITH FIREBASE INTEGRATION ===
         // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
         let currentLanguage = 'RUS';
         let currentMonth = new Date().getMonth();
@@ -2197,8 +2406,22 @@
         // Депозит за бронь
         const DEPOSIT_AMOUNT = 2000;
 
-        // ФУНКЦИИ ДЛЯ РАБОТЫ С ИНТЕРФЕЙСОМ
-        
+        // === REVENUE CALCULATION ===
+        function updateRevenue() {
+            bookingsRevenue = bookings.reduce((sum, booking) => sum + booking.total, 0);
+            
+            storeRevenue = 0;
+            for (const date in storeSalesByDate) {
+                const sales = storeSalesByDate[date];
+                sales.forEach(sale => {
+                    storeRevenue += sale.total || 0;
+                });
+            }
+            
+            totalRevenue = bookingsRevenue + storeRevenue;
+        }
+
+        // === ORIGINAL FUNCTIONS WITH FIREBASE INTEGRATION ===
         function selectLanguage(lang) {
             currentLanguage = lang;
             document.getElementById('home').classList.remove('active');
@@ -2529,7 +2752,7 @@
             });
         }
         
-        function confirmBooking() {
+        async function confirmBooking() {
             const customerName = document.getElementById('customerName').value.trim();
             const customerPhone = document.getElementById('customerPhone').value.trim();
             
@@ -2603,7 +2826,6 @@
                 
                 if (sent) {
                     const booking = {
-                        id: Date.now(),
                         place: selectedPlace,
                         date: selectedDate,
                         items: orderItems,
@@ -2612,25 +2834,33 @@
                         timestamp: new Date().toLocaleString(),
                         guestName: customerName,
                         guestPhone: customerPhone,
-                        whatsappSent: true
+                        whatsappSent: true,
+                        createdAt: new Date()
                     };
                     
-                    bookings.push(booking);
-                    bookingsRevenue += total;
-                    totalRevenue = bookingsRevenue + storeRevenue;
+                    // Save to Firebase
+                    const saved = await saveBookingToFirebase(booking);
                     
-                    updateAdminStats();
-                    updateStockDisplay();
-                    updatePlaceStatuses();
-                    updateMenuDisplay();
-                    
-                    document.getElementById('whatsappNotification').style.display = 'block';
-                    
-                    showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
-                    
-                    setTimeout(() => {
-                        closeBookingModal();
-                    }, 5000);
+                    if (saved) {
+                        // Save stock changes to Firebase
+                        await saveStockToFirebase();
+                        
+                        bookingsRevenue += total;
+                        totalRevenue = bookingsRevenue + storeRevenue;
+                        
+                        updateAdminStats();
+                        updateStockDisplay();
+                        updatePlaceStatuses();
+                        updateMenuDisplay();
+                        
+                        document.getElementById('whatsappNotification').style.display = 'block';
+                        
+                        showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
+                        
+                        setTimeout(() => {
+                            closeBookingModal();
+                        }, 5000);
+                    }
                 }
             } catch (error) {
                 showNotification('Ошибка при отправке в WhatsApp. Пожалуйста, свяжитесь с администратором по телефону.');
@@ -3272,7 +3502,7 @@
         }
         
         // ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ЗАПАСАМИ
-        function updateStockDisplay() {
+        async function updateStockDisplay() {
             const stockManagement = document.querySelector('#stockTab .stock-management');
             if (!stockManagement) return;
             
@@ -3298,12 +3528,18 @@
             stockManagement.innerHTML = stockHTML;
         }
         
-        function updateStock(item, change) {
+        async function updateStock(item, change) {
             stock[item] += change;
             if (stock[item] < 0) stock[item] = 0;
             
             updateStockDisplay();
             updateMenuDisplay();
+            
+            // Save to Firebase
+            if (firebaseInitialized) {
+                await saveStockToFirebase();
+            }
+            
             showNotification(`${getItemName(item)} обновлен: ${stock[item]} шт.`);
         }
         
@@ -3348,7 +3584,7 @@
             updateStoreSummary();
         }
         
-        function sellStoreItem(item, quantity) {
+        async function sellStoreItem(item, quantity) {
             if (quantity < 0 && tempStoreSales[item] + quantity < 0) {
                 showNotification('Нельзя продать отрицательное количество');
                 return;
@@ -3407,7 +3643,7 @@
             }
         }
         
-        function saveStoreSales() {
+        async function saveStoreSales() {
             const dateInput = document.getElementById('storeSaleDate');
             let saleDate = dateInput.value;
             
@@ -3453,6 +3689,12 @@
             totalRevenue = bookingsRevenue + storeRevenue;
             
             updateAdminStats();
+            
+            // Save to Firebase
+            if (firebaseInitialized) {
+                await saveStoreSalesToFirebase(salesData);
+                await saveStockToFirebase();
+            }
             
             tempStoreSales = {};
             smallItemsAmount = 0;
@@ -3551,7 +3793,7 @@
             updateAvailablePlaces(todayStr);
         }
         
-        function saveGuestBooking() {
+        async function saveGuestBooking() {
             const guestName = document.getElementById('guestName').value.trim();
             const guestPhone = document.getElementById('guestPhone').value.trim();
             const guestPlace = document.getElementById('guestPlace').value;
@@ -3607,7 +3849,6 @@
             }
             
             const booking = {
-                id: Date.now(),
                 place: guestPlace,
                 date: guestDate,
                 items: orderItems,
@@ -3617,20 +3858,28 @@
                 guestName: guestName,
                 guestPhone: guestPhone,
                 whatsappSent: false,
-                addedByAdmin: true
+                addedByAdmin: true,
+                createdAt: new Date()
             };
             
-            bookings.push(booking);
-            bookingsRevenue += total;
-            totalRevenue = bookingsRevenue + storeRevenue;
+            // Save to Firebase
+            const saved = await saveBookingToFirebase(booking);
             
-            updateAdminStats();
-            updateStockDisplay();
-            updateMenuDisplay();
-            updatePlaceStatuses();
-            clearGuestForm();
-            
-            showNotification(`Гость "${guestName}" добавлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
+            if (saved) {
+                // Save stock changes to Firebase
+                await saveStockToFirebase();
+                
+                bookingsRevenue += total;
+                totalRevenue = bookingsRevenue + storeRevenue;
+                
+                updateAdminStats();
+                updateStockDisplay();
+                updateMenuDisplay();
+                updatePlaceStatuses();
+                clearGuestForm();
+                
+                showNotification(`Гость "${guestName}" добавлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
+            }
         }
         
         function clearGuestForm() {
@@ -3876,53 +4125,8 @@
             }, 3000);
         }
         
-        // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-        window.addEventListener('load', function() {
-            // Устанавливаем data-month для кнопок месяцев
-            document.querySelectorAll('.month-btn').forEach((btn, index) => {
-                const months = [4, 5, 6, 7, 8];
-                btn.setAttribute('data-month', months[index]);
-            });
-            
-            updateMenuDisplay();
-            updatePlaceStatuses();
-            
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-            document.getElementById('storeSaleDate').value = todayStr;
-            document.getElementById('printDate').value = todayStr;
-            
-            loadSavedData();
-            
-            updateAdminStats();
-            
-            showNotification('Добро пожаловать в ресторан "Кочевник"! 🎪');
-        });
-        
-        function loadSavedData() {
-            try {
-                const savedData = localStorage.getItem('kocevnikData');
-                
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    
-                    bookings = data.bookings || [];
-                    stock = data.stock || stock;
-                    tempStoreSales = data.tempStoreSales || {};
-                    storeSalesByDate = data.storeSalesByDate || {};
-                    storeRevenue = data.storeRevenue || 0;
-                    bookingsRevenue = data.bookingsRevenue || 0;
-                    totalRevenue = data.totalRevenue || 0;
-                    smallItemsAmount = data.smallItemsAmount || 0;
-                    
-                    showNotification('Данные загружены из памяти');
-                }
-            } catch (error) {
-                console.log('Не удалось загрузить сохраненные данные');
-            }
-        }
-        
-        function saveDataToLocalStorage() {
+        // LOCAL STORAGE FALLBACK
+        function saveToLocalStorage() {
             try {
                 const dataToSave = {
                     bookings: bookings,
@@ -3940,14 +4144,35 @@
                 console.error('Ошибка сохранения данных:', error);
             }
         }
-        
-        window.addEventListener('beforeunload', function() {
-            saveDataToLocalStorage();
+
+        // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+        window.addEventListener('load', async function() {
+            // Инициализируем Firebase
+            await initializeFirebase();
+            
+            // Устанавливаем data-month для кнопок месяцев
+            document.querySelectorAll('.month-btn').forEach((btn, index) => {
+                const months = [4, 5, 6, 7, 8];
+                btn.setAttribute('data-month', months[index]);
+            });
+            
+            updateMenuDisplay();
+            updatePlaceStatuses();
+            
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            document.getElementById('storeSaleDate').value = todayStr;
+            document.getElementById('printDate').value = todayStr;
+            
+            updateAdminStats();
+            
+            showNotification('Добро пожаловать в ресторан "Кочевник"! 🎪');
         });
         
-        setInterval(function() {
-            saveDataToLocalStorage();
-        }, 30000);
+        // Сохраняем данные при закрытии страницы
+        window.addEventListener('beforeunload', function() {
+            saveToLocalStorage();
+        });
     </script>
 </body>
 </html>
