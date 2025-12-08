@@ -221,6 +221,16 @@
             color: #f5e9d7;
         }
 
+        .btn-warning {
+            background: #ffa500;
+            color: #5c3d2e;
+        }
+
+        .btn-success {
+            background: #25D366;
+            color: white;
+        }
+
         /* КАССА И ДОХОДЫ */
         .income-calendar-view {
             margin-top: 20px;
@@ -1498,11 +1508,11 @@
                             </div>
                             
                             <div class="month-selector">
-                                <button class="month-btn active" onclick="setIncomeMonth(4)">Май</button>
-                                <button class="month-btn" onclick="setIncomeMonth(5)">Июнь</button>
-                                <button class="month-btn" onclick="setIncomeMonth(6)">Июль</button>
-                                <button class="month-btn" onclick="setIncomeMonth(7)">Август</button>
-                                <button class="month-btn" onclick="setIncomeMonth(8)">Сентябрь</button>
+                                <button class="month-btn active" data-month="4" onclick="setIncomeMonth(4)">Май</button>
+                                <button class="month-btn" data-month="5" onclick="setIncomeMonth(5)">Июнь</button>
+                                <button class="month-btn" data-month="6" onclick="setIncomeMonth(6)">Июль</button>
+                                <button class="month-btn" data-month="7" onclick="setIncomeMonth(7)">Август</button>
+                                <button class="month-btn" data-month="8" onclick="setIncomeMonth(8)">Сентябрь</button>
                             </div>
                             
                             <div class="admin-calendar-grid" id="incomeCalendarGrid">
@@ -1586,7 +1596,7 @@
                 </div>
                 
                 <div id="addGuestTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">Добавить гостя</h3>
+                    <h3 style="color: #d9a566; text-align: center;">Добавить/Редактировать гостя</h3>
                     
                     <div class="date-selector">
                         <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Выберите дату:</label>
@@ -1637,9 +1647,12 @@
                     </div>
                     
                     <div class="booking-actions">
-                        <button class="control-btn btn-primary" onclick="saveGuestBooking()">Сохрать</button>
+                        <button class="control-btn btn-primary" id="saveGuestBtn" onclick="saveGuestBooking()">Сохранить</button>
+                        <button class="control-btn btn-warning" id="updateGuestBtn" onclick="updateCurrentGuest()" style="display: none;">💾 Обновить</button>
                         <button class="control-btn btn-danger" onclick="clearGuestForm()">Очистить</button>
                     </div>
+                    
+                    <input type="hidden" id="editingGuestId" value="">
                 </div>
                 
                 <div id="viewGuestsTab" class="tab-content">
@@ -1660,11 +1673,11 @@
                             </div>
                             
                             <div class="month-selector">
-                                <button class="month-btn active" onclick="setViewGuestsMonth(4)">Май</button>
-                                <button class="month-btn" onclick="setViewGuestsMonth(5)">Июнь</button>
-                                <button class="month-btn" onclick="setViewGuestsMonth(6)">Июль</button>
-                                <button class="month-btn" onclick="setViewGuestsMonth(7)">Август</button>
-                                <button class="month-btn" onclick="setViewGuestsMonth(8)">Сентябрь</button>
+                                <button class="month-btn active" data-month="4" onclick="setViewGuestsMonth(4)">Май</button>
+                                <button class="month-btn" data-month="5" onclick="setViewGuestsMonth(5)">Июнь</button>
+                                <button class="month-btn" data-month="6" onclick="setViewGuestsMonth(6)">Июль</button>
+                                <button class="month-btn" data-month="7" onclick="setViewGuestsMonth(7)">Август</button>
+                                <button class="month-btn" data-month="8" onclick="setViewGuestsMonth(8)">Сентябрь</button>
                             </div>
                             
                             <div class="admin-calendar-grid" id="viewGuestsCalendarGrid">
@@ -1712,11 +1725,11 @@
                 
                 <div class="calendar-container">
                     <div class="month-selector">
-                        <button class="month-btn active" onclick="setBookingMonth(4)">Май</button>
-                        <button class="month-btn" onclick="setBookingMonth(5)">Июнь</button>
-                        <button class="month-btn" onclick="setBookingMonth(6)">Июль</button>
-                        <button class="month-btn" onclick="setBookingMonth(7)">Август</button>
-                        <button class="month-btn" onclick="setBookingMonth(8)">Сентябрь</button>
+                        <button class="month-btn active" data-month="4" onclick="setBookingMonth(4)">Май</button>
+                        <button class="month-btn" data-month="5" onclick="setBookingMonth(5)">Июнь</button>
+                        <button class="month-btn" data-month="6" onclick="setBookingMonth(6)">Июль</button>
+                        <button class="month-btn" data-month="7" onclick="setBookingMonth(7)">Август</button>
+                        <button class="month-btn" data-month="8" onclick="setBookingMonth(8)">Сентябрь</button>
                     </div>
                     
                     <div class="calendar-header">
@@ -2088,216 +2101,7 @@
     </div>
 
     <script>
-        // === FIREBASE CONFIG ===
-        const firebaseConfig = {
-            apiKey: "AIzaSyDuLtQIjy7OWWugFdBLxc8fSr2z6T3Eg3U",
-            authDomain: "restoran-58790.firebaseapp.com",
-            projectId: "restoran-58790",
-            storageBucket: "restoran-58790.firebasestorage.app",
-            messagingSenderId: "246650619946",
-            appId: "1:246650619946:web:6c183d977dc69d6aeadb53",
-            measurementId: "G-4Z7WM31CBF"
-        };
-
-        // Firebase variables
-        let db;
-        let firebaseInitialized = false;
-        const firebaseModules = {};
-
-        // Firebase collections
-        const COLLECTIONS = {
-            BOOKINGS: "bookings",
-            STOCK: "stock",
-            STORE_SALES: "store_sales",
-            DAILY_INCOME: "daily_income",
-            SETTINGS: "settings"
-        };
-
-        // === FIREBASE INITIALIZATION ===
-        async function initializeFirebase() {
-            try {
-                if (!firebaseInitialized) {
-                    // Import Firebase modules
-                    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
-                    const { getFirestore, collection, addDoc, getDocs, onSnapshot, doc, setDoc, getDoc, updateDoc, query, where, orderBy, Timestamp } = 
-                        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js');
-                    
-                    const app = initializeApp(firebaseConfig);
-                    db = getFirestore(app);
-                    
-                    // Store modules for later use
-                    Object.assign(firebaseModules, {
-                        collection, addDoc, getDocs, onSnapshot, doc, setDoc, 
-                        getDoc, updateDoc, query, where, orderBy, Timestamp
-                    });
-                    
-                    firebaseInitialized = true;
-                    console.log("✅ Firebase подключен!");
-                    
-                    // Load data from Firebase
-                    await loadDataFromFirebase();
-                    setupRealtimeListeners();
-                    
-                    showNotification("Firebase подключен! Данные загружены.");
-                }
-                return true;
-            } catch (error) {
-                console.error("❌ Ошибка Firebase:", error);
-                showNotification("Ошибка подключения к Firebase. Используется локальное хранилище.");
-                return false;
-            }
-        }
-
-        // === FIREBASE DATA FUNCTIONS ===
-        async function loadDataFromFirebase() {
-            if (!firebaseInitialized) return;
-            
-            try {
-                // Load bookings
-                const bookingsSnapshot = await firebaseModules.getDocs(firebaseModules.collection(db, COLLECTIONS.BOOKINGS));
-                bookings.length = 0;
-                bookingsSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    bookings.push({
-                        id: doc.id,
-                        ...data,
-                        date: data.date || '',
-                        place: data.place || '',
-                        total: data.total || 0,
-                        guestName: data.guestName || '',
-                        guestPhone: data.guestPhone || '',
-                        items: data.items || [],
-                        timestamp: data.timestamp || new Date().toLocaleString(),
-                        createdAt: data.createdAt || new Date()
-                    });
-                });
-                
-                // Load stock
-                const stockDoc = await firebaseModules.getDoc(firebaseModules.doc(db, COLLECTIONS.STOCK, "current"));
-                if (stockDoc.exists()) {
-                    Object.assign(stock, stockDoc.data());
-                }
-                
-                // Load store sales
-                const salesSnapshot = await firebaseModules.getDocs(firebaseModules.collection(db, COLLECTIONS.STORE_SALES));
-                storeSalesByDate = {};
-                salesSnapshot.forEach(doc => {
-                    const data = doc.data();
-                    if (data.date) {
-                        if (!storeSalesByDate[data.date]) {
-                            storeSalesByDate[data.date] = [];
-                        }
-                        storeSalesByDate[data.date].push(data);
-                    }
-                });
-                
-                // Calculate revenue
-                updateRevenue();
-                updatePlaceStatuses();
-                updateMenuDisplay();
-                updateAdminStats();
-                
-                console.log("📊 Данные загружены из Firebase");
-            } catch (error) {
-                console.error("Ошибка загрузки данных:", error);
-            }
-        }
-
-        function setupRealtimeListeners() {
-            if (!firebaseInitialized) return;
-            
-            // Realtime listener for bookings
-            const bookingsQuery = firebaseModules.collection(db, COLLECTIONS.BOOKINGS);
-            firebaseModules.onSnapshot(bookingsQuery, (snapshot) => {
-                bookings.length = 0;
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    bookings.push({
-                        id: doc.id,
-                        ...data,
-                        date: data.date || '',
-                        place: data.place || '',
-                        total: data.total || 0,
-                        guestName: data.guestName || '',
-                        guestPhone: data.guestPhone || '',
-                        items: data.items || [],
-                        timestamp: data.timestamp || new Date().toLocaleString(),
-                        createdAt: data.createdAt || new Date()
-                    });
-                });
-                
-                updateRevenue();
-                updatePlaceStatuses();
-                updateAdminStats();
-                console.log("🔄 Бронирования обновлены в реальном времени");
-            });
-            
-            // Realtime listener for stock
-            const stockDocRef = firebaseModules.doc(db, COLLECTIONS.STOCK, "current");
-            firebaseModules.onSnapshot(stockDocRef, (doc) => {
-                if (doc.exists()) {
-                    Object.assign(stock, doc.data());
-                    updateStockDisplay();
-                    updateMenuDisplay();
-                    console.log("🔄 Запасы обновлены в реальном времени");
-                }
-            });
-        }
-
-        async function saveBookingToFirebase(booking) {
-            try {
-                const docRef = await firebaseModules.addDoc(
-                    firebaseModules.collection(db, COLLECTIONS.BOOKINGS),
-                    {
-                        ...booking,
-                        createdAt: firebaseModules.Timestamp.now()
-                    }
-                );
-                console.log("✅ Бронирование сохранено в Firebase:", docRef.id);
-                return true;
-            } catch (error) {
-                console.error("❌ Ошибка сохранения бронирования:", error);
-                // Fallback to local storage
-                saveToLocalStorage();
-                return false;
-            }
-        }
-
-        async function saveStockToFirebase() {
-            try {
-                await firebaseModules.setDoc(
-                    firebaseModules.doc(db, COLLECTIONS.STOCK, "current"),
-                    stock
-                );
-                console.log("✅ Запасы сохранены в Firebase");
-                return true;
-            } catch (error) {
-                console.error("❌ Ошибка сохранения запасов:", error);
-                saveToLocalStorage();
-                return false;
-            }
-        }
-
-        async function saveStoreSalesToFirebase(salesData) {
-            try {
-                await firebaseModules.addDoc(
-                    firebaseModules.collection(db, COLLECTIONS.STORE_SALES),
-                    {
-                        ...salesData,
-                        timestamp: firebaseModules.Timestamp.now()
-                    }
-                );
-                console.log("✅ Продажи сохранены в Firebase");
-                return true;
-            } catch (error) {
-                console.error("❌ Ошибка сохранения продаж:", error);
-                saveToLocalStorage();
-                return false;
-            }
-        }
-
-        // === ORIGINAL CODE WITH FIREBASE INTEGRATION ===
-        // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+        // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
         let currentLanguage = 'RUS';
         let currentMonth = new Date().getMonth();
         let currentYear = new Date().getFullYear();
@@ -2312,6 +2116,7 @@
         let viewGuestsYear = new Date().getFullYear();
         
         let currentAdminLevel = null;
+        let editingGuestId = null;
         
         // WhatsApp номер
         const WHATSAPP_NUMBER = '79620742140';
@@ -2406,22 +2211,8 @@
         // Депозит за бронь
         const DEPOSIT_AMOUNT = 2000;
 
-        // === REVENUE CALCULATION ===
-        function updateRevenue() {
-            bookingsRevenue = bookings.reduce((sum, booking) => sum + booking.total, 0);
-            
-            storeRevenue = 0;
-            for (const date in storeSalesByDate) {
-                const sales = storeSalesByDate[date];
-                sales.forEach(sale => {
-                    storeRevenue += sale.total || 0;
-                });
-            }
-            
-            totalRevenue = bookingsRevenue + storeRevenue;
-        }
-
-        // === ORIGINAL FUNCTIONS WITH FIREBASE INTEGRATION ===
+        // === ОСНОВНЫЕ ФУНКЦИИ ===
+        
         function selectLanguage(lang) {
             currentLanguage = lang;
             document.getElementById('home').classList.remove('active');
@@ -2430,9 +2221,15 @@
             document.getElementById(lang).classList.add('active');
             
             if (lang === 'RUS') {
-                showSection('main', document.querySelector('#RUS .nav-buttons button'));
+                const firstButton = document.querySelector('#RUS .nav-buttons button');
+                if (firstButton) {
+                    showSection('main', firstButton);
+                }
             } else {
-                showSection('main-kyrg', document.querySelector('#KYRG .nav-buttons button'));
+                const firstButton = document.querySelector('#KYRG .nav-buttons button');
+                if (firstButton) {
+                    showSection('main-kyrg', firstButton);
+                }
             }
             
             updateMenuDisplay();
@@ -2445,13 +2242,18 @@
                 section.classList.remove('active');
             });
             
-            document.getElementById(sectionId).classList.add('active');
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
             
             const buttons = document.querySelectorAll(`#${currentLanguage} .nav-buttons button`);
             buttons.forEach(btn => {
                 btn.classList.remove('active');
             });
-            button.classList.add('active');
+            if (button) {
+                button.classList.add('active');
+            }
             
             if (sectionId === 'places' || sectionId === 'places-kyrg') {
                 updatePlaceStatuses();
@@ -2466,8 +2268,6 @@
         function closeFullscreen() {
             document.getElementById('fullscreenOverlay').style.display = 'none';
         }
-        
-        // ФУНКЦИИ ДЛЯ СИСТЕМЫ БРОНИРОВАНИЯ
         
         function openBookingModal(place) {
             selectedPlace = place;
@@ -2492,6 +2292,8 @@
             resetOrder();
         }
         
+        // === ФУНКЦИИ КАЛЕНДАРЯ БРОНИРОВАНИЯ ===
+        
         function updateBookingCalendar() {
             const monthNames = [
                 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
@@ -2506,6 +2308,8 @@
             const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
             
             const calendarGrid = document.getElementById('bookingCalendarGrid');
+            if (!calendarGrid) return;
+            
             calendarGrid.innerHTML = '';
             
             const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
@@ -2572,6 +2376,7 @@
             monthButtons.forEach(btn => {
                 btn.classList.remove('active');
             });
+            
             event.target.classList.add('active');
             
             updateBookingCalendar();
@@ -2580,8 +2385,15 @@
         function changeBookingMonth(direction) {
             currentMonth += direction;
             
-            if (currentMonth < 4) currentMonth = 4;
-            if (currentMonth > 8) currentMonth = 8;
+            if (currentMonth < 4) {
+                currentMonth = 8;
+                currentYear--;
+            }
+            
+            if (currentMonth > 8) {
+                currentMonth = 4;
+                currentYear++;
+            }
             
             updateBookingCalendar();
         }
@@ -2621,6 +2433,8 @@
             selectDateFromInput(todayStr);
         }
         
+        // === ФУНКЦИИ МЕНЮ ===
+        
         function generateMenuForBooking() {
             // Напитки
             const drinks = ['cola', 'pepsi', 'fanta', 'sprite', 'water'];
@@ -2658,6 +2472,8 @@
         
         function changeItemQuantity(item, change) {
             const quantityElement = document.getElementById(`${item}-quantity`);
+            if (!quantityElement) return;
+            
             let quantity = parseInt(quantityElement.textContent) || 0;
             
             quantity += change;
@@ -2675,6 +2491,8 @@
             const orderSummary = document.getElementById('orderSummary');
             const orderTotal = document.getElementById('orderTotal');
             
+            if (!orderSummary || !orderTotal) return;
+            
             let summaryHTML = '';
             let total = DEPOSIT_AMOUNT;
             
@@ -2686,16 +2504,19 @@
             `;
             
             for (const item in prices) {
-                const quantity = parseInt(document.getElementById(`${item}-quantity`).textContent) || 0;
-                if (quantity > 0) {
-                    const itemTotal = prices[item] * quantity;
-                    total += itemTotal;
-                    summaryHTML += `
-                        <div class="summary-item">
-                            <span>${getItemName(item)} x${quantity}</span>
-                            <span>${itemTotal} сом</span>
-                        </div>
-                    `;
+                const quantityElement = document.getElementById(`${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        summaryHTML += `
+                            <div class="summary-item">
+                                <span>${getItemName(item)} x${quantity}</span>
+                                <span>${itemTotal} сом</span>
+                            </div>
+                        `;
+                    }
                 }
             }
             
@@ -2717,7 +2538,10 @@
             
             selectedDate = null;
             selectedPlace = '';
-            document.getElementById('orderTotal').textContent = '0 сом';
+            const orderTotal = document.getElementById('orderTotal');
+            if (orderTotal) {
+                orderTotal.textContent = '0 сом';
+            }
         }
         
         function sendToWhatsApp(orderDetails) {
@@ -2795,19 +2619,24 @@
             const orderItems = [];
             
             for (const item in prices) {
-                const quantity = parseInt(document.getElementById(`${item}-quantity`).textContent) || 0;
-                if (quantity > 0) {
-                    const itemTotal = prices[item] * quantity;
-                    total += itemTotal;
-                    orderItems.push({
-                        name: getItemName(item),
-                        itemId: item,
-                        quantity: quantity,
-                        price: prices[item],
-                        total: itemTotal
-                    });
-                    
-                    stock[item] -= quantity;
+                const quantityElement = document.getElementById(`${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        orderItems.push({
+                            name: getItemName(item),
+                            itemId: item,
+                            quantity: quantity,
+                            price: prices[item],
+                            total: itemTotal
+                        });
+                        
+                        if (stock[item] !== undefined) {
+                            stock[item] -= quantity;
+                        }
+                    }
                 }
             }
             
@@ -2838,36 +2667,31 @@
                         createdAt: new Date()
                     };
                     
-                    // Save to Firebase
-                    const saved = await saveBookingToFirebase(booking);
+                    bookings.push(booking);
+                    bookingsRevenue += total;
+                    totalRevenue = bookingsRevenue + storeRevenue;
                     
-                    if (saved) {
-                        // Save stock changes to Firebase
-                        await saveStockToFirebase();
-                        
-                        bookingsRevenue += total;
-                        totalRevenue = bookingsRevenue + storeRevenue;
-                        
-                        updateAdminStats();
-                        updateStockDisplay();
-                        updatePlaceStatuses();
-                        updateMenuDisplay();
-                        
-                        document.getElementById('whatsappNotification').style.display = 'block';
-                        
-                        showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
-                        
-                        setTimeout(() => {
-                            closeBookingModal();
-                        }, 5000);
-                    }
+                    updateAdminStats();
+                    updateStockDisplay();
+                    updatePlaceStatuses();
+                    updateMenuDisplay();
+                    
+                    document.getElementById('whatsappNotification').style.display = 'block';
+                    
+                    showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
+                    
+                    setTimeout(() => {
+                        closeBookingModal();
+                    }, 5000);
+                    
+                    saveToLocalStorage();
                 }
             } catch (error) {
                 showNotification('Ошибка при отправке в WhatsApp. Пожалуйста, свяжитесь с администратором по телефону.');
             }
         }
         
-        // ФУНКЦИИ ДЛЯ ОТОБРАЖЕНИЯ МЕНЮ
+        // === ФУНКЦИИ ОТОБРАЖЕНИЯ МЕНЮ ===
         
         function updateMenuDisplay() {
             updateRussianMenu();
@@ -2937,7 +2761,7 @@
                 `;
             }
             
-            // Энергетики (только flash, drive, nitro)
+            // Энергетики
             const energyContainer = document.getElementById('menu-energy');
             if (energyContainer) {
                 energyContainer.innerHTML = `
@@ -3032,7 +2856,7 @@
                 `;
             }
             
-            // Энергетики (только flash, drive, nitro)
+            // Энергетики
             const energyContainer = document.getElementById('menu-energy-kyrg');
             if (energyContainer) {
                 energyContainer.innerHTML = `
@@ -3064,7 +2888,8 @@
             }
         }
         
-        // ФУНКЦИИ ДЛЯ ОБНОВЛЕНИЯ СТАТУСОВ МЕСТ
+        // === ФУНКЦИИ СТАТУСОВ МЕСТ ===
+        
         function updatePlaceStatuses() {
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
@@ -3103,7 +2928,8 @@
             }
         }
         
-        // ФУНКЦИИ ДЛЯ АДМИНИСТРАТИВНОЙ ПАНЕЛИ
+        // === ФУНКЦИИ АДМИНИСТРАТИВНОЙ ПАНЕЛИ ===
+        
         function openAdminModal() {
             document.getElementById('adminModal').style.display = 'block';
             document.getElementById('adminLogin').style.display = 'block';
@@ -3114,10 +2940,12 @@
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
             currentAdminLevel = null;
+            editingGuestId = null;
+            resetEditMode();
         }
         
-        function checkAdminPassword(event) {
-            if (event && event.key !== 'Enter') return;
+        function checkAdminPassword(e) {
+            if (e && e.key && e.key !== 'Enter') return;
             
             const password = document.getElementById('adminPassword').value;
             
@@ -3147,8 +2975,14 @@
                 content.classList.remove('active');
             });
             
-            document.getElementById(`${tabName}Tab`).classList.add('active');
-            event.target.classList.add('active');
+            const targetTab = document.getElementById(`${tabName}Tab`);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             if (tabName === 'cash') {
                 updateAdminStats();
@@ -3162,6 +2996,7 @@
                 const todayStr = today.toISOString().split('T')[0];
                 document.getElementById('guestDateInput').value = todayStr;
                 updateAvailablePlaces(todayStr);
+                resetEditMode();
             } else if (tabName === 'viewGuests') {
                 updateViewGuestsCalendar();
             }
@@ -3170,17 +3005,25 @@
         function updateAdminStats() {
             totalRevenue = bookingsRevenue + storeRevenue;
             
-            document.getElementById('totalRevenue').textContent = `${totalRevenue} сом`;
-            document.getElementById('bookingsRevenue').textContent = `${bookingsRevenue} сом`;
-            document.getElementById('storeRevenue').textContent = `${storeRevenue} сом`;
-            document.getElementById('totalBookings').textContent = bookings.length;
+            const totalRevenueElement = document.getElementById('totalRevenue');
+            const bookingsRevenueElement = document.getElementById('bookingsRevenue');
+            const storeRevenueElement = document.getElementById('storeRevenue');
+            const totalBookingsElement = document.getElementById('totalBookings');
+            
+            if (totalRevenueElement) totalRevenueElement.textContent = `${totalRevenue} сом`;
+            if (bookingsRevenueElement) bookingsRevenueElement.textContent = `${bookingsRevenue} сом`;
+            if (storeRevenueElement) storeRevenueElement.textContent = `${storeRevenue} сом`;
+            if (totalBookingsElement) totalBookingsElement.textContent = bookings.length;
         }
         
-        // ФУНКЦИИ ДЛЯ КАССЫ (ДОХОДЫ)
+        // === ФУНКЦИИ КАССЫ ===
+        
         function showIncomeCalendar(type) {
             incomeType = type;
             const incomeView = document.getElementById('incomeCalendarView');
-            incomeView.style.display = 'block';
+            if (incomeView) {
+                incomeView.style.display = 'block';
+            }
             updateIncomeCalendar();
         }
         
@@ -3190,16 +3033,18 @@
                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
             ];
             
-            document.getElementById('incomeCalendarMonth').textContent = 
-                `${monthNames[incomeMonth]} ${incomeYear}`;
+            const incomeCalendarMonth = document.getElementById('incomeCalendarMonth');
+            if (incomeCalendarMonth) {
+                incomeCalendarMonth.textContent = `${monthNames[incomeMonth]} ${incomeYear}`;
+            }
             
             updateCalendarGrid('incomeCalendarGrid', incomeMonth, incomeYear, true);
             
-            // Обновляем активные кнопки месяцев
             const monthButtons = document.querySelectorAll('#incomeCalendarView .month-btn');
             monthButtons.forEach(btn => {
                 btn.classList.remove('active');
-                if (parseInt(btn.getAttribute('data-month')) === incomeMonth) {
+                const month = parseInt(btn.getAttribute('data-month'));
+                if (month === incomeMonth) {
                     btn.classList.add('active');
                 }
             });
@@ -3231,23 +3076,26 @@
             updateIncomeCalendar();
         }
         
-        // ФУНКЦИИ ДЛЯ ПРОСМОТРА ГОСТЕЙ
+        // === ФУНКЦИИ ПРОСМОТРА ГОСТЕЙ ===
+        
         function updateViewGuestsCalendar() {
             const monthNames = [
                 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
             ];
             
-            document.getElementById('viewGuestsCalendarMonth').textContent = 
-                `${monthNames[viewGuestsMonth]} ${viewGuestsYear}`;
+            const viewGuestsCalendarMonth = document.getElementById('viewGuestsCalendarMonth');
+            if (viewGuestsCalendarMonth) {
+                viewGuestsCalendarMonth.textContent = `${monthNames[viewGuestsMonth]} ${viewGuestsYear}`;
+            }
             
             updateCalendarGrid('viewGuestsCalendarGrid', viewGuestsMonth, viewGuestsYear, false);
             
-            // Обновляем активные кнопки месяцев
             const monthButtons = document.querySelectorAll('#viewGuestsCalendarView .month-btn');
             monthButtons.forEach(btn => {
                 btn.classList.remove('active');
-                if (parseInt(btn.getAttribute('data-month')) === viewGuestsMonth) {
+                const month = parseInt(btn.getAttribute('data-month'));
+                if (month === viewGuestsMonth) {
                     btn.classList.add('active');
                 }
             });
@@ -3279,7 +3127,8 @@
             updateViewGuestsCalendar();
         }
         
-        // ОБЩАЯ ФУНКЦИЯ ОБНОВЛЕНИЯ КАЛЕНДАРЯ
+        // === ОБЩАЯ ФУНКЦИЯ КАЛЕНДАРЯ ===
+        
         function updateCalendarGrid(gridId, month, year, isIncomeCalendar) {
             const firstDay = new Date(year, month, 1);
             const lastDay = new Date(year, month + 1, 0);
@@ -3287,6 +3136,8 @@
             const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
             
             const calendarGrid = document.getElementById(gridId);
+            if (!calendarGrid) return;
+            
             calendarGrid.innerHTML = '';
             
             const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
@@ -3369,6 +3220,7 @@
         
         function showIncomeDetails(dateStr, dateIncome) {
             const incomeDetails = document.getElementById('incomeDetails');
+            if (!incomeDetails) return;
             
             if (dateIncome === 0) {
                 incomeDetails.innerHTML = `
@@ -3423,6 +3275,7 @@
         
         function showGuestDetails(dateStr, dateBookings) {
             const guestDateDetails = document.getElementById('guestDateDetails');
+            if (!guestDateDetails) return;
             
             if (dateBookings.length === 0) {
                 guestDateDetails.innerHTML = `
@@ -3478,6 +3331,10 @@
                                                 </ul>
                                             </div>
                                         ` : ''}
+                                        <div class="guest-actions">
+                                            <button class="btn-warning" onclick="editGuestFromView(${bookings.indexOf(booking)})">✏️ Редактировать</button>
+                                            <button class="btn-danger" onclick="deleteGuest(${bookings.indexOf(booking)})">🗑️ Удалить</button>
+                                        </div>
                                     </div>
                                 `).join('')}
                             </div>
@@ -3501,8 +3358,243 @@
             }
         }
         
-        // ФУНКЦИИ ДЛЯ УПРАВЛЕНИЯ ЗАПАСАМИ
-        async function updateStockDisplay() {
+        // === ФУНКЦИИ РЕДАКТИРОВАНИЯ ГОСТЕЙ ===
+        
+        function editGuestFromView(bookingIndex) {
+            if (bookingIndex < 0 || bookingIndex >= bookings.length) return;
+            
+            const booking = bookings[bookingIndex];
+            editingGuestId = bookingIndex;
+            
+            // Заполняем форму редактирования
+            document.getElementById('guestName').value = booking.guestName;
+            document.getElementById('guestPhone').value = booking.guestPhone;
+            document.getElementById('guestDateInput').value = booking.date;
+            
+            // Выбираем место
+            const placeSelect = document.getElementById('guestPlace');
+            placeSelect.innerHTML = '<option value="">Выберите место</option>';
+            
+            // Добавляем все места, текущее помечаем как выбранное
+            allPlaces.forEach(place => {
+                const option = document.createElement('option');
+                option.value = place;
+                option.textContent = place;
+                if (place === booking.place) {
+                    option.selected = true;
+                }
+                placeSelect.appendChild(option);
+            });
+            
+            // Сбрасываем количество блюд
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`guest-${item}-quantity`);
+                if (quantityElement) {
+                    quantityElement.textContent = '0';
+                }
+            }
+            
+            // Заполняем блюда
+            if (booking.items && booking.items.length > 0) {
+                booking.items.forEach(item => {
+                    const quantityElement = document.getElementById(`guest-${item.itemId}-quantity`);
+                    if (quantityElement) {
+                        quantityElement.textContent = item.quantity;
+                    }
+                });
+            }
+            
+            // Обновляем сумму
+            updateGuestAmount();
+            
+            // Переключаемся на вкладку редактирования
+            switchAdminTab('addGuest');
+            
+            // Меняем заголовок
+            const tabTitle = document.querySelector('#addGuestTab h3');
+            if (tabTitle) {
+                tabTitle.textContent = '✏️ Редактировать гостя';
+            }
+            
+            // Показываем кнопку обновления
+            const saveBtn = document.getElementById('saveGuestBtn');
+            const updateBtn = document.getElementById('updateGuestBtn');
+            if (saveBtn && updateBtn) {
+                saveBtn.style.display = 'none';
+                updateBtn.style.display = 'block';
+            }
+            
+            showNotification(`Редактирование гостя: ${booking.guestName}`);
+        }
+        
+        function updateCurrentGuest() {
+            if (editingGuestId === null || editingGuestId < 0 || editingGuestId >= bookings.length) {
+                showNotification('Ошибка: гость не найден');
+                return;
+            }
+            
+            const guestName = document.getElementById('guestName').value.trim();
+            const guestPhone = document.getElementById('guestPhone').value.trim();
+            const guestPlace = document.getElementById('guestPlace').value;
+            const guestDate = document.getElementById('guestDateInput').value;
+            
+            if (!guestName) {
+                showNotification('Введите имя гостя');
+                return;
+            }
+            
+            if (!guestPhone) {
+                showNotification('Введите телефон гостя');
+                return;
+            }
+            
+            if (!guestPlace) {
+                showNotification('Выберите место для бронирования');
+                return;
+            }
+            
+            if (!guestDate) {
+                showNotification('Выберите дату бронирования');
+                return;
+            }
+            
+            // Проверяем, не занято ли место на эту дату другим гостем
+            const isPlaceBusy = bookings.some((booking, index) => 
+                index !== editingGuestId && 
+                booking.date === guestDate && 
+                booking.place === guestPlace
+            );
+            
+            if (isPlaceBusy) {
+                showNotification('Выбранное место уже занято на эту дату');
+                return;
+            }
+            
+            let total = DEPOSIT_AMOUNT;
+            const orderItems = [];
+            
+            // Восстанавливаем старые запасы
+            const oldBooking = bookings[editingGuestId];
+            if (oldBooking.items) {
+                oldBooking.items.forEach(item => {
+                    if (stock[item.itemId] !== undefined) {
+                        stock[item.itemId] += item.quantity;
+                    }
+                });
+            }
+            
+            // Собираем новый заказ
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`guest-${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        orderItems.push({
+                            name: getItemName(item),
+                            itemId: item,
+                            quantity: quantity,
+                            price: prices[item],
+                            total: itemTotal
+                        });
+                        
+                        if (stock[item] !== undefined) {
+                            stock[item] -= quantity;
+                        }
+                    }
+                }
+            }
+            
+            // Обновляем бронирование
+            bookings[editingGuestId] = {
+                ...oldBooking,
+                place: guestPlace,
+                date: guestDate,
+                items: orderItems,
+                total: total,
+                guestName: guestName,
+                guestPhone: guestPhone,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            // Пересчитываем доходы
+            updateRevenue();
+            
+            // Обновляем отображение
+            updateAdminStats();
+            updateStockDisplay();
+            updateMenuDisplay();
+            updatePlaceStatuses();
+            
+            // Сбрасываем форму
+            clearGuestForm();
+            resetEditMode();
+            
+            // Сохраняем изменения
+            saveToLocalStorage();
+            
+            showNotification(`Гость "${guestName}" обновлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
+        }
+        
+        function deleteGuest(bookingIndex) {
+            if (bookingIndex < 0 || bookingIndex >= bookings.length) return;
+            
+            const booking = bookings[bookingIndex];
+            
+            if (confirm(`Удалить бронирование гостя "${booking.guestName}"?\nМесто: ${booking.place}\nДата: ${booking.date}\nСумма: ${booking.total} сом`)) {
+                // Возвращаем запасы
+                if (booking.items) {
+                    booking.items.forEach(item => {
+                        if (stock[item.itemId] !== undefined) {
+                            stock[item.itemId] += item.quantity;
+                        }
+                    });
+                }
+                
+                // Удаляем бронирование
+                bookings.splice(bookingIndex, 1);
+                
+                // Пересчитываем доходы
+                updateRevenue();
+                
+                // Обновляем отображение
+                updateAdminStats();
+                updateStockDisplay();
+                updateMenuDisplay();
+                updatePlaceStatuses();
+                
+                // Обновляем календарь гостей
+                updateViewGuestsCalendar();
+                
+                // Сохраняем изменения
+                saveToLocalStorage();
+                
+                showNotification(`Бронирование гостя "${booking.guestName}" удалено`);
+            }
+        }
+        
+        function resetEditMode() {
+            editingGuestId = null;
+            
+            // Восстанавливаем заголовок
+            const tabTitle = document.querySelector('#addGuestTab h3');
+            if (tabTitle) {
+                tabTitle.textContent = 'Добавить/Редактировать гостя';
+            }
+            
+            // Восстанавливаем кнопки
+            const saveBtn = document.getElementById('saveGuestBtn');
+            const updateBtn = document.getElementById('updateGuestBtn');
+            if (saveBtn && updateBtn) {
+                saveBtn.style.display = 'block';
+                updateBtn.style.display = 'none';
+            }
+        }
+        
+        // === ФУНКЦИИ УПРАВЛЕНИЯ ЗАПАСАМИ ===
+        
+        function updateStockDisplay() {
             const stockManagement = document.querySelector('#stockTab .stock-management');
             if (!stockManagement) return;
             
@@ -3528,22 +3620,20 @@
             stockManagement.innerHTML = stockHTML;
         }
         
-        async function updateStock(item, change) {
-            stock[item] += change;
-            if (stock[item] < 0) stock[item] = 0;
-            
-            updateStockDisplay();
-            updateMenuDisplay();
-            
-            // Save to Firebase
-            if (firebaseInitialized) {
-                await saveStockToFirebase();
+        function updateStock(item, change) {
+            if (stock[item] !== undefined) {
+                stock[item] += change;
+                if (stock[item] < 0) stock[item] = 0;
+                
+                updateStockDisplay();
+                updateMenuDisplay();
+                saveToLocalStorage();
+                showNotification(`${getItemName(item)} обновлен: ${stock[item]} шт.`);
             }
-            
-            showNotification(`${getItemName(item)} обновлен: ${stock[item]} шт.`);
         }
         
-        // ФУНКЦИИ ДЛЯ МАГАЗИНА
+        // === ФУНКЦИИ МАГАЗИНА ===
+        
         function updateStoreDisplay() {
             const storeItems = document.getElementById('storeItems');
             if (!storeItems) return;
@@ -3563,7 +3653,7 @@
                         </div>
                         <div class="store-stats">
                             <div class="store-quantity">
-                                <div>Склад: ${stock[item]}</div>
+                                <div>Склад: ${stock[item] || 0}</div>
                             </div>
                             <div class="store-sold">
                                 <div>Продано: ${soldToday}</div>
@@ -3584,7 +3674,7 @@
             updateStoreSummary();
         }
         
-        async function sellStoreItem(item, quantity) {
+        function sellStoreItem(item, quantity) {
             if (quantity < 0 && tempStoreSales[item] + quantity < 0) {
                 showNotification('Нельзя продать отрицательное количество');
                 return;
@@ -3620,36 +3710,50 @@
             
             currentTotal += smallItemsAmount;
             
-            document.getElementById('currentStoreTotal').textContent = `${currentTotal} сом`;
-            document.getElementById('storeTotal').textContent = `${storeRevenue} сом`;
+            const currentStoreTotal = document.getElementById('currentStoreTotal');
+            const storeTotalElement = document.getElementById('storeTotal');
+            
+            if (currentStoreTotal) currentStoreTotal.textContent = `${currentTotal} сом`;
+            if (storeTotalElement) storeTotalElement.textContent = `${storeRevenue} сом`;
         }
         
         function changeSmallItemAmount(change) {
             smallItemsAmount += change;
             if (smallItemsAmount < 0) smallItemsAmount = 0;
             
-            document.getElementById('smallItemAmount').textContent = `${smallItemsAmount} сом`;
+            const smallItemAmountElement = document.getElementById('smallItemAmount');
+            if (smallItemAmountElement) {
+                smallItemAmountElement.textContent = `${smallItemsAmount} сом`;
+            }
             updateStoreSummary();
         }
         
         function setCustomSmallAmount() {
-            const customAmount = parseInt(document.getElementById('customSmallAmount').value);
+            const customAmountInput = document.getElementById('customSmallAmount');
+            if (!customAmountInput) return;
+            
+            const customAmount = parseInt(customAmountInput.value);
             if (!isNaN(customAmount) && customAmount >= 0) {
                 smallItemsAmount = customAmount;
-                document.getElementById('smallItemAmount').textContent = `${smallItemsAmount} сом`;
-                document.getElementById('customSmallAmount').value = '';
+                const smallItemAmountElement = document.getElementById('smallItemAmount');
+                if (smallItemAmountElement) {
+                    smallItemAmountElement.textContent = `${smallItemsAmount} сом`;
+                }
+                customAmountInput.value = '';
                 updateStoreSummary();
                 showNotification(`Мелкие покупки установлены: ${smallItemsAmount} сом`);
             }
         }
         
-        async function saveStoreSales() {
+        function saveStoreSales() {
             const dateInput = document.getElementById('storeSaleDate');
-            let saleDate = dateInput.value;
+            let saleDate = dateInput ? dateInput.value : '';
             
             if (!saleDate) {
                 saleDate = new Date().toISOString().split('T')[0];
-                dateInput.value = saleDate;
+                if (dateInput) {
+                    dateInput.value = saleDate;
+                }
             }
             
             let hasSales = false;
@@ -3690,27 +3794,26 @@
             
             updateAdminStats();
             
-            // Save to Firebase
-            if (firebaseInitialized) {
-                await saveStoreSalesToFirebase(salesData);
-                await saveStockToFirebase();
-            }
-            
             tempStoreSales = {};
             smallItemsAmount = 0;
             
             updateStoreDisplay();
-            document.getElementById('storeSalesMessage').innerHTML = `
-                <div style="color: #25D366; font-weight: bold;">
-                    ✅ Продажи за ${formatDate(saleDate)} сохранены!<br>
-                    Общая сумма: ${total} сом
-                </div>
-            `;
+            const storeSalesMessage = document.getElementById('storeSalesMessage');
+            if (storeSalesMessage) {
+                storeSalesMessage.innerHTML = `
+                    <div style="color: #25D366; font-weight: bold;">
+                        ✅ Продажи за ${formatDate(saleDate)} сохранены!<br>
+                        Общая сумма: ${total} сом
+                    </div>
+                `;
+            }
             
+            saveToLocalStorage();
             showNotification(`Продажи сохранены: ${total} сом`);
         }
         
-        // ФУНКЦИИ ДЛЯ ДОБАВЛЕНИЯ ГОСТЕЙ
+        // === ФУНКЦИИ ДОБАВЛЕНИЯ ГОСТЕЙ ===
+        
         function generateGuestMenu() {
             const menuItemsContainer = document.getElementById('guestMenuItems');
             if (!menuItemsContainer) return;
@@ -3736,6 +3839,8 @@
         
         function changeGuestItemQuantity(item, change) {
             const quantityElement = document.getElementById(`guest-${item}-quantity`);
+            if (!quantityElement) return;
+            
             let quantity = parseInt(quantityElement.textContent) || 0;
             
             quantity += change;
@@ -3749,13 +3854,19 @@
             let total = DEPOSIT_AMOUNT;
             
             for (const item in prices) {
-                const quantity = parseInt(document.getElementById(`guest-${item}-quantity`).textContent) || 0;
-                if (quantity > 0) {
-                    total += prices[item] * quantity;
+                const quantityElement = document.getElementById(`guest-${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        total += prices[item] * quantity;
+                    }
                 }
             }
             
-            document.getElementById('guestAmount').value = total;
+            const guestAmountInput = document.getElementById('guestAmount');
+            if (guestAmountInput) {
+                guestAmountInput.value = total;
+            }
         }
         
         function updateAvailablePlaces(dateStr) {
@@ -3763,6 +3874,8 @@
             const busyPlaces = bookingsForDate.map(booking => booking.place);
             
             const placeSelect = document.getElementById('guestPlace');
+            if (!placeSelect) return;
+            
             placeSelect.innerHTML = '<option value="">Выберите место</option>';
             
             allPlaces.forEach(place => {
@@ -3789,11 +3902,14 @@
         function showToday() {
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
-            document.getElementById('guestDateInput').value = todayStr;
+            const guestDateInput = document.getElementById('guestDateInput');
+            if (guestDateInput) {
+                guestDateInput.value = todayStr;
+            }
             updateAvailablePlaces(todayStr);
         }
         
-        async function saveGuestBooking() {
+        function saveGuestBooking() {
             const guestName = document.getElementById('guestName').value.trim();
             const guestPhone = document.getElementById('guestPhone').value.trim();
             const guestPlace = document.getElementById('guestPlace').value;
@@ -3832,19 +3948,24 @@
             const orderItems = [];
             
             for (const item in prices) {
-                const quantity = parseInt(document.getElementById(`guest-${item}-quantity`).textContent) || 0;
-                if (quantity > 0) {
-                    const itemTotal = prices[item] * quantity;
-                    total += itemTotal;
-                    orderItems.push({
-                        name: getItemName(item),
-                        itemId: item,
-                        quantity: quantity,
-                        price: prices[item],
-                        total: itemTotal
-                    });
-                    
-                    stock[item] -= quantity;
+                const quantityElement = document.getElementById(`guest-${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        orderItems.push({
+                            name: getItemName(item),
+                            itemId: item,
+                            quantity: quantity,
+                            price: prices[item],
+                            total: itemTotal
+                        });
+                        
+                        if (stock[item] !== undefined) {
+                            stock[item] -= quantity;
+                        }
+                    }
                 }
             }
             
@@ -3862,24 +3983,18 @@
                 createdAt: new Date()
             };
             
-            // Save to Firebase
-            const saved = await saveBookingToFirebase(booking);
+            bookings.push(booking);
+            bookingsRevenue += total;
+            totalRevenue = bookingsRevenue + storeRevenue;
             
-            if (saved) {
-                // Save stock changes to Firebase
-                await saveStockToFirebase();
-                
-                bookingsRevenue += total;
-                totalRevenue = bookingsRevenue + storeRevenue;
-                
-                updateAdminStats();
-                updateStockDisplay();
-                updateMenuDisplay();
-                updatePlaceStatuses();
-                clearGuestForm();
-                
-                showNotification(`Гость "${guestName}" добавлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
-            }
+            updateAdminStats();
+            updateStockDisplay();
+            updateMenuDisplay();
+            updatePlaceStatuses();
+            clearGuestForm();
+            
+            saveToLocalStorage();
+            showNotification(`Гость "${guestName}" добавлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
         }
         
         function clearGuestForm() {
@@ -3899,11 +4014,17 @@
             const todayStr = today.toISOString().split('T')[0];
             document.getElementById('guestDateInput').value = todayStr;
             updateAvailablePlaces(todayStr);
+            
+            resetEditMode();
         }
         
-        // ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА
+        // === ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА ===
+        
         function printDayReport() {
-            const printDate = document.getElementById('printDate').value;
+            const printDateInput = document.getElementById('printDate');
+            if (!printDateInput) return;
+            
+            const printDate = printDateInput.value;
             if (!printDate) {
                 showNotification('Выберите дату для печати отчета');
                 return;
@@ -4105,7 +4226,8 @@
                   `📊 ИТОГО: ${totalDay} сом`);
         }
         
-        // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
+        
         function formatDate(dateStr) {
             const date = new Date(dateStr);
             return date.toLocaleDateString('ru-RU', {
@@ -4117,6 +4239,8 @@
         
         function showNotification(message) {
             const notification = document.getElementById('notification');
+            if (!notification) return;
+            
             notification.textContent = message;
             notification.classList.add('show');
             
@@ -4125,7 +4249,6 @@
             }, 3000);
         }
         
-        // LOCAL STORAGE FALLBACK
         function saveToLocalStorage() {
             try {
                 const dataToSave = {
@@ -4136,7 +4259,8 @@
                     storeRevenue: storeRevenue,
                     bookingsRevenue: bookingsRevenue,
                     totalRevenue: totalRevenue,
-                    smallItemsAmount: smallItemsAmount
+                    smallItemsAmount: smallItemsAmount,
+                    lastSaved: new Date().toISOString()
                 };
                 
                 localStorage.setItem('kocevnikData', JSON.stringify(dataToSave));
@@ -4144,32 +4268,70 @@
                 console.error('Ошибка сохранения данных:', error);
             }
         }
-
-        // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
-        window.addEventListener('load', async function() {
-            // Инициализируем Firebase
-            await initializeFirebase();
+        
+        function loadFromLocalStorage() {
+            try {
+                const savedData = localStorage.getItem('kocevnikData');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    
+                    bookings = data.bookings || [];
+                    stock = data.stock || {};
+                    tempStoreSales = data.tempStoreSales || {};
+                    storeSalesByDate = data.storeSalesByDate || {};
+                    storeRevenue = data.storeRevenue || 0;
+                    bookingsRevenue = data.bookingsRevenue || 0;
+                    totalRevenue = data.totalRevenue || 0;
+                    smallItemsAmount = data.smallItemsAmount || 0;
+                    
+                    updateRevenue();
+                    updateMenuDisplay();
+                    updatePlaceStatuses();
+                    updateAdminStats();
+                    
+                    console.log('Данные загружены из localStorage');
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+            }
+        }
+        
+        function updateRevenue() {
+            bookingsRevenue = bookings.reduce((sum, booking) => sum + booking.total, 0);
             
-            // Устанавливаем data-month для кнопок месяцев
-            document.querySelectorAll('.month-btn').forEach((btn, index) => {
-                const months = [4, 5, 6, 7, 8];
-                btn.setAttribute('data-month', months[index]);
-            });
+            storeRevenue = 0;
+            for (const date in storeSalesByDate) {
+                const sales = storeSalesByDate[date];
+                sales.forEach(sale => {
+                    storeRevenue += sale.total || 0;
+                });
+            }
+            
+            totalRevenue = bookingsRevenue + storeRevenue;
+        }
+        
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        
+        window.addEventListener('load', function() {
+            loadFromLocalStorage();
             
             updateMenuDisplay();
             updatePlaceStatuses();
             
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
-            document.getElementById('storeSaleDate').value = todayStr;
-            document.getElementById('printDate').value = todayStr;
+            
+            const storeSaleDateInput = document.getElementById('storeSaleDate');
+            const printDateInput = document.getElementById('printDate');
+            
+            if (storeSaleDateInput) storeSaleDateInput.value = todayStr;
+            if (printDateInput) printDateInput.value = todayStr;
             
             updateAdminStats();
             
             showNotification('Добро пожаловать в ресторан "Кочевник"! 🎪');
         });
         
-        // Сохраняем данные при закрытии страницы
         window.addEventListener('beforeunload', function() {
             saveToLocalStorage();
         });
