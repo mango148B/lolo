@@ -1305,6 +1305,72 @@
             font-weight: bold;
         }
 
+        /* СТИЛИ ДЛЯ УПРАВЛЕНИЯ БРОНИРОВАНИЯМИ */
+        .booking-management {
+            margin-top: 20px;
+        }
+
+        .booking-item {
+            background: rgba(139, 90, 43, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #d9a566;
+            transition: all 0.3s ease;
+        }
+
+        .booking-item:hover {
+            background: rgba(139, 90, 43, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .booking-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .booking-details {
+            flex-grow: 1;
+            min-width: 200px;
+        }
+
+        .booking-amount {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #d9a566;
+            min-width: 120px;
+            text-align: right;
+        }
+
+        .booking-items-list {
+            background: rgba(139, 90, 43, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .booking-item-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(139, 90, 43, 0.2);
+            flex-wrap: wrap;
+        }
+
+        .booking-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .booking-item-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+            justify-content: flex-end;
+        }
+
         /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
             .admin-modal {
@@ -1465,7 +1531,7 @@
                     <button class="admin-tab active" onclick="switchAdminTab('cash')">💰 Касса</button>
                     <button class="admin-tab" onclick="switchAdminTab('stock')">📦 Запасы</button>
                     <button class="admin-tab" onclick="switchAdminTab('store')">🏪 Магазин</button>
-                    <button class="admin-tab" onclick="switchAdminTab('addGuest')">➕ Добавить гостя</button>
+                    <button class="admin-tab" onclick="switchAdminTab('manageBookings')">📋 Управление бронированиями</button>
                     <button class="admin-tab" onclick="switchAdminTab('viewGuests')">👥 Просмотр гостей</button>
                 </div>
                 
@@ -1595,64 +1661,27 @@
                     </div>
                 </div>
                 
-                <div id="addGuestTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">Добавить/Редактировать гостя</h3>
+                <!-- НОВАЯ ВКЛАДКА: УПРАВЛЕНИЕ БРОНИРОВАНИЯМИ -->
+                <div id="manageBookingsTab" class="tab-content">
+                    <h3 style="color: #d9a566; text-align: center;">📋 Управление бронированиями</h3>
                     
-                    <div class="date-selector">
-                        <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Выберите дату:</label>
+                    <div class="admin-controls">
+                        <button class="control-btn btn-primary" onclick="loadAllBookings()">🔄 Загрузить все бронирования</button>
+                        <button class="control-btn btn-warning" onclick="editSelectedBooking()">✏️ Редактировать выбранное</button>
+                        <button class="control-btn btn-danger" onclick="deleteSelectedBooking()">🗑️ Удалить выбранное</button>
+                    </div>
+                    
+                    <div class="date-selector" style="margin: 15px 0;">
+                        <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Фильтр по дате:</label>
                         <div class="date-input-wrapper">
-                            <input type="date" id="guestDateInput" class="date-input" onchange="updateGuestDate(this.value)">
-                            <button class="control-btn btn-secondary" onclick="showToday()">Сегодня</button>
+                            <input type="date" id="filterDate" class="date-input" onchange="filterBookingsByDate(this.value)">
+                            <button class="control-btn btn-secondary" onclick="clearDateFilter()">Очистить фильтр</button>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="guestName">Имя гостя:</label>
-                        <input type="text" id="guestName" class="admin-input" placeholder="Введите имя гостя">
+                    <div class="booking-management" id="bookingsList">
+                        <!-- Список бронирований будет загружен через JavaScript -->
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="guestPhone">Телефон:</label>
-                        <input type="tel" id="guestPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="guestPlace">Место бронирования:</label>
-                        <select id="guestPlace" class="admin-input">
-                            <option value="">Выберите место</option>
-                            <option value="Юрта 1">Юрта 1</option>
-                            <option value="Юрта 2">Юрта 2</option>
-                            <option value="Купол 1">Купол 1</option>
-                            <option value="Купол 2">Купол 2</option>
-                            <option value="Терраса">Терраса</option>
-                        </select>
-                    </div>
-                    
-                    <div class="booking-deposit">
-                        <div>Депозит за бронь юрты:</div>
-                        <div class="deposit-amount">2000 сом</div>
-                        <div style="font-size: 0.9em; color: #8b5a2b;">(включается в общую сумму)</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Выберите напитки и блюда:</label>
-                        <div class="menu-items" id="guestMenuItems">
-                            <!-- Меню будет заполнено через JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="guestAmount">Общая сумма:</label>
-                        <input type="number" id="guestAmount" class="admin-input" value="2000" readonly style="font-weight: bold;">
-                    </div>
-                    
-                    <div class="booking-actions">
-                        <button class="control-btn btn-primary" id="saveGuestBtn" onclick="saveGuestBooking()">Сохранить</button>
-                        <button class="control-btn btn-warning" id="updateGuestBtn" onclick="updateCurrentGuest()" style="display: none;">💾 Обновить</button>
-                        <button class="control-btn btn-danger" onclick="clearGuestForm()">Очистить</button>
-                    </div>
-                    
-                    <input type="hidden" id="editingGuestId" value="">
                 </div>
                 
                 <div id="viewGuestsTab" class="tab-content">
@@ -1796,6 +1825,79 @@
                 <div class="booking-actions">
                     <button class="control-btn btn-primary" onclick="confirmBooking()">📱 Подтвердить и отправить в WhatsApp</button>
                     <button class="control-btn btn-danger" onclick="closeBookingModal()">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ БРОНИРОВАНИЯ -->
+        <div id="editBookingModal" class="booking-modal">
+            <div class="booking-content">
+                <div class="booking-header">
+                    <h2 class="booking-title">✏️ Редактирование бронирования</h2>
+                    <button class="booking-close" onclick="closeEditBookingModal()">×</button>
+                </div>
+                
+                <div class="customer-info">
+                    <div class="form-group">
+                        <label for="editCustomerName">Имя гостя:</label>
+                        <input type="text" id="editCustomerName" class="admin-input" placeholder="Введите имя гостя">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editCustomerPhone">Телефон:</label>
+                        <input type="tel" id="editCustomerPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editBookingDate">Дата:</label>
+                        <input type="date" id="editBookingDate" class="admin-input" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editBookingPlace">Место:</label>
+                        <input type="text" id="editBookingPlace" class="admin-input" readonly>
+                    </div>
+                </div>
+                
+                <div class="menu-selection">
+                    <h3>Редактирование напитков и блюд</h3>
+                    
+                    <div class="menu-category">
+                        <h3>🥤 Напитки</h3>
+                        <div class="menu-items" id="editDrinks">
+                            <!-- Напитки будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="menu-category">
+                        <h3>🍽️ Национальные блюда</h3>
+                        <div class="menu-items" id="editDishes">
+                            <!-- Блюда будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="menu-category">
+                        <h3>⚡ Энергетики</h3>
+                        <div class="menu-items" id="editEnergyDrinks">
+                            <!-- Энергетики будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-summary">
+                    <h3>Сводка заказа</h3>
+                    <div id="editOrderSummary">
+                        <!-- Сводка заказа будет заполнена через JavaScript -->
+                    </div>
+                    <div class="summary-total">
+                        <span>Итого:</span>
+                        <span id="editOrderTotal">2000 сом</span>
+                    </div>
+                </div>
+                
+                <div class="booking-actions">
+                    <button class="control-btn btn-success" onclick="saveEditedBooking()">💾 Сохранить изменения</button>
+                    <button class="control-btn btn-danger" onclick="closeEditBookingModal()">Отмена</button>
                 </div>
             </div>
         </div>
@@ -2116,7 +2218,8 @@
         let viewGuestsYear = new Date().getFullYear();
         
         let currentAdminLevel = null;
-        let editingGuestId = null;
+        let editingBookingId = null;
+        let selectedBookingIndex = null;
         
         // WhatsApp номер
         const WHATSAPP_NUMBER = '79620742140';
@@ -2292,6 +2395,11 @@
             resetOrder();
         }
         
+        function closeEditBookingModal() {
+            document.getElementById('editBookingModal').style.display = 'none';
+            editingBookingId = null;
+        }
+        
         // === ФУНКЦИИ КАЛЕНДАРЯ БРОНИРОВАНИЯ ===
         
         function updateBookingCalendar() {
@@ -2449,6 +2557,20 @@
             generateMenuCategory('energyDrinks', energyDrinks);
         }
         
+        function generateEditMenuForBooking(booking) {
+            // Напитки
+            const drinks = ['cola', 'pepsi', 'fanta', 'sprite', 'water'];
+            generateEditMenuCategory('editDrinks', drinks, booking);
+            
+            // Национальные блюда
+            const dishes = ['kuurdak', 'kymyz', 'kuymak', 'plov', 'manty', 'lagman'];
+            generateEditMenuCategory('editDishes', dishes, booking);
+            
+            // Энергетики (только flash, drive, nitro)
+            const energyDrinks = ['nitro', 'flash', 'drive'];
+            generateEditMenuCategory('editEnergyDrinks', energyDrinks, booking);
+        }
+        
         function generateMenuCategory(containerId, items) {
             const container = document.getElementById(containerId);
             if (!container) return;
@@ -2464,6 +2586,36 @@
                         <button onclick="changeItemQuantity('${item}', -1)">-</button>
                         <span class="item-quantity" id="${item}-quantity">0</span>
                         <button onclick="changeItemQuantity('${item}', 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(menuItem);
+            });
+        }
+        
+        function generateEditMenuCategory(containerId, items, booking) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            items.forEach(item => {
+                // Находим количество этого товара в заказе
+                let quantity = 0;
+                if (booking.items) {
+                    const itemInOrder = booking.items.find(i => i.itemId === item);
+                    if (itemInOrder) {
+                        quantity = itemInOrder.quantity;
+                    }
+                }
+                
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <span>${getItemName(item)} - ${prices[item]} сом</span>
+                    <div class="item-controls">
+                        <button onclick="changeEditItemQuantity('${item}', -1)">-</button>
+                        <span class="item-quantity" id="edit-${item}-quantity">${quantity}</span>
+                        <button onclick="changeEditItemQuantity('${item}', 1)">+</button>
                     </div>
                 `;
                 container.appendChild(menuItem);
@@ -2487,6 +2639,19 @@
             updateOrderSummary();
         }
         
+        function changeEditItemQuantity(item, change) {
+            const quantityElement = document.getElementById(`edit-${item}-quantity`);
+            if (!quantityElement) return;
+            
+            let quantity = parseInt(quantityElement.textContent) || 0;
+            
+            quantity += change;
+            if (quantity < 0) quantity = 0;
+            
+            quantityElement.textContent = quantity;
+            updateEditOrderSummary();
+        }
+        
         function updateOrderSummary() {
             const orderSummary = document.getElementById('orderSummary');
             const orderTotal = document.getElementById('orderTotal');
@@ -2505,6 +2670,43 @@
             
             for (const item in prices) {
                 const quantityElement = document.getElementById(`${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        summaryHTML += `
+                            <div class="summary-item">
+                                <span>${getItemName(item)} x${quantity}</span>
+                                <span>${itemTotal} сом</span>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            orderSummary.innerHTML = summaryHTML;
+            orderTotal.textContent = `${total} сом`;
+        }
+        
+        function updateEditOrderSummary() {
+            const orderSummary = document.getElementById('editOrderSummary');
+            const orderTotal = document.getElementById('editOrderTotal');
+            
+            if (!orderSummary || !orderTotal) return;
+            
+            let summaryHTML = '';
+            let total = DEPOSIT_AMOUNT;
+            
+            summaryHTML += `
+                <div class="summary-item">
+                    <span>Депозит за бронь "${document.getElementById('editBookingPlace').value}"</span>
+                    <span>${DEPOSIT_AMOUNT} сом</span>
+                </div>
+            `;
+            
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`edit-${item}-quantity`);
                 if (quantityElement) {
                     const quantity = parseInt(quantityElement.textContent) || 0;
                     if (quantity > 0) {
@@ -2655,6 +2857,7 @@
                 
                 if (sent) {
                     const booking = {
+                        id: generateBookingId(),
                         place: selectedPlace,
                         date: selectedDate,
                         items: orderItems,
@@ -2664,7 +2867,8 @@
                         guestName: customerName,
                         guestPhone: customerPhone,
                         whatsappSent: true,
-                        createdAt: new Date()
+                        createdAt: new Date(),
+                        lastModified: new Date()
                     };
                     
                     bookings.push(booking);
@@ -2689,6 +2893,10 @@
             } catch (error) {
                 showNotification('Ошибка при отправке в WhatsApp. Пожалуйста, свяжитесь с администратором по телефону.');
             }
+        }
+        
+        function generateBookingId() {
+            return 'BK-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
         
         // === ФУНКЦИИ ОТОБРАЖЕНИЯ МЕНЮ ===
@@ -2940,8 +3148,8 @@
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
             currentAdminLevel = null;
-            editingGuestId = null;
-            resetEditMode();
+            editingBookingId = null;
+            selectedBookingIndex = null;
         }
         
         function checkAdminPassword(e) {
@@ -2990,13 +3198,8 @@
                 updateStockDisplay();
             } else if (tabName === 'store') {
                 updateStoreDisplay();
-            } else if (tabName === 'addGuest') {
-                generateGuestMenu();
-                const today = new Date();
-                const todayStr = today.toISOString().split('T')[0];
-                document.getElementById('guestDateInput').value = todayStr;
-                updateAvailablePlaces(todayStr);
-                resetEditMode();
+            } else if (tabName === 'manageBookings') {
+                loadAllBookings();
             } else if (tabName === 'viewGuests') {
                 updateViewGuestsCalendar();
             }
@@ -3308,7 +3511,7 @@
                                 ${place} (${places[place].length} гостей)
                             </div>
                             <div class="place-item-content">
-                                ${places[place].map(booking => `
+                                ${places[place].map((booking, index) => `
                                     <div style="background: rgba(139, 90, 43, 0.2); border-radius: 10px; padding: 12px; margin: 8px 0; border-left: 4px solid #d9a566;">
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
                                             <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
@@ -3332,8 +3535,8 @@
                                             </div>
                                         ` : ''}
                                         <div class="guest-actions">
-                                            <button class="btn-warning" onclick="editGuestFromView(${bookings.indexOf(booking)})">✏️ Редактировать</button>
-                                            <button class="btn-danger" onclick="deleteGuest(${bookings.indexOf(booking)})">🗑️ Удалить</button>
+                                            <button class="btn-warning" onclick="editBooking(${bookings.indexOf(booking)})">✏️ Редактировать</button>
+                                            <button class="btn-danger" onclick="deleteBooking(${bookings.indexOf(booking)})">🗑️ Удалить</button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -3358,85 +3561,215 @@
             }
         }
         
-        // === ФУНКЦИИ РЕДАКТИРОВАНИЯ ГОСТЕЙ ===
+        // === ФУНКЦИИ РЕДАКТИРОВАНИЯ БРОНИРОВАНИЙ ===
         
-        function editGuestFromView(bookingIndex) {
-            if (bookingIndex < 0 || bookingIndex >= bookings.length) return;
+        function loadAllBookings() {
+            const bookingsList = document.getElementById('bookingsList');
+            if (!bookingsList) return;
             
-            const booking = bookings[bookingIndex];
-            editingGuestId = bookingIndex;
-            
-            // Заполняем форму редактирования
-            document.getElementById('guestName').value = booking.guestName;
-            document.getElementById('guestPhone').value = booking.guestPhone;
-            document.getElementById('guestDateInput').value = booking.date;
-            
-            // Выбираем место
-            const placeSelect = document.getElementById('guestPlace');
-            placeSelect.innerHTML = '<option value="">Выберите место</option>';
-            
-            // Добавляем все места, текущее помечаем как выбранное
-            allPlaces.forEach(place => {
-                const option = document.createElement('option');
-                option.value = place;
-                option.textContent = place;
-                if (place === booking.place) {
-                    option.selected = true;
-                }
-                placeSelect.appendChild(option);
-            });
-            
-            // Сбрасываем количество блюд
-            for (const item in prices) {
-                const quantityElement = document.getElementById(`guest-${item}-quantity`);
-                if (quantityElement) {
-                    quantityElement.textContent = '0';
-                }
-            }
-            
-            // Заполняем блюда
-            if (booking.items && booking.items.length > 0) {
-                booking.items.forEach(item => {
-                    const quantityElement = document.getElementById(`guest-${item.itemId}-quantity`);
-                    if (quantityElement) {
-                        quantityElement.textContent = item.quantity;
-                    }
-                });
-            }
-            
-            // Обновляем сумму
-            updateGuestAmount();
-            
-            // Переключаемся на вкладку редактирования
-            switchAdminTab('addGuest');
-            
-            // Меняем заголовок
-            const tabTitle = document.querySelector('#addGuestTab h3');
-            if (tabTitle) {
-                tabTitle.textContent = '✏️ Редактировать гостя';
-            }
-            
-            // Показываем кнопку обновления
-            const saveBtn = document.getElementById('saveGuestBtn');
-            const updateBtn = document.getElementById('updateGuestBtn');
-            if (saveBtn && updateBtn) {
-                saveBtn.style.display = 'none';
-                updateBtn.style.display = 'block';
-            }
-            
-            showNotification(`Редактирование гостя: ${booking.guestName}`);
-        }
-        
-        function updateCurrentGuest() {
-            if (editingGuestId === null || editingGuestId < 0 || editingGuestId >= bookings.length) {
-                showNotification('Ошибка: гость не найден');
+            if (bookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="no-guests" style="text-align: center; padding: 20px;">
+                        <p>Нет бронирований</p>
+                    </div>
+                `;
                 return;
             }
             
-            const guestName = document.getElementById('guestName').value.trim();
-            const guestPhone = document.getElementById('guestPhone').value.trim();
-            const guestPlace = document.getElementById('guestPlace').value;
-            const guestDate = document.getElementById('guestDateInput').value;
+            let bookingsHTML = `
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <strong>Всего бронирований:</strong> ${bookings.length}
+                </div>
+            `;
+            
+            // Сортируем бронирования по дате (сначала новые)
+            const sortedBookings = [...bookings].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedBookings.forEach((booking, index) => {
+                const originalIndex = bookings.indexOf(booking);
+                
+                bookingsHTML += `
+                    <div class="booking-item" onclick="selectBooking(this, ${originalIndex})" id="booking-${originalIndex}">
+                        <div class="booking-info">
+                            <div class="booking-details">
+                                <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 8px;">
+                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📅 ${formatDate(booking.date)}</div>
+                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">🏕️ ${booking.place}</div>
+                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
+                                </div>
+                            </div>
+                            <div class="booking-amount">
+                                ${booking.total} сом
+                            </div>
+                        </div>
+                        
+                        ${booking.items && booking.items.length > 0 ? `
+                            <div class="booking-items-list">
+                                <div style="font-weight: bold; margin-bottom: 8px; color: #8b5a2b;">Состав заказа:</div>
+                                ${booking.items.map(item => `
+                                    <div class="booking-item-row">
+                                        <span>${item.name}</span>
+                                        <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="booking-item-actions">
+                            <button class="btn-warning" onclick="editBooking(${originalIndex}); event.stopPropagation();">✏️ Редактировать</button>
+                            <button class="btn-danger" onclick="deleteBooking(${originalIndex}); event.stopPropagation();">🗑️ Удалить</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            bookingsList.innerHTML = bookingsHTML;
+            selectedBookingIndex = null;
+        }
+        
+        function selectBooking(element, index) {
+            const allBookings = document.querySelectorAll('.booking-item');
+            allBookings.forEach(booking => {
+                booking.style.background = 'rgba(139, 90, 43, 0.2)';
+            });
+            
+            element.style.background = 'rgba(217, 165, 102, 0.3)';
+            selectedBookingIndex = index;
+        }
+        
+        function filterBookingsByDate(dateStr) {
+            if (!dateStr) {
+                loadAllBookings();
+                return;
+            }
+            
+            const filteredBookings = bookings.filter(booking => booking.date === dateStr);
+            const bookingsList = document.getElementById('bookingsList');
+            
+            if (filteredBookings.length === 0) {
+                bookingsList.innerHTML = `
+                    <div class="no-guests" style="text-align: center; padding: 20px;">
+                        <p>Нет бронирований на ${formatDate(dateStr)}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let bookingsHTML = `
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <strong>Бронирования на ${formatDate(dateStr)}:</strong> ${filteredBookings.length}
+                </div>
+            `;
+            
+            filteredBookings.forEach((booking, index) => {
+                const originalIndex = bookings.indexOf(booking);
+                
+                bookingsHTML += `
+                    <div class="booking-item" onclick="selectBooking(this, ${originalIndex})" id="booking-${originalIndex}">
+                        <div class="booking-info">
+                            <div class="booking-details">
+                                <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 8px;">
+                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">🏕️ ${booking.place}</div>
+                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
+                                </div>
+                            </div>
+                            <div class="booking-amount">
+                                ${booking.total} сом
+                            </div>
+                        </div>
+                        
+                        ${booking.items && booking.items.length > 0 ? `
+                            <div class="booking-items-list">
+                                <div style="font-weight: bold; margin-bottom: 8px; color: #8b5a2b;">Состав заказа:</div>
+                                ${booking.items.map(item => `
+                                    <div class="booking-item-row">
+                                        <span>${item.name}</span>
+                                        <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="booking-item-actions">
+                            <button class="btn-warning" onclick="editBooking(${originalIndex}); event.stopPropagation();">✏️ Редактировать</button>
+                            <button class="btn-danger" onclick="deleteBooking(${originalIndex}); event.stopPropagation();">🗑️ Удалить</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            bookingsList.innerHTML = bookingsHTML;
+            selectedBookingIndex = null;
+        }
+        
+        function clearDateFilter() {
+            document.getElementById('filterDate').value = '';
+            loadAllBookings();
+        }
+        
+        function editSelectedBooking() {
+            if (selectedBookingIndex === null) {
+                showNotification('Выберите бронирование для редактирования');
+                return;
+            }
+            
+            editBooking(selectedBookingIndex);
+        }
+        
+        function deleteSelectedBooking() {
+            if (selectedBookingIndex === null) {
+                showNotification('Выберите бронирование для удаления');
+                return;
+            }
+            
+            deleteBooking(selectedBookingIndex);
+        }
+        
+        function editBooking(bookingIndex) {
+            if (bookingIndex < 0 || bookingIndex >= bookings.length) {
+                showNotification('Ошибка: бронирование не найдено');
+                return;
+            }
+            
+            const booking = bookings[bookingIndex];
+            editingBookingId = booking.id;
+            
+            // Заполняем форму редактирования
+            document.getElementById('editCustomerName').value = booking.guestName;
+            document.getElementById('editCustomerPhone').value = booking.guestPhone;
+            document.getElementById('editBookingDate').value = booking.date;
+            document.getElementById('editBookingPlace').value = booking.place;
+            
+            // Генерируем меню с текущими значениями
+            generateEditMenuForBooking(booking);
+            
+            // Обновляем сводку заказа
+            updateEditOrderSummary();
+            
+            // Показываем модальное окно редактирования
+            document.getElementById('editBookingModal').style.display = 'flex';
+            
+            showNotification(`Редактирование бронирования: ${booking.guestName}`);
+        }
+        
+        function saveEditedBooking() {
+            if (editingBookingId === null) {
+                showNotification('Ошибка: не выбрано бронирование для редактирования');
+                return;
+            }
+            
+            const bookingIndex = bookings.findIndex(b => b.id === editingBookingId);
+            if (bookingIndex === -1) {
+                showNotification('Ошибка: бронирование не найдено');
+                return;
+            }
+            
+            const oldBooking = bookings[bookingIndex];
+            
+            const guestName = document.getElementById('editCustomerName').value.trim();
+            const guestPhone = document.getElementById('editCustomerPhone').value.trim();
             
             if (!guestName) {
                 showNotification('Введите имя гостя');
@@ -3448,33 +3781,7 @@
                 return;
             }
             
-            if (!guestPlace) {
-                showNotification('Выберите место для бронирования');
-                return;
-            }
-            
-            if (!guestDate) {
-                showNotification('Выберите дату бронирования');
-                return;
-            }
-            
-            // Проверяем, не занято ли место на эту дату другим гостем
-            const isPlaceBusy = bookings.some((booking, index) => 
-                index !== editingGuestId && 
-                booking.date === guestDate && 
-                booking.place === guestPlace
-            );
-            
-            if (isPlaceBusy) {
-                showNotification('Выбранное место уже занято на эту дату');
-                return;
-            }
-            
-            let total = DEPOSIT_AMOUNT;
-            const orderItems = [];
-            
-            // Восстанавливаем старые запасы
-            const oldBooking = bookings[editingGuestId];
+            // Возвращаем старые запасы
             if (oldBooking.items) {
                 oldBooking.items.forEach(item => {
                     if (stock[item.itemId] !== undefined) {
@@ -3484,8 +3791,11 @@
             }
             
             // Собираем новый заказ
+            let total = DEPOSIT_AMOUNT;
+            const orderItems = [];
+            
             for (const item in prices) {
-                const quantityElement = document.getElementById(`guest-${item}-quantity`);
+                const quantityElement = document.getElementById(`edit-${item}-quantity`);
                 if (quantityElement) {
                     const quantity = parseInt(quantityElement.textContent) || 0;
                     if (quantity > 0) {
@@ -3507,14 +3817,13 @@
             }
             
             // Обновляем бронирование
-            bookings[editingGuestId] = {
+            bookings[bookingIndex] = {
                 ...oldBooking,
-                place: guestPlace,
-                date: guestDate,
                 items: orderItems,
                 total: total,
                 guestName: guestName,
                 guestPhone: guestPhone,
+                lastModified: new Date(),
                 timestamp: new Date().toLocaleString()
             };
             
@@ -3526,23 +3835,26 @@
             updateStockDisplay();
             updateMenuDisplay();
             updatePlaceStatuses();
+            loadAllBookings();
             
-            // Сбрасываем форму
-            clearGuestForm();
-            resetEditMode();
+            // Закрываем модальное окно
+            closeEditBookingModal();
             
             // Сохраняем изменения
             saveToLocalStorage();
             
-            showNotification(`Гость "${guestName}" обновлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
+            showNotification(`Бронирование "${guestName}" обновлено! Сумма: ${total} сом`);
         }
         
-        function deleteGuest(bookingIndex) {
-            if (bookingIndex < 0 || bookingIndex >= bookings.length) return;
+        function deleteBooking(bookingIndex) {
+            if (bookingIndex < 0 || bookingIndex >= bookings.length) {
+                showNotification('Ошибка: бронирование не найдено');
+                return;
+            }
             
             const booking = bookings[bookingIndex];
             
-            if (confirm(`Удалить бронирование гостя "${booking.guestName}"?\nМесто: ${booking.place}\nДата: ${booking.date}\nСумма: ${booking.total} сом`)) {
+            if (confirm(`Удалить бронирование гостя "${booking.guestName}"?\nМесто: ${booking.place}\nДата: ${formatDate(booking.date)}\nСумма: ${booking.total} сом`)) {
                 // Возвращаем запасы
                 if (booking.items) {
                     booking.items.forEach(item => {
@@ -3563,32 +3875,12 @@
                 updateStockDisplay();
                 updateMenuDisplay();
                 updatePlaceStatuses();
-                
-                // Обновляем календарь гостей
-                updateViewGuestsCalendar();
+                loadAllBookings();
                 
                 // Сохраняем изменения
                 saveToLocalStorage();
                 
                 showNotification(`Бронирование гостя "${booking.guestName}" удалено`);
-            }
-        }
-        
-        function resetEditMode() {
-            editingGuestId = null;
-            
-            // Восстанавливаем заголовок
-            const tabTitle = document.querySelector('#addGuestTab h3');
-            if (tabTitle) {
-                tabTitle.textContent = 'Добавить/Редактировать гостя';
-            }
-            
-            // Восстанавливаем кнопки
-            const saveBtn = document.getElementById('saveGuestBtn');
-            const updateBtn = document.getElementById('updateGuestBtn');
-            if (saveBtn && updateBtn) {
-                saveBtn.style.display = 'block';
-                updateBtn.style.display = 'none';
             }
         }
         
@@ -3810,212 +4102,6 @@
             
             saveToLocalStorage();
             showNotification(`Продажи сохранены: ${total} сом`);
-        }
-        
-        // === ФУНКЦИИ ДОБАВЛЕНИЯ ГОСТЕЙ ===
-        
-        function generateGuestMenu() {
-            const menuItemsContainer = document.getElementById('guestMenuItems');
-            if (!menuItemsContainer) return;
-            
-            let menuHTML = '';
-            
-            for (const item in prices) {
-                const itemName = getItemName(item);
-                menuHTML += `
-                    <div class="menu-item">
-                        <span>${itemName} - ${prices[item]} сом</span>
-                        <div class="item-controls">
-                            <button onclick="changeGuestItemQuantity('${item}', -1)">-</button>
-                            <span class="item-quantity" id="guest-${item}-quantity">0</span>
-                            <button onclick="changeGuestItemQuantity('${item}', 1)">+</button>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            menuItemsContainer.innerHTML = menuHTML;
-        }
-        
-        function changeGuestItemQuantity(item, change) {
-            const quantityElement = document.getElementById(`guest-${item}-quantity`);
-            if (!quantityElement) return;
-            
-            let quantity = parseInt(quantityElement.textContent) || 0;
-            
-            quantity += change;
-            if (quantity < 0) quantity = 0;
-            
-            quantityElement.textContent = quantity;
-            updateGuestAmount();
-        }
-        
-        function updateGuestAmount() {
-            let total = DEPOSIT_AMOUNT;
-            
-            for (const item in prices) {
-                const quantityElement = document.getElementById(`guest-${item}-quantity`);
-                if (quantityElement) {
-                    const quantity = parseInt(quantityElement.textContent) || 0;
-                    if (quantity > 0) {
-                        total += prices[item] * quantity;
-                    }
-                }
-            }
-            
-            const guestAmountInput = document.getElementById('guestAmount');
-            if (guestAmountInput) {
-                guestAmountInput.value = total;
-            }
-        }
-        
-        function updateAvailablePlaces(dateStr) {
-            const bookingsForDate = bookings.filter(booking => booking.date === dateStr);
-            const busyPlaces = bookingsForDate.map(booking => booking.place);
-            
-            const placeSelect = document.getElementById('guestPlace');
-            if (!placeSelect) return;
-            
-            placeSelect.innerHTML = '<option value="">Выберите место</option>';
-            
-            allPlaces.forEach(place => {
-                if (!busyPlaces.includes(place)) {
-                    const option = document.createElement('option');
-                    option.value = place;
-                    option.textContent = place;
-                    placeSelect.appendChild(option);
-                }
-            });
-            
-            if (busyPlaces.length >= 5) {
-                placeSelect.innerHTML = '<option value="">Все места заняты</option>';
-                placeSelect.disabled = true;
-            } else {
-                placeSelect.disabled = false;
-            }
-        }
-        
-        function updateGuestDate(dateStr) {
-            updateAvailablePlaces(dateStr);
-        }
-        
-        function showToday() {
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-            const guestDateInput = document.getElementById('guestDateInput');
-            if (guestDateInput) {
-                guestDateInput.value = todayStr;
-            }
-            updateAvailablePlaces(todayStr);
-        }
-        
-        function saveGuestBooking() {
-            const guestName = document.getElementById('guestName').value.trim();
-            const guestPhone = document.getElementById('guestPhone').value.trim();
-            const guestPlace = document.getElementById('guestPlace').value;
-            const guestDate = document.getElementById('guestDateInput').value;
-            
-            if (!guestName) {
-                showNotification('Введите имя гостя');
-                return;
-            }
-            
-            if (!guestPhone) {
-                showNotification('Введите телефон гостя');
-                return;
-            }
-            
-            if (!guestPlace) {
-                showNotification('Выберите место для бронирования');
-                return;
-            }
-            
-            if (!guestDate) {
-                showNotification('Выберите дату бронирования');
-                return;
-            }
-            
-            const isPlaceBusy = bookings.some(booking => 
-                booking.date === guestDate && booking.place === guestPlace
-            );
-            
-            if (isPlaceBusy) {
-                showNotification('Выбранное место уже занято на эту дату');
-                return;
-            }
-            
-            let total = DEPOSIT_AMOUNT;
-            const orderItems = [];
-            
-            for (const item in prices) {
-                const quantityElement = document.getElementById(`guest-${item}-quantity`);
-                if (quantityElement) {
-                    const quantity = parseInt(quantityElement.textContent) || 0;
-                    if (quantity > 0) {
-                        const itemTotal = prices[item] * quantity;
-                        total += itemTotal;
-                        orderItems.push({
-                            name: getItemName(item),
-                            itemId: item,
-                            quantity: quantity,
-                            price: prices[item],
-                            total: itemTotal
-                        });
-                        
-                        if (stock[item] !== undefined) {
-                            stock[item] -= quantity;
-                        }
-                    }
-                }
-            }
-            
-            const booking = {
-                place: guestPlace,
-                date: guestDate,
-                items: orderItems,
-                total: total,
-                deposit: DEPOSIT_AMOUNT,
-                timestamp: new Date().toLocaleString(),
-                guestName: guestName,
-                guestPhone: guestPhone,
-                whatsappSent: false,
-                addedByAdmin: true,
-                createdAt: new Date()
-            };
-            
-            bookings.push(booking);
-            bookingsRevenue += total;
-            totalRevenue = bookingsRevenue + storeRevenue;
-            
-            updateAdminStats();
-            updateStockDisplay();
-            updateMenuDisplay();
-            updatePlaceStatuses();
-            clearGuestForm();
-            
-            saveToLocalStorage();
-            showNotification(`Гость "${guestName}" добавлен! Место: ${guestPlace}, Дата: ${guestDate}, Сумма: ${total} сом`);
-        }
-        
-        function clearGuestForm() {
-            document.getElementById('guestName').value = '';
-            document.getElementById('guestPhone').value = '';
-            document.getElementById('guestPlace').value = '';
-            document.getElementById('guestAmount').value = DEPOSIT_AMOUNT;
-            
-            for (const item in prices) {
-                const quantityElement = document.getElementById(`guest-${item}-quantity`);
-                if (quantityElement) {
-                    quantityElement.textContent = '0';
-                }
-            }
-            
-            const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
-            document.getElementById('guestDateInput').value = todayStr;
-            updateAvailablePlaces(todayStr);
-            
-            resetEditMode();
         }
         
         // === ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА ===
