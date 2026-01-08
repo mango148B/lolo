@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ресторан "Кочевник"</title>
+    <!-- Favicon и PWA мета-теги -->
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Кочевник">
+<meta name="theme-color" content="#8b5a2b">
+<meta name="msapplication-TileColor" content="#8b5a2b">
+<meta name="msapplication-TileImage" content="logo.png">
+<meta name="application-name" content="Кочевник">
+<link rel="manifest" href="manifest.json">
     <style>
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -2000,7 +2011,7 @@
         <div id="home" class="content-section active">
             <h2>Добро пожаловать в Кочевник</h2>
             <div class="logo-upload-container">
-                <img id="mainLogo" class="logo-preview" src="" alt="Логотип">
+                <img id="mainLogo" class="logo-preview" src="logo.png" alt="Логотип">
                 <div id="mainLogoName" style="font-weight: bold; color: #5c3d2e; margin-top: 10px;"></div>
             </div>
             <h2>Выберите язык</h2>
@@ -2012,7 +2023,7 @@
 
         <div id="fullscreenOverlay" class="fullscreen-overlay" onclick="closeFullscreen()">
             <button class="close-fullscreen" onclick="closeFullscreen()">×</button>
-            <img class="fullscreen-img" id="fullscreenImage" src="" onclick="event.stopPropagation()">
+            <img class="fullscreen-img" id="fullscreenImage" src="logo.png" onclick="event.stopPropagation()">
         </div>
 
         <!-- РУССКАЯ ВЕРСИЯ -->
@@ -2029,7 +2040,7 @@
             <!-- СЕКЦИЯ МЕСТА С УРЮТАМИ И КУПОЛАМИ -->
             <div id="places" class="content-section">
                 <h2>Наши места</h2>
-                <img id="logoPlaces" class="logo-preview" src="" alt="Логотип">
+                <img id="logoPlaces" class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Всего мест: <span id="totalPlacesCount">5</span></h3>
@@ -2083,7 +2094,7 @@
             <!-- ОСТАЛЬНЫЕ СЕКЦИИ -->
             <div id="guest" class="content-section">
                 <h2>Наши гости</h2>
-                <img id="logoGuest" class="logo-preview" src="" alt="Логотип">
+                <img id="logoGuest" class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="guest-photos">  
                      <img src="klk.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
                      <img src="pop.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
@@ -2093,7 +2104,7 @@
 
             <div id="main" class="content-section">
                 <h2>О нас</h2>
-                <img id="logoAbout" class="logo-preview" src="" alt="Логотип">
+                <img id="logoAbout" class="logo-preview" src="logo.png" alt="Логотип">
                 <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
                 
                 <h3>🎪 Юрты</h3>
@@ -2112,7 +2123,7 @@
             
             <div id="menu" class="content-section">
                 <h2>🍽️ Наше меню</h2>
-                <img id="logoMenu" class="logo-preview" src="" alt="Логотип">
+                <img id="logoMenu" class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <h3>🥤 Напитки</h3>
                 <div class="menu-items" id="menu-drinks">
@@ -2132,7 +2143,7 @@
 
             <div id="social" class="content-section">
                 <h2>📱 Наши соцсети</h2>
-                <img id="logoSocial" class="logo-preview" src="" alt="Логотип">
+                <img id="logoSocial" class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2144,7 +2155,7 @@
             
             <div id="contacts" class="content-section">
                 <h2>📞 Наши контакты</h2>
-                <img id="logoContacts" class="logo-preview" src="" alt="Логотип">
+                <img id="logoContacts" class="logo-preview" src="logo.png" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Адрес: ул. Горная, д. 15</li>
@@ -2168,7 +2179,7 @@
             <!-- ОРУНДАР БОЛУМУ -->
             <div id="places-kyrg" class="content-section">
                 <h2>Биздин орундар</h2>
-                <img id="logoPlacesKyrg" class="logo-preview" src="" alt="Логотип">
+                <img id="logoPlacesKyrg" class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Бардык орундар: <span id="totalPlacesCount-kyrg">5</span></h3>
@@ -2232,7 +2243,7 @@
 
             <div id="main-kyrg" class="content-section">
                 <h2>Биз жөнүндө</h2>
-                <img id="logoAboutKyrg" class="logo-preview" src="" alt="Логотип">
+                <img id="logoAboutKyrg" class="logo-preview" src="logo.png" alt="Логотип">
                 <p>Токой бешбармагынан ийриктин жытына чейин. Биздин ресторан - Тянь-Шань тоолорунун этегиндеги саякат. Бул жерде сиз чыныгы кыргыз коноккорчулугунун эмне экенин билесиз, мында конокко эң жакшы эт бөлүгү берилет, чайнек эч качан бош болбойт.</p>
                 
                 <h3>🎪 Үйлөр</h3>
@@ -2251,7 +2262,7 @@
             
             <div id="menu-kyrg" class="content-section">
                 <h2>🍽️ Биздин меню</h2>
-                <img id="logoMenuKyrg" class="logo-preview" src="" alt="Логотип">
+                <img id="logoMenuKyrg" class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <h3>🥤 Ичимдиктер</h3>
                 <div class="menu-items" id="menu-drinks-kyrg">
@@ -2271,7 +2282,7 @@
 
             <div id="social-kyrg" class="content-section">
                 <h2>📱 Биздин социалдык тармактар</h2>
-                <img id="logoSocialKyrg" class="logo-preview" src="" alt="Логотип">
+                <img id="logoSocialKyrg" class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2283,7 +2294,7 @@
             
             <div id="contacts-kyrg" class="content-section">
                 <h2>📞 Байланыш</h2>
-                <img id="logoContactsKyrg" class="logo-preview" src="" alt="Логотип">
+                <img id="logoContactsKyrg" class="logo-preview" src="logo.png" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Дарек: Горная көч., 15-үй</li>

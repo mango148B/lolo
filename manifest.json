@@ -1,14 +1,20 @@
 {
-  "name": "Кара-таш парк",
-  "short_name": "Кара-таш",
-  "start_url": "https://mango148b.github.io/kara-tash-restaurant/",
+  "name": "Ресторан Кочевник",
+  "short_name": "Кочевник",
+  "description": "Погрузитесь в атмосферу настоящего кочевого гостеприимства",
+  "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffa07a",
-  "theme_color": "#ca5400",
+  "background_color": "#f5e9d7",
+  "theme_color": "#8b5a2b",
   "icons": [
     {
-      "src": "https://mango148b.github.io/kara-tash-restaurant/logo.png",
+      "src": "logo.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
