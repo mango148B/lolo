@@ -817,25 +817,40 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        .foto {
+        .logo-upload-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .logo-preview {
             width: 150px;
-            height: 100px;
-            object-fit: cover;
+            height: 150px;
+            object-fit: contain;
             display: block;
             margin: 15px auto;
             border: 2px solid #8b5a2b;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            background: white;
         }
 
-        .language-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
+        .upload-btn {
+            background: #8b5a2b;
+            color: #f5e9d7;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 10px;
         }
-        
+
+        .upload-btn:hover {
+            background: #d9a566;
+            color: #5c3d2e;
+        }
+
         .fullscreen-overlay {
             display: none;
             position: fixed;
@@ -1371,6 +1386,30 @@
             justify-content: flex-end;
         }
 
+        /* СТИЛИ ДЛЯ НАСТРОЙКИ ЛОГОТИПА */
+        .logo-settings {
+            background: rgba(139, 90, 43, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 2px solid #8b5a2b;
+        }
+
+        .logo-preview-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .logo-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
             .admin-modal {
@@ -1454,6 +1493,11 @@
                 font-size: 11px;
                 padding: 6px;
             }
+            
+            .logo-preview {
+                width: 120px;
+                height: 120px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1516,7 +1560,7 @@
         
         <div id="adminModal" class="admin-modal">
             <div class="admin-header">
-                <div class="admin-drag-handle">👑 Панель администратора</div>
+                <div class="admin-drag-handle">👑 Панель управления</div>
                 <button class="admin-close" onclick="closeAdminModal()">×</button>
             </div>
             
@@ -1533,6 +1577,7 @@
                     <button class="admin-tab" onclick="switchAdminTab('store')">🏪 Магазин</button>
                     <button class="admin-tab" onclick="switchAdminTab('manageBookings')">📋 Управление бронированиями</button>
                     <button class="admin-tab" onclick="switchAdminTab('viewGuests')">👥 Просмотр гостей</button>
+                    <button class="admin-tab" onclick="switchAdminTab('settings')">⚙️ Настройки</button>
                 </div>
                 
                 <div id="cashTab" class="tab-content active">
@@ -1661,7 +1706,7 @@
                     </div>
                 </div>
                 
-                <!-- НОВАЯ ВКЛАДКА: УПРАВЛЕНИЕ БРОНИРОВАНИЯМИ -->
+                <!-- УПРАВЛЕНИЕ БРОНИРОВАНИЯМИ -->
                 <div id="manageBookingsTab" class="tab-content">
                     <h3 style="color: #d9a566; text-align: center;">📋 Управление бронированиями</h3>
                     
@@ -1716,6 +1761,48 @@
                         
                         <div id="guestDateDetails" class="guest-date-details">
                             <!-- Детали гостей по дате будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- НАСТРОЙКИ -->
+                <div id="settingsTab" class="tab-content">
+                    <h3 style="color: #d9a566; text-align: center;">⚙️ Настройки</h3>
+                    
+                    <div class="logo-settings">
+                        <h4 style="color: #d9a566; text-align: center; margin-bottom: 15px;">Настройка логотипа</h4>
+                        
+                        <div class="logo-preview-container">
+                            <img id="logoPreview" class="logo-preview" src="" alt="Логотип">
+                            <div id="logoName" style="color: #d9a566; font-weight: bold; text-align: center;">Название логотипа не задано</div>
+                        </div>
+                        
+                        <div class="logo-controls">
+                            <button class="control-btn btn-primary" onclick="document.getElementById('logoUpload').click()">
+                                📁 Загрузить логотип
+                            </button>
+                            <button class="control-btn btn-secondary" onclick="removeLogo()">
+                                🗑️ Удалить логотип
+                            </button>
+                        </div>
+                        
+                        <div style="margin-top: 15px;">
+                            <input type="text" id="logoNameInput" class="admin-input" placeholder="Введите название логотипа">
+                            <button class="control-btn btn-primary" onclick="saveLogoName()" style="width: 100%; margin-top: 10px;">
+                                💾 Сохранить название
+                            </button>
+                        </div>
+                        
+                        <input type="file" id="logoUpload" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
+                        
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #8b5a2b;">
+                            <h4 style="color: #d9a566; text-align: center; margin-bottom: 10px;">Сброс данных</h4>
+                            <button class="control-btn btn-danger" onclick="resetAllData()" style="width: 100%;">
+                                🗑️ Сбросить все данные
+                            </button>
+                            <p style="text-align: center; color: #d9a566; font-size: 12px; margin-top: 10px;">
+                                Внимание: это действие нельзя отменить!
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -1912,7 +1999,10 @@
 
         <div id="home" class="content-section active">
             <h2>Добро пожаловать в Кочевник</h2>
-            <img src="logo.png" alt="логотип" class="foto">
+            <div class="logo-upload-container">
+                <img id="mainLogo" class="logo-preview" src="" alt="Логотип">
+                <div id="mainLogoName" style="font-weight: bold; color: #5c3d2e; margin-top: 10px;"></div>
+            </div>
             <h2>Выберите язык</h2>
             <div class="language-buttons">
                 <button onclick="selectLanguage('RUS')" class="nav-btn">🌏 Русский</button>
@@ -1939,7 +2029,7 @@
             <!-- СЕКЦИЯ МЕСТА С УРЮТАМИ И КУПОЛАМИ -->
             <div id="places" class="content-section">
                 <h2>Наши места</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoPlaces" class="logo-preview" src="" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Всего мест: <span id="totalPlacesCount">5</span></h3>
@@ -1993,7 +2083,7 @@
             <!-- ОСТАЛЬНЫЕ СЕКЦИИ -->
             <div id="guest" class="content-section">
                 <h2>Наши гости</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoGuest" class="logo-preview" src="" alt="Логотип">
                 <div class="guest-photos">  
                      <img src="klk.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
                      <img src="pop.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
@@ -2003,6 +2093,7 @@
 
             <div id="main" class="content-section">
                 <h2>О нас</h2>
+                <img id="logoAbout" class="logo-preview" src="" alt="Логотип">
                 <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
                 
                 <h3>🎪 Юрты</h3>
@@ -2021,7 +2112,7 @@
             
             <div id="menu" class="content-section">
                 <h2>🍽️ Наше меню</h2>
-                <img src="logo.png" alt="кочевник" class="foto">
+                <img id="logoMenu" class="logo-preview" src="" alt="Логотип">
                 
                 <h3>🥤 Напитки</h3>
                 <div class="menu-items" id="menu-drinks">
@@ -2041,7 +2132,7 @@
 
             <div id="social" class="content-section">
                 <h2>📱 Наши соцсети</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoSocial" class="logo-preview" src="" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2053,7 +2144,7 @@
             
             <div id="contacts" class="content-section">
                 <h2>📞 Наши контакты</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoContacts" class="logo-preview" src="" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Адрес: ул. Горная, д. 15</li>
@@ -2077,7 +2168,7 @@
             <!-- ОРУНДАР БОЛУМУ -->
             <div id="places-kyrg" class="content-section">
                 <h2>Биздин орундар</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoPlacesKyrg" class="logo-preview" src="" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Бардык орундар: <span id="totalPlacesCount-kyrg">5</span></h3>
@@ -2131,7 +2222,7 @@
             <!-- КОНОКТОР БОЛУМУ -->
             <div id="guest-kyrg" class="content-section">
                 <h2>Биздин коноктор</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoGuestKyrg" class="logo-preview" src="" alt="Логотип">
                 <div class="guest-photos">  
                      <img src="klk.jpg" alt="Биздин коноктор" class="guest-photo" onclick="openFullscreen(this.src)">
                      <img src="pop.jpg" alt="Биздин коноктор" class="guest-photo" onclick="openFullscreen(this.src)">
@@ -2141,6 +2232,7 @@
 
             <div id="main-kyrg" class="content-section">
                 <h2>Биз жөнүндө</h2>
+                <img id="logoAboutKyrg" class="logo-preview" src="" alt="Логотип">
                 <p>Токой бешбармагынан ийриктин жытына чейин. Биздин ресторан - Тянь-Шань тоолорунун этегиндеги саякат. Бул жерде сиз чыныгы кыргыз коноккорчулугунун эмне экенин билесиз, мында конокко эң жакшы эт бөлүгү берилет, чайнек эч качан бош болбойт.</p>
                 
                 <h3>🎪 Үйлөр</h3>
@@ -2159,7 +2251,7 @@
             
             <div id="menu-kyrg" class="content-section">
                 <h2>🍽️ Биздин меню</h2>
-                <img src="logo.png" alt="көчмөн" class="foto">
+                <img id="logoMenuKyrg" class="logo-preview" src="" alt="Логотип">
                 
                 <h3>🥤 Ичимдиктер</h3>
                 <div class="menu-items" id="menu-drinks-kyrg">
@@ -2179,7 +2271,7 @@
 
             <div id="social-kyrg" class="content-section">
                 <h2>📱 Биздин социалдык тармактар</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoSocialKyrg" class="logo-preview" src="" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2191,7 +2283,7 @@
             
             <div id="contacts-kyrg" class="content-section">
                 <h2>📞 Байланыш</h2>
-                <img src="logo.png" alt="логотип" class="foto">
+                <img id="logoContactsKyrg" class="logo-preview" src="" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Дарек: Горная көч., 15-үй</li>
@@ -2217,12 +2309,16 @@
         let viewGuestsMonth = new Date().getMonth();
         let viewGuestsYear = new Date().getFullYear();
         
-        let currentAdminLevel = null;
+        let currentAdminLevel = null; // 'admin', 'cashier', или null
         let editingBookingId = null;
         let selectedBookingIndex = null;
         
         // WhatsApp номер
         const WHATSAPP_NUMBER = '79620742140';
+        
+        // ПАРОЛИ
+        const ADMIN_PASSWORD = '8791';
+        const CASHIER_PASSWORD = '9233';
         
         // Цены на напитки и блюда
         const prices = {
@@ -2310,6 +2406,12 @@
         let totalRevenue = 0;
         let bookingsRevenue = 0;
         let storeRevenue = 0;
+        
+        // Логотип и его название
+        let logoData = {
+            url: '',
+            name: ''
+        };
         
         // Депозит за бронь
         const DEPOSIT_AMOUNT = 2000;
@@ -3157,8 +3259,8 @@
             
             const password = document.getElementById('adminPassword').value;
             
-            if (password === '8791' || password === '1234') {
-                currentAdminLevel = 'full';
+            if (password === ADMIN_PASSWORD) {
+                currentAdminLevel = 'admin';
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminControls').style.display = 'block';
                 switchAdminTab('cash');
@@ -3166,6 +3268,23 @@
                 updateStockDisplay();
                 updateStoreDisplay();
                 showNotification('Доступ администратора получен');
+            } else if (password === CASHIER_PASSWORD) {
+                currentAdminLevel = 'cashier';
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminControls').style.display = 'block';
+                
+                // Для кассира скрываем вкладки настроек и управления бронированиями
+                const tabsToHide = ['manageBookings', 'viewGuests', 'settings'];
+                tabsToHide.forEach(tab => {
+                    const tabElement = document.querySelector(`.admin-tab[onclick*="${tab}"]`);
+                    if (tabElement) tabElement.style.display = 'none';
+                });
+                
+                switchAdminTab('cash');
+                updateAdminStats();
+                updateStockDisplay();
+                updateStoreDisplay();
+                showNotification('Доступ кассира получен');
             } else {
                 showNotification('Неверный пароль');
             }
@@ -3202,6 +3321,8 @@
                 loadAllBookings();
             } else if (tabName === 'viewGuests') {
                 updateViewGuestsCalendar();
+            } else if (tabName === 'settings') {
+                updateSettingsDisplay();
             }
         }
         
@@ -4104,6 +4225,106 @@
             showNotification(`Продажи сохранены: ${total} сом`);
         }
         
+        // === ФУНКЦИИ ЛОГОТИПА ===
+        
+        function handleLogoUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.match('image.*')) {
+                showNotification('Пожалуйста, выберите изображение');
+                return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('Размер файла не должен превышать 5MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                logoData.url = e.target.result;
+                updateLogoDisplay();
+                saveToLocalStorage();
+                showNotification('Логотип успешно загружен');
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updateLogoDisplay() {
+            // Обновляем предпросмотр в настройках
+            const logoPreview = document.getElementById('logoPreview');
+            if (logoPreview && logoData.url) {
+                logoPreview.src = logoData.url;
+            }
+            
+            // Обновляем название логотипа
+            const logoNameElement = document.getElementById('logoName');
+            if (logoNameElement) {
+                logoNameElement.textContent = logoData.name || 'Название логотипа не задано';
+            }
+            
+            // Обновляем логотип на главном экране
+            const mainLogo = document.getElementById('mainLogo');
+            if (mainLogo && logoData.url) {
+                mainLogo.src = logoData.url;
+            }
+            
+            // Обновляем название на главном экране
+            const mainLogoName = document.getElementById('mainLogoName');
+            if (mainLogoName) {
+                mainLogoName.textContent = logoData.name || '';
+            }
+            
+            // Обновляем логотипы во всех секциях
+            updateAllLogos();
+        }
+        
+        function updateAllLogos() {
+            // Обновляем логотипы во всех секциях
+            const logoIds = [
+                'logoPlaces', 'logoGuest', 'logoAbout', 'logoMenu', 'logoSocial', 'logoContacts',
+                'logoPlacesKyrg', 'logoGuestKyrg', 'logoAboutKyrg', 'logoMenuKyrg', 'logoSocialKyrg', 'logoContactsKyrg'
+            ];
+            
+            logoIds.forEach(id => {
+                const element = document.getElementById(id);
+                if (element && logoData.url) {
+                    element.src = logoData.url;
+                }
+            });
+        }
+        
+        function saveLogoName() {
+            const logoNameInput = document.getElementById('logoNameInput');
+            if (!logoNameInput) return;
+            
+            const name = logoNameInput.value.trim();
+            if (name) {
+                logoData.name = name;
+                updateLogoDisplay();
+                saveToLocalStorage();
+                showNotification(`Название логотипа сохранено: ${name}`);
+                logoNameInput.value = '';
+            } else {
+                showNotification('Введите название логотипа');
+            }
+        }
+        
+        function removeLogo() {
+            if (confirm('Удалить логотип?')) {
+                logoData.url = '';
+                logoData.name = '';
+                updateLogoDisplay();
+                saveToLocalStorage();
+                showNotification('Логотип удален');
+            }
+        }
+        
+        function updateSettingsDisplay() {
+            updateLogoDisplay();
+        }
+        
         // === ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА ===
         
         function printDayReport() {
@@ -4312,6 +4533,43 @@
                   `📊 ИТОГО: ${totalDay} сом`);
         }
         
+        // === СБРОС ВСЕХ ДАННЫХ ===
+        
+        function resetAllData() {
+            if (confirm('ВНИМАНИЕ: Это действие удалит ВСЕ данные!\n\n• Все бронирования\n• Все продажи\n• Все запасы\n• Логотип\n\nДействие нельзя отменить!\n\nПродолжить?')) {
+                if (confirm('Последнее предупреждение: Вы уверены, что хотите удалить ВСЕ данные?')) {
+                    // Сбрасываем все данные
+                    bookings = [];
+                    stock = {
+                        cola: 50, pepsi: 50, fanta: 50, sprite: 50, water: 100,
+                        kuurdak: 20, kymyz: 30, kuymak: 20, plov: 25, manty: 30, lagman: 25,
+                        nitro: 30, flash: 30, drive: 30
+                    };
+                    tempStoreSales = {};
+                    storeSalesByDate = {};
+                    storeRevenue = 0;
+                    bookingsRevenue = 0;
+                    totalRevenue = 0;
+                    smallItemsAmount = 0;
+                    logoData = { url: '', name: '' };
+                    
+                    // Обновляем отображение
+                    updateAdminStats();
+                    updateStockDisplay();
+                    updateStoreDisplay();
+                    updateMenuDisplay();
+                    updatePlaceStatuses();
+                    updateLogoDisplay();
+                    loadAllBookings();
+                    
+                    // Очищаем localStorage
+                    localStorage.removeItem('kocevnikData');
+                    
+                    showNotification('Все данные сброшены');
+                }
+            }
+        }
+        
         // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
         
         function formatDate(dateStr) {
@@ -4346,6 +4604,7 @@
                     bookingsRevenue: bookingsRevenue,
                     totalRevenue: totalRevenue,
                     smallItemsAmount: smallItemsAmount,
+                    logoData: logoData,
                     lastSaved: new Date().toISOString()
                 };
                 
@@ -4362,18 +4621,24 @@
                     const data = JSON.parse(savedData);
                     
                     bookings = data.bookings || [];
-                    stock = data.stock || {};
+                    stock = data.stock || {
+                        cola: 50, pepsi: 50, fanta: 50, sprite: 50, water: 100,
+                        kuurdak: 20, kymyz: 30, kuymak: 20, plov: 25, manty: 30, lagman: 25,
+                        nitro: 30, flash: 30, drive: 30
+                    };
                     tempStoreSales = data.tempStoreSales || {};
                     storeSalesByDate = data.storeSalesByDate || {};
                     storeRevenue = data.storeRevenue || 0;
                     bookingsRevenue = data.bookingsRevenue || 0;
                     totalRevenue = data.totalRevenue || 0;
                     smallItemsAmount = data.smallItemsAmount || 0;
+                    logoData = data.logoData || { url: '', name: '' };
                     
                     updateRevenue();
                     updateMenuDisplay();
                     updatePlaceStatuses();
                     updateAdminStats();
+                    updateLogoDisplay();
                     
                     console.log('Данные загружены из localStorage');
                 }
@@ -4403,6 +4668,7 @@
             
             updateMenuDisplay();
             updatePlaceStatuses();
+            updateLogoDisplay();
             
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
