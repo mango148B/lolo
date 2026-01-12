@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ресторан "Кочевник"</title>
     <!-- Favicon и PWA мета-теги -->
-<link rel="icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Кочевник">
-<meta name="theme-color" content="#8b5a2b">
-<meta name="msapplication-TileColor" content="#8b5a2b">
-<meta name="msapplication-TileImage" content="logo.png">
-<meta name="application-name" content="Кочевник">
-<link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Кочевник">
+    <meta name="theme-color" content="#8b5a2b">
+    <meta name="msapplication-TileColor" content="#8b5a2b">
+    <meta name="msapplication-TileImage" content="logo.png">
+    <meta name="application-name" content="Кочевник">
+    <link rel="manifest" href="manifest.json">
     <style>
         /* ОСНОВНЫЕ СТИЛИ */
         * {
@@ -33,7 +33,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             background: rgba(255, 248, 240, 0.95);
             border-radius: 15px;
@@ -71,20 +71,28 @@
         .admin-modal {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(92, 61, 46, 0.95);
+            z-index: 10001;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .admin-content {
             background: #5c3d2e;
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-            z-index: 10001;
-            max-width: 95%;
-            width: 700px;
-            max-height: 85vh;
+            max-width: 100%;
+            width: 100%;
+            max-height: 95vh;
             overflow-y: auto;
             border: 3px solid #8b5a2b;
             color: #f5e9d7;
+            margin: 0 auto;
         }
         
         .admin-header {
@@ -97,14 +105,11 @@
         }
         
         .admin-drag-handle {
-            cursor: move;
-            padding: 10px;
-            margin: -10px;
-            flex-grow: 1;
             color: #d9a566;
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: bold;
             text-align: center;
+            flex-grow: 1;
         }
         
         .admin-close {
@@ -135,16 +140,17 @@
         }
 
         .admin-tabs {
-            display: flex;
-            gap: 5px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
             margin-bottom: 20px;
             border-bottom: 2px solid #8b5a2b;
+            padding-bottom: 10px;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .admin-tab {
-            padding: 10px 12px;
+            padding: 12px 15px;
             background: none;
             border: none;
             border-bottom: 3px solid transparent;
@@ -153,13 +159,13 @@
             color: #d9a566;
             transition: all 0.3s ease;
             font-size: 14px;
-            min-width: auto;
             text-align: center;
-            flex: 1;
+            border-radius: 8px;
         }
 
         .admin-tab.active {
             color: #f5e9d7;
+            background: rgba(139, 90, 43, 0.3);
             border-bottom-color: #d9a566;
         }
 
@@ -177,7 +183,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin: 15px 0;
         }
@@ -198,11 +204,10 @@
         }
 
         .admin-controls {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin: 15px 0;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .control-btn {
@@ -212,9 +217,7 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            min-width: 120px;
             text-align: center;
-            flex: 1;
         }
 
         .btn-primary {
@@ -351,11 +354,10 @@
         }
 
         .month-selector {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
             gap: 5px;
             margin: 15px 0;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .month-btn {
@@ -367,8 +369,6 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 12px;
-            flex: 1;
-            min-width: 60px;
             text-align: center;
         }
 
@@ -443,7 +443,6 @@
             display: flex;
             gap: 10px;
             align-items: center;
-            justify-content: center;
             flex-wrap: wrap;
         }
 
@@ -573,11 +572,10 @@
         }
 
         .booking-actions {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-top: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
         }
 
         .booking-actions button {
@@ -587,8 +585,6 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            min-width: 150px;
-            flex: 1;
         }
 
         /* ОСНОВНОЙ СТИЛЬ САЙТА */
@@ -615,11 +611,10 @@
         }
         
         .nav-buttons {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin: 20px auto;
-            flex-wrap: wrap;
             max-width: 100%;
         }
         
@@ -634,11 +629,9 @@
             font-weight: bold;
             padding: 12px 15px;
             font-size: 14px;
-            min-width: 120px;
             position: relative;
             overflow: hidden;
             text-align: center;
-            flex: 1;
         }
         
         .nav-btn:hover {
@@ -657,7 +650,7 @@
             margin: 15px auto;
             text-align: left;
             padding: 20px;
-            max-width: 900px;
+            max-width: 100%;
         }
         
         .content-section.active {
@@ -769,16 +762,21 @@
             transform: none;
         }
 
+        .social-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
         .social-links a {
             text-decoration: none;
             color: #5c3d2e;
-            display: block;
             padding: 12px 15px;
-            margin: 8px 0;
             background: rgba(139, 90, 43, 0.1);
             border-radius: 10px;
             border: 1px solid #8b5a2b;
             transition: all 0.3s ease;
+            text-align: center;
         }
         
         .social-links a:hover {
@@ -808,14 +806,16 @@
         }
         
         .guest-photos {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
         
         .guest-photo {
             width: 100%;
+            height: 200px;
+            object-fit: cover;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
@@ -828,11 +828,6 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        .logo-upload-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
         .logo-preview {
             width: 150px;
             height: 150px;
@@ -843,23 +838,6 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             background: white;
-        }
-
-        .upload-btn {
-            background: #8b5a2b;
-            color: #f5e9d7;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            margin: 10px;
-        }
-
-        .upload-btn:hover {
-            background: #d9a566;
-            color: #5c3d2e;
         }
 
         .fullscreen-overlay {
@@ -1104,15 +1082,12 @@
         }
 
         /* СТИЛИ ДЛЯ ДОБАВЛЕНИЯ ГОСТЕЙ */
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #d9a566;
-            font-weight: bold;
+        .add-guest-form {
+            background: rgba(139, 90, 43, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #8b5a2b;
         }
 
         /* СТИЛИ ДЛЯ КАЛЕНДАРНЫХ ПРОСМОТРОВ */
@@ -1121,7 +1096,6 @@
         }
 
         .guest-date-details {
-            display: none;
             margin-top: 15px;
             padding: 12px;
             background: rgba(139, 90, 43, 0.1);
@@ -1155,12 +1129,12 @@
         }
 
         .place-item-content {
-            display: none;
             margin-top: 10px;
             padding: 10px;
             background: rgba(139, 90, 43, 0.05);
             border-radius: 5px;
             border-top: 1px solid #8b5a2b;
+            display: none;
         }
 
         .place-item-content.active {
@@ -1175,10 +1149,10 @@
         }
 
         .guest-actions {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 8px;
             margin-top: 10px;
-            flex-wrap: wrap;
         }
 
         .guest-actions button {
@@ -1188,7 +1162,6 @@
             cursor: pointer;
             font-weight: bold;
             font-size: 12px;
-            flex: 1;
         }
 
         /* ОФОРМЛЕНИЕ БРОНИ */
@@ -1391,45 +1364,51 @@
         }
 
         .booking-item-actions {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 8px;
             margin-top: 10px;
-            justify-content: flex-end;
         }
 
-        /* СТИЛИ ДЛЯ НАСТРОЙКИ ЛОГОТИПА */
-        .logo-settings {
-            background: rgba(139, 90, 43, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #8b5a2b;
-        }
-
-        .logo-preview-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .logo-controls {
-            display: flex;
-            gap: 10px;
+        /* МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ГОСТЯ */
+        .guest-edit-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(92, 61, 46, 0.95);
+            z-index: 10005;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .guest-edit-content {
+            background: #f5e9d7;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 3px solid #8b5a2b;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
         /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
         @media (max-width: 768px) {
-            .admin-modal {
-                width: 98%;
+            .container {
+                border-radius: 10px;
+            }
+            
+            .admin-content {
                 padding: 15px;
-                top: 10px;
-                left: 10px;
-                transform: none;
-                max-height: 90vh;
+            }
+            
+            .admin-tabs {
+                grid-template-columns: 1fr 1fr;
             }
             
             .booking-content {
@@ -1440,48 +1419,8 @@
                 grid-template-columns: 1fr;
             }
             
-            .admin-controls,
-            .booking-actions {
-                flex-direction: column;
-            }
-            
-            .control-btn,
-            .booking-actions button {
-                width: 100%;
-                margin-bottom: 5px;
-            }
-            
-            .store-item {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-            
-            .store-stats {
-                justify-content: center;
-            }
-            
-            .store-controls {
-                justify-content: center;
-            }
-            
-            .admin-tabs {
-                flex-direction: column;
-            }
-            
-            .admin-tab {
-                width: 100%;
-            }
-            
             .nav-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .nav-btn {
-                width: 100%;
-                max-width: 300px;
-                margin: 0 auto;
+                grid-template-columns: 1fr 1fr;
             }
             
             .yurta-container, .kupol-container {
@@ -1509,6 +1448,14 @@
                 width: 120px;
                 height: 120px;
             }
+            
+            .guest-photos {
+                grid-template-columns: 1fr;
+            }
+            
+            .guest-photo {
+                height: 150px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1516,10 +1463,8 @@
                 font-size: 1.8em;
             }
             
-            .nav-btn {
-                padding: 10px 12px;
-                font-size: 13px;
-                min-width: 100px;
+            .nav-buttons {
+                grid-template-columns: 1fr;
             }
             
             h2 {
@@ -1557,7 +1502,10 @@
             .month-btn {
                 padding: 6px 8px;
                 font-size: 11px;
-                min-width: 50px;
+            }
+            
+            .admin-tabs {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1570,255 +1518,273 @@
         </div>
         
         <div id="adminModal" class="admin-modal">
-            <div class="admin-header">
-                <div class="admin-drag-handle">👑 Панель управления</div>
-                <button class="admin-close" onclick="closeAdminModal()">×</button>
-            </div>
-            
-            <div id="adminLogin" style="text-align: center;">
-                <p style="margin-bottom: 15px; color: #d9a566;">Введите пароль для доступа:</p>
-                <input type="password" id="adminPassword" class="admin-input" placeholder="Введите пароль" onkeypress="checkAdminPassword(event)">
-                <button class="control-btn btn-primary" onclick="checkAdminPassword()" style="width: 100%; margin-top: 10px;">Войти</button>
-            </div>
-            
-            <div id="adminControls" style="display: none;">
-                <div class="admin-tabs">
-                    <button class="admin-tab active" onclick="switchAdminTab('cash')">💰 Касса</button>
-                    <button class="admin-tab" onclick="switchAdminTab('stock')">📦 Запасы</button>
-                    <button class="admin-tab" onclick="switchAdminTab('store')">🏪 Магазин</button>
-                    <button class="admin-tab" onclick="switchAdminTab('manageBookings')">📋 Управление бронированиями</button>
-                    <button class="admin-tab" onclick="switchAdminTab('viewGuests')">👥 Просмотр гостей</button>
-                    <button class="admin-tab" onclick="switchAdminTab('settings')">⚙️ Настройки</button>
+            <div class="admin-content">
+                <div class="admin-header">
+                    <div class="admin-drag-handle">👑 Панель управления</div>
+                    <button class="admin-close" onclick="closeAdminModal()">×</button>
                 </div>
                 
-                <div id="cashTab" class="tab-content active">
-                    <h3 style="color: #d9a566; text-align: center;">💰 Управление кассой</h3>
-                    
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div>Общая выручка</div>
-                            <div class="stat-value" id="totalRevenue">0 сом</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Доход от бронирований</div>
-                            <div class="stat-value" id="bookingsRevenue">0 сом</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Доход от магазина</div>
-                            <div class="stat-value" id="storeRevenue">0 сом</div>
-                        </div>
-                        <div class="stat-card">
-                            <div>Бронирований</div>
-                            <div class="stat-value" id="totalBookings">0</div>
-                        </div>
+                <div id="adminLogin" style="text-align: center;">
+                    <p style="margin-bottom: 15px; color: #d9a566;">Введите пароль для доступа:</p>
+                    <input type="password" id="adminPassword" class="admin-input" placeholder="Введите пароль" onkeypress="checkAdminPassword(event)">
+                    <button class="control-btn btn-primary" onclick="checkAdminPassword()" style="width: 100%; margin-top: 10px;">Войти</button>
+                </div>
+                
+                <div id="adminControls" style="display: none;">
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" onclick="switchAdminTab('cash')">💰 Касса</button>
+                        <button class="admin-tab" onclick="switchAdminTab('stock')">📦 Запасы</button>
+                        <button class="admin-tab" onclick="switchAdminTab('store')">🏪 Магазин</button>
+                        <button class="admin-tab" onclick="switchAdminTab('addGuest')">👤 Добавить гостя</button>
+                        <button class="admin-tab" onclick="switchAdminTab('viewGuests')">👥 Просмотр гостей</button>
                     </div>
                     
-                    <div class="admin-controls">
-                        <button class="control-btn btn-primary" onclick="showTotalDayIncome()">📅 Доход за сегодня</button>
-                        <button class="control-btn btn-secondary" onclick="showIncomeCalendar('bookings')">📅 Доход от бронирований</button>
-                        <button class="control-btn btn-secondary" onclick="showIncomeCalendar('store')">📅 Доход от магазина</button>
-                    </div>
-                    
-                    <div id="incomeCalendarView" class="income-calendar-view" style="display: none;">
-                        <div class="admin-calendar-container">
-                            <div class="calendar-header">
-                                <div class="calendar-nav">
-                                    <button onclick="changeIncomeMonth(-1)">‹</button>
-                                    <button onclick="changeIncomeMonth(1)">›</button>
+                    <div id="cashTab" class="tab-content active">
+                        <h3 style="color: #d9a566; text-align: center;">💰 Управление кассой</h3>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div>Общая выручка</div>
+                                <div class="stat-value" id="totalRevenue">0 сом</div>
+                            </div>
+                            <div class="stat-card">
+                                <div>Доход от бронирований</div>
+                                <div class="stat-value" id="bookingsRevenue">0 сом</div>
+                            </div>
+                            <div class="stat-card">
+                                <div>Доход от магазина</div>
+                                <div class="stat-value" id="storeRevenue">0 сом</div>
+                            </div>
+                            <div class="stat-card">
+                                <div>Бронирований</div>
+                                <div class="stat-value" id="totalBookings">0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-controls">
+                            <button class="control-btn btn-primary" onclick="showTotalDayIncome()">📅 Доход за сегодня</button>
+                            <button class="control-btn btn-secondary" onclick="showIncomeCalendar('bookings')">📅 Доход от бронирований</button>
+                            <button class="control-btn btn-secondary" onclick="showIncomeCalendar('store')">📅 Доход от магазина</button>
+                        </div>
+                        
+                        <div id="incomeCalendarView" class="income-calendar-view" style="display: none;">
+                            <div class="admin-calendar-container">
+                                <div class="calendar-header">
+                                    <div class="calendar-nav">
+                                        <button onclick="changeIncomeMonth(-1)">‹</button>
+                                        <button onclick="changeIncomeMonth(1)">›</button>
+                                    </div>
+                                    <h3 id="incomeCalendarMonth">Май 2024</h3>
                                 </div>
-                                <h3 id="incomeCalendarMonth">Май 2024</h3>
-                            </div>
-                            
-                            <div class="month-selector">
-                                <button class="month-btn active" data-month="4" onclick="setIncomeMonth(4)">Май</button>
-                                <button class="month-btn" data-month="5" onclick="setIncomeMonth(5)">Июнь</button>
-                                <button class="month-btn" data-month="6" onclick="setIncomeMonth(6)">Июль</button>
-                                <button class="month-btn" data-month="7" onclick="setIncomeMonth(7)">Август</button>
-                                <button class="month-btn" data-month="8" onclick="setIncomeMonth(8)">Сентябрь</button>
-                            </div>
-                            
-                            <div class="admin-calendar-grid" id="incomeCalendarGrid">
-                                <!-- Календарь доходов будет заполнен через JavaScript -->
-                            </div>
-                        </div>
-                        
-                        <div id="incomeDetails" class="income-details" style="display: none;">
-                            <!-- Детали доходов будут добавлены через JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <div class="print-controls">
-                        <h4 style="color: #d9a566; text-align: center;">Печать отчета за день</h4>
-                        <div class="print-date-selector">
-                            <input type="date" id="printDate" class="admin-input" style="flex-grow: 1;">
-                            <button class="print-btn" onclick="printDayReport()">Печатать</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="stockTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">📦 Управление запасами</h3>
-                    <button class="control-btn btn-primary" onclick="updateStockDisplay()">
-                        🔄 Обновить остатки
-                    </button>
-                    <div class="stock-management">
-                        <!-- Остатки продуктов будут добавлены через JavaScript -->
-                    </div>
-                </div>
-                
-                <div id="storeTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">🏪 Магазин</h3>
-                    <p style="text-align: center; margin-bottom: 15px;">Продажа напитков и национальных блюд</p>
-                    
-                    <button class="control-btn btn-primary" onclick="updateStoreDisplay()">
-                        🔄 Обновить остатки
-                    </button>
-                    
-                    <div id="storeItems">
-                        <!-- Товары магазина будут добавлены через JavaScript -->
-                    </div>
-                    
-                    <!-- МЕЛОЧИ В МАГАЗИНЕ -->
-                    <div class="small-items-control">
-                        <h4 style="color: #d9a566; text-align: center;">💰 Разные мелкие покупки</h4>
-                        <p style="text-align: center; margin-bottom: 10px;">(Чупа-чупсы, жевачки и другие мелкие товары)</p>
-                        
-                        <div class="small-item-controls">
-                            <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-10)">-10</button>
-                            <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-1)">-</button>
-                            <div class="small-item-amount" id="smallItemAmount">0 сом</div>
-                            <button class="control-btn btn-primary" onclick="changeSmallItemAmount(1)">+</button>
-                            <button class="control-btn btn-primary" onclick="changeSmallItemAmount(10)">+10</button>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 10px;">
-                            <input type="number" id="customSmallAmount" class="admin-input" placeholder="Введите сумму" style="width: 200px; display: inline-block;">
-                            <button class="control-btn btn-secondary" onclick="setCustomSmallAmount()" style="margin-left: 10px;">Установить</button>
-                        </div>
-                    </div>
-                    
-                    <div class="store-summary">
-                        <div>Текущие продажи:</div>
-                        <div class="store-total" id="currentStoreTotal">0 сом</div>
-                    </div>
-                    
-                    <div class="save-store-sales" style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #8b5a2b;">
-                        <div class="form-group">
-                            <label>Выберите дату для сохранения продаж:</label>
-                            <input type="date" id="storeSaleDate" class="admin-input" value="">
-                        </div>
-                        <button class="control-btn btn-primary" onclick="saveStoreSales()">💾 Сохранить продажи</button>
-                        <div id="storeSalesMessage" style="text-align: center; margin-top: 10px; color: #d9a566;"></div>
-                    </div>
-                    
-                    <div class="store-summary" style="margin-top: 20px;">
-                        <div>Общий доход от магазина:</div>
-                        <div class="store-total" id="storeTotal">0 сом</div>
-                    </div>
-                </div>
-                
-                <!-- УПРАВЛЕНИЕ БРОНИРОВАНИЯМИ -->
-                <div id="manageBookingsTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">📋 Управление бронированиями</h3>
-                    
-                    <div class="admin-controls">
-                        <button class="control-btn btn-primary" onclick="loadAllBookings()">🔄 Загрузить все бронирования</button>
-                        <button class="control-btn btn-warning" onclick="editSelectedBooking()">✏️ Редактировать выбранное</button>
-                        <button class="control-btn btn-danger" onclick="deleteSelectedBooking()">🗑️ Удалить выбранное</button>
-                    </div>
-                    
-                    <div class="date-selector" style="margin: 15px 0;">
-                        <label style="color: #d9a566; text-align: center; display: block; margin-bottom: 10px;">Фильтр по дате:</label>
-                        <div class="date-input-wrapper">
-                            <input type="date" id="filterDate" class="date-input" onchange="filterBookingsByDate(this.value)">
-                            <button class="control-btn btn-secondary" onclick="clearDateFilter()">Очистить фильтр</button>
-                        </div>
-                    </div>
-                    
-                    <div class="booking-management" id="bookingsList">
-                        <!-- Список бронирований будет загружен через JavaScript -->
-                    </div>
-                </div>
-                
-                <div id="viewGuestsTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">Просмотр гостей по датам</h3>
-                    
-                    <button class="control-btn btn-primary" onclick="updateViewGuestsCalendar()" style="margin: 0 auto 15px; display: block;">
-                        🔄 Обновить список гостей
-                    </button>
-                    
-                    <div class="calendar-view-guests">
-                        <div class="admin-calendar-container">
-                            <div class="calendar-header">
-                                <div class="calendar-nav">
-                                    <button onclick="changeViewGuestsMonth(-1)">‹</button>
-                                    <button onclick="changeViewGuestsMonth(1)">›</button>
+                                
+                                <div class="month-selector">
+                                    <button class="month-btn active" data-month="4" onclick="setIncomeMonth(4)">Май</button>
+                                    <button class="month-btn" data-month="5" onclick="setIncomeMonth(5)">Июнь</button>
+                                    <button class="month-btn" data-month="6" onclick="setIncomeMonth(6)">Июль</button>
+                                    <button class="month-btn" data-month="7" onclick="setIncomeMonth(7)">Август</button>
+                                    <button class="month-btn" data-month="8" onclick="setIncomeMonth(8)">Сентябрь</button>
                                 </div>
-                                <h3 id="viewGuestsCalendarMonth">Май 2024</h3>
+                                
+                                <div class="admin-calendar-grid" id="incomeCalendarGrid">
+                                    <!-- Календарь доходов будет заполнен через JavaScript -->
+                                </div>
                             </div>
                             
-                            <div class="month-selector">
-                                <button class="month-btn active" data-month="4" onclick="setViewGuestsMonth(4)">Май</button>
-                                <button class="month-btn" data-month="5" onclick="setViewGuestsMonth(5)">Июнь</button>
-                                <button class="month-btn" data-month="6" onclick="setViewGuestsMonth(6)">Июль</button>
-                                <button class="month-btn" data-month="7" onclick="setViewGuestsMonth(7)">Август</button>
-                                <button class="month-btn" data-month="8" onclick="setViewGuestsMonth(8)">Сентябрь</button>
-                            </div>
-                            
-                            <div class="admin-calendar-grid" id="viewGuestsCalendarGrid">
-                                <!-- Календарь просмотра гостей будет заполнен через JavaScript -->
+                            <div id="incomeDetails" class="income-details" style="display: none;">
+                                <!-- Детали доходов будут добавлены через JavaScript -->
                             </div>
                         </div>
                         
-                        <div id="guestDateDetails" class="guest-date-details">
-                            <!-- Детали гостей по дате будут добавлены через JavaScript -->
+                        <div class="print-controls">
+                            <h4 style="color: #d9a566; text-align: center;">Печать отчета за день</h4>
+                            <div class="print-date-selector">
+                                <input type="date" id="printDate" class="admin-input" style="flex-grow: 1;">
+                                <button class="print-btn" onclick="printDayReport()">Печатать</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- НАСТРОЙКИ -->
-                <div id="settingsTab" class="tab-content">
-                    <h3 style="color: #d9a566; text-align: center;">⚙️ Настройки</h3>
                     
-                    <div class="logo-settings">
-                        <h4 style="color: #d9a566; text-align: center; margin-bottom: 15px;">Настройка логотипа</h4>
-                        
-                        <div class="logo-preview-container">
-                            <img id="logoPreview" class="logo-preview" src="" alt="Логотип">
-                            <div id="logoName" style="color: #d9a566; font-weight: bold; text-align: center;">Название логотипа не задано</div>
-                        </div>
-                        
-                        <div class="logo-controls">
-                            <button class="control-btn btn-primary" onclick="document.getElementById('logoUpload').click()">
-                                📁 Загрузить логотип
-                            </button>
-                            <button class="control-btn btn-secondary" onclick="removeLogo()">
-                                🗑️ Удалить логотип
-                            </button>
-                        </div>
-                        
-                        <div style="margin-top: 15px;">
-                            <input type="text" id="logoNameInput" class="admin-input" placeholder="Введите название логотипа">
-                            <button class="control-btn btn-primary" onclick="saveLogoName()" style="width: 100%; margin-top: 10px;">
-                                💾 Сохранить название
-                            </button>
-                        </div>
-                        
-                        <input type="file" id="logoUpload" accept="image/*" style="display: none;" onchange="handleLogoUpload(event)">
-                        
-                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #8b5a2b;">
-                            <h4 style="color: #d9a566; text-align: center; margin-bottom: 10px;">Сброс данных</h4>
-                            <button class="control-btn btn-danger" onclick="resetAllData()" style="width: 100%;">
-                                🗑️ Сбросить все данные
-                            </button>
-                            <p style="text-align: center; color: #d9a566; font-size: 12px; margin-top: 10px;">
-                                Внимание: это действие нельзя отменить!
-                            </p>
+                    <div id="stockTab" class="tab-content">
+                        <h3 style="color: #d9a566; text-align: center;">📦 Управление запасами</h3>
+                        <button class="control-btn btn-primary" onclick="updateStockDisplay()">
+                            🔄 Обновить остатки
+                        </button>
+                        <div class="stock-management">
+                            <!-- Остатки продуктов будут добавлены через JavaScript -->
                         </div>
                     </div>
+                    
+                    <div id="storeTab" class="tab-content">
+                        <h3 style="color: #d9a566; text-align: center;">🏪 Магазин</h3>
+                        <p style="text-align: center; margin-bottom: 15px;">Продажа напитков и национальных блюд</p>
+                        
+                        <button class="control-btn btn-primary" onclick="updateStoreDisplay()">
+                            🔄 Обновить остатки
+                        </button>
+                        
+                        <div id="storeItems">
+                            <!-- Товары магазина будут добавлены через JavaScript -->
+                        </div>
+                        
+                        <!-- МЕЛОЧИ В МАГАЗИНЕ -->
+                        <div class="small-items-control">
+                            <h4 style="color: #d9a566; text-align: center;">💰 Разные мелкие покупки</h4>
+                            <p style="text-align: center; margin-bottom: 10px;">(Чупа-чупсы, жевачки и другие мелкие товары)</p>
+                            
+                            <div class="small-item-controls">
+                                <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-10)">-10</button>
+                                <button class="control-btn btn-danger" onclick="changeSmallItemAmount(-1)">-</button>
+                                <div class="small-item-amount" id="smallItemAmount">0 сом</div>
+                                <button class="control-btn btn-primary" onclick="changeSmallItemAmount(1)">+</button>
+                                <button class="control-btn btn-primary" onclick="changeSmallItemAmount(10)">+10</button>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 10px;">
+                                <input type="number" id="customSmallAmount" class="admin-input" placeholder="Введите сумму" style="width: 200px; display: inline-block;">
+                                <button class="control-btn btn-secondary" onclick="setCustomSmallAmount()" style="margin-left: 10px;">Установить</button>
+                            </div>
+                        </div>
+                        
+                        <div class="store-summary">
+                            <div>Текущие продажи:</div>
+                            <div class="store-total" id="currentStoreTotal">0 сом</div>
+                        </div>
+                        
+                        <div class="save-store-sales" style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #8b5a2b;">
+                            <div class="form-group">
+                                <label>Выберите дату для сохранения продаж:</label>
+                                <input type="date" id="storeSaleDate" class="admin-input" value="">
+                            </div>
+                            <button class="control-btn btn-primary" onclick="saveStoreSales()">💾 Сохранить продажи</button>
+                            <div id="storeSalesMessage" style="text-align: center; margin-top: 10px; color: #d9a566;"></div>
+                        </div>
+                        
+                        <div class="store-summary" style="margin-top: 20px;">
+                            <div>Общий доход от магазина:</div>
+                            <div class="store-total" id="storeTotal">0 сом</div>
+                        </div>
+                    </div>
+                    
+                    <!-- ДОБАВЛЕНИЕ ГОСТЯ -->
+                    <div id="addGuestTab" class="tab-content">
+                        <h3 style="color: #d9a566; text-align: center;">👤 Добавить гостя</h3>
+                        
+                        <div class="add-guest-form">
+                            <div class="form-group">
+                                <label for="newGuestName">Имя гостя:</label>
+                                <input type="text" id="newGuestName" class="admin-input" placeholder="Введите имя гостя">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newGuestPhone">Телефон:</label>
+                                <input type="tel" id="newGuestPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newGuestDate">Дата бронирования:</label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" id="newGuestDate" class="admin-input" value="">
+                                    <button class="control-btn btn-secondary" onclick="selectTodayForNewGuest()">Сегодня</button>
+                                </div>
+                            </div>
+                            
+                            <div class="calendar-container" id="addGuestCalendar">
+                                <!-- Календарь для выбора даты -->
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="newGuestPlace">Место:</label>
+                                <select id="newGuestPlace" class="admin-input">
+                                    <option value="Юрта 1">Юрта 1</option>
+                                    <option value="Юрта 2">Юрта 2</option>
+                                    <option value="Купол 1">Купол 1</option>
+                                    <option value="Купол 2">Купол 2</option>
+                                    <option value="Терраса">Терраса</option>
+                                </select>
+                            </div>
+                            
+                            <!-- ВЫБОР БЛЮД И НАПИТКОВ -->
+                            <div class="menu-selection">
+                                <h3>Выберите напитки и блюда</h3>
+                                
+                                <div class="menu-category">
+                                    <h3>🥤 Напитки</h3>
+                                    <div class="menu-items" id="addGuestDrinks">
+                                        <!-- Напитки будут добавлены через JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <div class="menu-category">
+                                    <h3>🍽️ Национальные блюда</h3>
+                                    <div class="menu-items" id="addGuestDishes">
+                                        <!-- Блюда будут добавлены через JavaScript -->
+                                    </div>
+                                </div>
+                                
+                                <div class="menu-category">
+                                    <h3>⚡ Энергетики</h3>
+                                    <div class="menu-items" id="addGuestEnergy">
+                                        <!-- Энергетики будут добавлены через JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-summary">
+                                <h3>Сводка заказа</h3>
+                                <div id="addGuestSummary">
+                                    <!-- Сводка заказа будет заполнена через JavaScript -->
+                                </div>
+                                <div class="summary-total">
+                                    <span>Итого:</span>
+                                    <span id="addGuestTotal">2000 сом</span>
+                                </div>
+                            </div>
+                            
+                            <div class="admin-controls">
+                                <button class="control-btn btn-primary" onclick="addNewGuest()">✅ Добавить гостя</button>
+                                <button class="control-btn btn-secondary" onclick="clearGuestForm()">🗑️ Очистить форму</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="viewGuestsTab" class="tab-content">
+                        <h3 style="color: #d9a566; text-align: center;">Просмотр гостей по датам</h3>
+                        
+                        <button class="control-btn btn-primary" onclick="updateViewGuestsCalendar()" style="margin: 0 auto 15px; display: block;">
+                            🔄 Обновить список гостей
+                        </button>
+                        
+                        <div class="calendar-view-guests">
+                            <div class="admin-calendar-container">
+                                <div class="calendar-header">
+                                    <div class="calendar-nav">
+                                        <button onclick="changeViewGuestsMonth(-1)">‹</button>
+                                        <button onclick="changeViewGuestsMonth(1)">›</button>
+                                    </div>
+                                    <h3 id="viewGuestsCalendarMonth">Май 2024</h3>
+                                </div>
+                                
+                                <div class="month-selector">
+                                    <button class="month-btn" data-month="4" onclick="setViewGuestsMonth(4)">Май</button>
+                                    <button class="month-btn" data-month="5" onclick="setViewGuestsMonth(5)">Июнь</button>
+                                    <button class="month-btn" data-month="6" onclick="setViewGuestsMonth(6)">Июль</button>
+                                    <button class="month-btn" data-month="7" onclick="setViewGuestsMonth(7)">Август</button>
+                                    <button class="month-btn" data-month="8" onclick="setViewGuestsMonth(8)">Сентябрь</button>
+                                </div>
+                                
+                                <div class="admin-calendar-grid" id="viewGuestsCalendarGrid">
+                                    <!-- Календарь просмотра гостей будет заполнен через JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <div id="guestDateDetails" class="guest-date-details">
+                                <!-- Детали гостей по дате будут добавлены через JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="control-btn btn-danger" onclick="closeAdminModal()" style="width: 100%; margin-top: 20px;">Закрыть</button>
                 </div>
-                
-                <button class="control-btn btn-danger" onclick="closeAdminModal()" style="width: 100%; margin-top: 20px;">Закрыть</button>
             </div>
         </div>
 
@@ -1927,75 +1893,82 @@
             </div>
         </div>
 
-        <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ БРОНИРОВАНИЯ -->
-        <div id="editBookingModal" class="booking-modal">
-            <div class="booking-content">
+        <!-- МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ ГОСТЯ -->
+        <div id="guestEditModal" class="guest-edit-modal">
+            <div class="guest-edit-content">
                 <div class="booking-header">
-                    <h2 class="booking-title">✏️ Редактирование бронирования</h2>
-                    <button class="booking-close" onclick="closeEditBookingModal()">×</button>
+                    <h2 class="booking-title">✏️ Редактирование гостя</h2>
+                    <button class="booking-close" onclick="closeGuestEditModal()">×</button>
                 </div>
                 
                 <div class="customer-info">
                     <div class="form-group">
-                        <label for="editCustomerName">Имя гостя:</label>
-                        <input type="text" id="editCustomerName" class="admin-input" placeholder="Введите имя гостя">
+                        <label for="editGuestName">Имя гостя:</label>
+                        <input type="text" id="editGuestName" class="admin-input" placeholder="Введите имя гостя">
                     </div>
                     
                     <div class="form-group">
-                        <label for="editCustomerPhone">Телефон:</label>
-                        <input type="tel" id="editCustomerPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
+                        <label for="editGuestPhone">Телефон:</label>
+                        <input type="tel" id="editGuestPhone" class="admin-input" placeholder="+996 XXX XXX XXX">
                     </div>
                     
                     <div class="form-group">
-                        <label for="editBookingDate">Дата:</label>
-                        <input type="date" id="editBookingDate" class="admin-input" readonly>
+                        <label for="editGuestDate">Дата:</label>
+                        <input type="date" id="editGuestDate" class="admin-input">
                     </div>
                     
                     <div class="form-group">
-                        <label for="editBookingPlace">Место:</label>
-                        <input type="text" id="editBookingPlace" class="admin-input" readonly>
+                        <label for="editGuestPlace">Место:</label>
+                        <select id="editGuestPlace" class="admin-input">
+                            <option value="Юрта 1">Юрта 1</option>
+                            <option value="Юрта 2">Юрта 2</option>
+                            <option value="Купол 1">Купол 1</option>
+                            <option value="Купол 2">Купол 2</option>
+                            <option value="Терраса">Терраса</option>
+                        </select>
                     </div>
-                </div>
-                
-                <div class="menu-selection">
-                    <h3>Редактирование напитков и блюд</h3>
                     
-                    <div class="menu-category">
-                        <h3>🥤 Напитки</h3>
-                        <div class="menu-items" id="editDrinks">
-                            <!-- Напитки будут добавлены через JavaScript -->
+                    <div class="menu-selection">
+                        <h3>Редактирование заказа</h3>
+                        
+                        <div class="menu-category">
+                            <h3>🥤 Напитки</h3>
+                            <div class="menu-items" id="editGuestDrinks">
+                                <!-- Напитки будут добавлены через JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="menu-category">
+                            <h3>🍽️ Национальные блюда</h3>
+                            <div class="menu-items" id="editGuestDishes">
+                                <!-- Блюда будут добавлены через JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="menu-category">
+                            <h3>⚡ Энергетики</h3>
+                            <div class="menu-items" id="editGuestEnergy">
+                                <!-- Энергетики будут добавлены через JavaScript -->
+                            </div>
                         </div>
                     </div>
                     
-                    <div class="menu-category">
-                        <h3>🍽️ Национальные блюда</h3>
-                        <div class="menu-items" id="editDishes">
-                            <!-- Блюда будут добавлены через JavaScript -->
+                    <div class="booking-summary">
+                        <h3>Сводка заказа</h3>
+                        <div id="editGuestSummary">
+                            <!-- Сводка заказа будет заполнена через JavaScript -->
+                        </div>
+                        <div class="summary-total">
+                            <span>Итого:</span>
+                            <span id="editGuestTotal">0 сом</span>
                         </div>
                     </div>
                     
-                    <div class="menu-category">
-                        <h3>⚡ Энергетики</h3>
-                        <div class="menu-items" id="editEnergyDrinks">
-                            <!-- Энергетики будут добавлены через JavaScript -->
-                        </div>
+                    <div class="booking-actions">
+                        <button class="control-btn btn-success" onclick="saveGuestEdit()">💾 Сохранить изменения</button>
+                        <button class="control-btn btn-danger" onclick="deleteGuestBooking()">🗑️ Удалить бронирование</button>
+                        <button class="control-btn btn-secondary" onclick="closeGuestEditModal()">Отмена</button>
                     </div>
-                </div>
-                
-                <div class="booking-summary">
-                    <h3>Сводка заказа</h3>
-                    <div id="editOrderSummary">
-                        <!-- Сводка заказа будет заполнена через JavaScript -->
-                    </div>
-                    <div class="summary-total">
-                        <span>Итого:</span>
-                        <span id="editOrderTotal">2000 сом</span>
-                    </div>
-                </div>
-                
-                <div class="booking-actions">
-                    <button class="control-btn btn-success" onclick="saveEditedBooking()">💾 Сохранить изменения</button>
-                    <button class="control-btn btn-danger" onclick="closeEditBookingModal()">Отмена</button>
                 </div>
             </div>
         </div>
@@ -2010,12 +1983,9 @@
 
         <div id="home" class="content-section active">
             <h2>Добро пожаловать в Кочевник</h2>
-            <div class="logo-upload-container">
-                <img id="mainLogo" class="logo-preview" src="logo.png" alt="Логотип">
-                <div id="mainLogoName" style="font-weight: bold; color: #5c3d2e; margin-top: 10px;"></div>
-            </div>
+            <img class="logo-preview" src="logo.png" alt="Логотип">
             <h2>Выберите язык</h2>
-            <div class="language-buttons">
+            <div class="nav-buttons">
                 <button onclick="selectLanguage('RUS')" class="nav-btn">🌏 Русский</button>
                 <button onclick="selectLanguage('KYRG')" class="nav-btn">🌏 Кыргызский</button>
             </div>
@@ -2040,7 +2010,7 @@
             <!-- СЕКЦИЯ МЕСТА С УРЮТАМИ И КУПОЛАМИ -->
             <div id="places" class="content-section">
                 <h2>Наши места</h2>
-                <img id="logoPlaces" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Всего мест: <span id="totalPlacesCount">5</span></h3>
@@ -2094,7 +2064,7 @@
             <!-- ОСТАЛЬНЫЕ СЕКЦИИ -->
             <div id="guest" class="content-section">
                 <h2>Наши гости</h2>
-                <img id="logoGuest" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="guest-photos">  
                      <img src="klk.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
                      <img src="pop.jpg" alt="Наши гости" class="guest-photo" onclick="openFullscreen(this.src)">
@@ -2104,7 +2074,7 @@
 
             <div id="main" class="content-section">
                 <h2>О нас</h2>
-                <img id="logoAbout" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <p>От сытного бешбармака до ароматного курута. Наш ресторан — это путешествие к подножию гор Тянь-Шаня. Здесь вы узнаете, что такое настоящее гостеприимство по-кыргызски, где гостя угощают лучшим куском мяса, а чайник никогда не пустует.</p>
                 
                 <h3>🎪 Юрты</h3>
@@ -2118,12 +2088,12 @@
                 <p>Вкус Кыргызстана у вас дома: Не можете к нам приехать? Мы приедем к вам! Закажите ваши любимые блюда через сайт или по телефону и наслаждайтесь ими в уюте.</p>
                 
                 <h3>🍽️ Дегустационые сеты</h3>
-                <p>"Знакомство с Кыргызстаном": Не знаете, с чего начать? Попробуйте наш сет-дегустацию из нескольких мини-порций самых главных блюд национальной кухни. Идеально для новичков.</p>
+                <p>"Знакомство с Кыргызстаном": Не знаете, с чего начать? Попробуйте наш сет-дегустацию из нескольких мини+порций самых главных блюд национальной кухни. Идеально для новичков.</p>
             </div>
             
             <div id="menu" class="content-section">
                 <h2>🍽️ Наше меню</h2>
-                <img id="logoMenu" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <h3>🥤 Напитки</h3>
                 <div class="menu-items" id="menu-drinks">
@@ -2143,7 +2113,7 @@
 
             <div id="social" class="content-section">
                 <h2>📱 Наши соцсети</h2>
-                <img id="logoSocial" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2155,7 +2125,7 @@
             
             <div id="contacts" class="content-section">
                 <h2>📞 Наши контакты</h2>
-                <img id="logoContacts" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Адрес: ул. Горная, д. 15</li>
@@ -2179,7 +2149,7 @@
             <!-- ОРУНДАР БОЛУМУ -->
             <div id="places-kyrg" class="content-section">
                 <h2>Биздин орундар</h2>
-                <img id="logoPlacesKyrg" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <div style="text-align: center; margin: 20px 0; padding: 15px; background: rgba(139, 90, 43, 0.1); border-radius: 10px;">
                     <h3>Бардык орундар: <span id="totalPlacesCount-kyrg">5</span></h3>
@@ -2233,7 +2203,7 @@
             <!-- КОНОКТОР БОЛУМУ -->
             <div id="guest-kyrg" class="content-section">
                 <h2>Биздин коноктор</h2>
-                <img id="logoGuestKyrg" class="logo-preview" src="" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="guest-photos">  
                      <img src="klk.jpg" alt="Биздин коноктор" class="guest-photo" onclick="openFullscreen(this.src)">
                      <img src="pop.jpg" alt="Биздин коноктор" class="guest-photo" onclick="openFullscreen(this.src)">
@@ -2243,7 +2213,7 @@
 
             <div id="main-kyrg" class="content-section">
                 <h2>Биз жөнүндө</h2>
-                <img id="logoAboutKyrg" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <p>Токой бешбармагынан ийриктин жытына чейин. Биздин ресторан - Тянь-Шань тоолорунун этегиндеги саякат. Бул жерде сиз чыныгы кыргыз коноккорчулугунун эмне экенин билесиз, мында конокко эң жакшы эт бөлүгү берилет, чайнек эч качан бош болбойт.</p>
                 
                 <h3>🎪 Үйлөр</h3>
@@ -2262,7 +2232,7 @@
             
             <div id="menu-kyrg" class="content-section">
                 <h2>🍽️ Биздин меню</h2>
-                <img id="logoMenuKyrg" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 
                 <h3>🥤 Ичимдиктер</h3>
                 <div class="menu-items" id="menu-drinks-kyrg">
@@ -2282,7 +2252,7 @@
 
             <div id="social-kyrg" class="content-section">
                 <h2>📱 Биздин социалдык тармактар</h2>
-                <img id="logoSocialKyrg" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <div class="social-links">
                     <a href="#">📸 Instagram</a>
                     <a href="#">🎵 TikTok</a>
@@ -2294,7 +2264,7 @@
             
             <div id="contacts-kyrg" class="content-section">
                 <h2>📞 Байланыш</h2>
-                <img id="logoContactsKyrg" class="logo-preview" src="logo.png" alt="Логотип">
+                <img class="logo-preview" src="logo.png" alt="Логотип">
                 <ul class="contacts-list">
                     <li>📞 Номер: +7 (962) 074-21-40</li>
                     <li>📍 Дарек: Горная көч., 15-үй</li>
@@ -2320,9 +2290,11 @@
         let viewGuestsMonth = new Date().getMonth();
         let viewGuestsYear = new Date().getFullYear();
         
-        let currentAdminLevel = null; // 'admin', 'cashier', или null
-        let editingBookingId = null;
-        let selectedBookingIndex = null;
+        let addGuestMonth = new Date().getMonth();
+        let addGuestYear = new Date().getFullYear();
+        
+        let currentAdminLevel = null;
+        let editingGuestId = null;
         
         // WhatsApp номер
         const WHATSAPP_NUMBER = '79620742140';
@@ -2418,12 +2390,6 @@
         let bookingsRevenue = 0;
         let storeRevenue = 0;
         
-        // Логотип и его название
-        let logoData = {
-            url: '',
-            name: ''
-        };
-        
         // Депозит за бронь
         const DEPOSIT_AMOUNT = 2000;
 
@@ -2506,11 +2472,6 @@
         function closeBookingModal() {
             document.getElementById('bookingModal').style.display = 'none';
             resetOrder();
-        }
-        
-        function closeEditBookingModal() {
-            document.getElementById('editBookingModal').style.display = 'none';
-            editingBookingId = null;
         }
         
         // === ФУНКЦИИ КАЛЕНДАРЯ БРОНИРОВАНИЯ ===
@@ -2670,18 +2631,32 @@
             generateMenuCategory('energyDrinks', energyDrinks);
         }
         
-        function generateEditMenuForBooking(booking) {
+        function generateAddGuestMenu() {
             // Напитки
             const drinks = ['cola', 'pepsi', 'fanta', 'sprite', 'water'];
-            generateEditMenuCategory('editDrinks', drinks, booking);
+            generateMenuCategoryForAddGuest('addGuestDrinks', drinks);
             
             // Национальные блюда
             const dishes = ['kuurdak', 'kymyz', 'kuymak', 'plov', 'manty', 'lagman'];
-            generateEditMenuCategory('editDishes', dishes, booking);
+            generateMenuCategoryForAddGuest('addGuestDishes', dishes);
             
             // Энергетики (только flash, drive, nitro)
             const energyDrinks = ['nitro', 'flash', 'drive'];
-            generateEditMenuCategory('editEnergyDrinks', energyDrinks, booking);
+            generateMenuCategoryForAddGuest('addGuestEnergy', energyDrinks);
+        }
+        
+        function generateEditMenuForGuest(guest) {
+            // Напитки
+            const drinks = ['cola', 'pepsi', 'fanta', 'sprite', 'water'];
+            generateEditMenuCategory('editGuestDrinks', drinks, guest);
+            
+            // Национальные блюда
+            const dishes = ['kuurdak', 'kymyz', 'kuymak', 'plov', 'manty', 'lagman'];
+            generateEditMenuCategory('editGuestDishes', dishes, guest);
+            
+            // Энергетики (только flash, drive, nitro)
+            const energyDrinks = ['nitro', 'flash', 'drive'];
+            generateEditMenuCategory('editGuestEnergy', energyDrinks, guest);
         }
         
         function generateMenuCategory(containerId, items) {
@@ -2705,7 +2680,28 @@
             });
         }
         
-        function generateEditMenuCategory(containerId, items, booking) {
+        function generateMenuCategoryForAddGuest(containerId, items) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            items.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <span>${getItemName(item)} - ${prices[item]} сом</span>
+                    <div class="item-controls">
+                        <button onclick="changeAddGuestItemQuantity('${item}', -1)">-</button>
+                        <span class="item-quantity" id="add-guest-${item}-quantity">0</span>
+                        <button onclick="changeAddGuestItemQuantity('${item}', 1)">+</button>
+                    </div>
+                `;
+                container.appendChild(menuItem);
+            });
+        }
+        
+        function generateEditMenuCategory(containerId, items, guest) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
@@ -2714,8 +2710,8 @@
             items.forEach(item => {
                 // Находим количество этого товара в заказе
                 let quantity = 0;
-                if (booking.items) {
-                    const itemInOrder = booking.items.find(i => i.itemId === item);
+                if (guest.items) {
+                    const itemInOrder = guest.items.find(i => i.itemId === item);
                     if (itemInOrder) {
                         quantity = itemInOrder.quantity;
                     }
@@ -2726,9 +2722,9 @@
                 menuItem.innerHTML = `
                     <span>${getItemName(item)} - ${prices[item]} сом</span>
                     <div class="item-controls">
-                        <button onclick="changeEditItemQuantity('${item}', -1)">-</button>
-                        <span class="item-quantity" id="edit-${item}-quantity">${quantity}</span>
-                        <button onclick="changeEditItemQuantity('${item}', 1)">+</button>
+                        <button onclick="changeEditGuestItemQuantity('${item}', -1)">-</button>
+                        <span class="item-quantity" id="edit-guest-${item}-quantity">${quantity}</span>
+                        <button onclick="changeEditGuestItemQuantity('${item}', 1)">+</button>
                     </div>
                 `;
                 container.appendChild(menuItem);
@@ -2752,8 +2748,25 @@
             updateOrderSummary();
         }
         
-        function changeEditItemQuantity(item, change) {
-            const quantityElement = document.getElementById(`edit-${item}-quantity`);
+        function changeAddGuestItemQuantity(item, change) {
+            const quantityElement = document.getElementById(`add-guest-${item}-quantity`);
+            if (!quantityElement) return;
+            
+            let quantity = parseInt(quantityElement.textContent) || 0;
+            
+            quantity += change;
+            if (quantity < 0) quantity = 0;
+            if (quantity > stock[item]) {
+                quantity = stock[item];
+                showNotification('Недостаточно товара на складе');
+            }
+            
+            quantityElement.textContent = quantity;
+            updateAddGuestSummary();
+        }
+        
+        function changeEditGuestItemQuantity(item, change) {
+            const quantityElement = document.getElementById(`edit-guest-${item}-quantity`);
             if (!quantityElement) return;
             
             let quantity = parseInt(quantityElement.textContent) || 0;
@@ -2762,7 +2775,7 @@
             if (quantity < 0) quantity = 0;
             
             quantityElement.textContent = quantity;
-            updateEditOrderSummary();
+            updateEditGuestSummary();
         }
         
         function updateOrderSummary() {
@@ -2802,24 +2815,65 @@
             orderTotal.textContent = `${total} сом`;
         }
         
-        function updateEditOrderSummary() {
-            const orderSummary = document.getElementById('editOrderSummary');
-            const orderTotal = document.getElementById('editOrderTotal');
+        function updateAddGuestSummary() {
+            const orderSummary = document.getElementById('addGuestSummary');
+            const orderTotal = document.getElementById('addGuestTotal');
             
             if (!orderSummary || !orderTotal) return;
             
             let summaryHTML = '';
             let total = DEPOSIT_AMOUNT;
             
+            const guestPlace = document.getElementById('newGuestPlace').value;
+            
             summaryHTML += `
                 <div class="summary-item">
-                    <span>Депозит за бронь "${document.getElementById('editBookingPlace').value}"</span>
+                    <span>Депозит за бронь "${guestPlace}"</span>
                     <span>${DEPOSIT_AMOUNT} сом</span>
                 </div>
             `;
             
             for (const item in prices) {
-                const quantityElement = document.getElementById(`edit-${item}-quantity`);
+                const quantityElement = document.getElementById(`add-guest-${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        summaryHTML += `
+                            <div class="summary-item">
+                                <span>${getItemName(item)} x${quantity}</span>
+                                <span>${itemTotal} сом</span>
+                            </div>
+                        `;
+                    }
+                }
+            }
+            
+            orderSummary.innerHTML = summaryHTML;
+            orderTotal.textContent = `${total} сом`;
+        }
+        
+        function updateEditGuestSummary() {
+            const orderSummary = document.getElementById('editGuestSummary');
+            const orderTotal = document.getElementById('editGuestTotal');
+            
+            if (!orderSummary || !orderTotal) return;
+            
+            let summaryHTML = '';
+            let total = DEPOSIT_AMOUNT;
+            
+            const guestPlace = document.getElementById('editGuestPlace').value;
+            
+            summaryHTML += `
+                <div class="summary-item">
+                    <span>Депозит за бронь "${guestPlace}"</span>
+                    <span>${DEPOSIT_AMOUNT} сом</span>
+                </div>
+            `;
+            
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`edit-guest-${item}-quantity`);
                 if (quantityElement) {
                     const quantity = parseInt(quantityElement.textContent) || 0;
                     if (quantity > 0) {
@@ -2970,7 +3024,7 @@
                 
                 if (sent) {
                     const booking = {
-                        id: generateBookingId(),
+                        id: generateGuestId(),
                         place: selectedPlace,
                         date: selectedDate,
                         items: orderItems,
@@ -3008,8 +3062,8 @@
             }
         }
         
-        function generateBookingId() {
-            return 'BK-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        function generateGuestId() {
+            return 'GUEST-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         }
         
         // === ФУНКЦИИ ОТОБРАЖЕНИЯ МЕНЮ ===
@@ -3020,7 +3074,7 @@
         }
         
         function updateRussianMenu() {
-            // Напитки
+            // Напитки в основном меню
             const drinksContainer = document.getElementById('menu-drinks');
             if (drinksContainer) {
                 drinksContainer.innerHTML = `
@@ -3051,7 +3105,7 @@
                 `;
             }
             
-            // Национальные блюда
+            // Национальные блюда в основном меню
             const dishesContainer = document.getElementById('menu-dishes');
             if (dishesContainer) {
                 dishesContainer.innerHTML = `
@@ -3082,7 +3136,7 @@
                 `;
             }
             
-            // Энергетики
+            // Энергетики в основном меню
             const energyContainer = document.getElementById('menu-energy');
             if (energyContainer) {
                 energyContainer.innerHTML = `
@@ -3115,7 +3169,7 @@
         }
         
         function updateKyrgyzMenu() {
-            // Напитки
+            // Напитки в кыргызском меню
             const drinksContainer = document.getElementById('menu-drinks-kyrg');
             if (drinksContainer) {
                 drinksContainer.innerHTML = `
@@ -3146,7 +3200,7 @@
                 `;
             }
             
-            // Национальные блюда
+            // Национальные блюда в кыргызском меню
             const dishesContainer = document.getElementById('menu-dishes-kyrg');
             if (dishesContainer) {
                 dishesContainer.innerHTML = `
@@ -3177,7 +3231,7 @@
                 `;
             }
             
-            // Энергетики
+            // Энергетики в кыргызском меню
             const energyContainer = document.getElementById('menu-energy-kyrg');
             if (energyContainer) {
                 energyContainer.innerHTML = `
@@ -3261,8 +3315,7 @@
         function closeAdminModal() {
             document.getElementById('adminModal').style.display = 'none';
             currentAdminLevel = null;
-            editingBookingId = null;
-            selectedBookingIndex = null;
+            editingGuestId = null;
         }
         
         function checkAdminPassword(e) {
@@ -3284,13 +3337,7 @@
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminControls').style.display = 'block';
                 
-                // Для кассира скрываем вкладки настроек и управления бронированиями
-                const tabsToHide = ['manageBookings', 'viewGuests', 'settings'];
-                tabsToHide.forEach(tab => {
-                    const tabElement = document.querySelector(`.admin-tab[onclick*="${tab}"]`);
-                    if (tabElement) tabElement.style.display = 'none';
-                });
-                
+                // Для кассира доступны ВСЕ вкладки
                 switchAdminTab('cash');
                 updateAdminStats();
                 updateStockDisplay();
@@ -3328,12 +3375,15 @@
                 updateStockDisplay();
             } else if (tabName === 'store') {
                 updateStoreDisplay();
-            } else if (tabName === 'manageBookings') {
-                loadAllBookings();
+            } else if (tabName === 'addGuest') {
+                const today = new Date();
+                const todayStr = today.toISOString().split('T')[0];
+                document.getElementById('newGuestDate').value = todayStr;
+                updateAddGuestCalendar();
+                generateAddGuestMenu();
+                updateAddGuestSummary();
             } else if (tabName === 'viewGuests') {
                 updateViewGuestsCalendar();
-            } else if (tabName === 'settings') {
-                updateSettingsDisplay();
             }
         }
         
@@ -3349,6 +3399,253 @@
             if (bookingsRevenueElement) bookingsRevenueElement.textContent = `${bookingsRevenue} сом`;
             if (storeRevenueElement) storeRevenueElement.textContent = `${storeRevenue} сом`;
             if (totalBookingsElement) totalBookingsElement.textContent = bookings.length;
+        }
+        
+        // === ФУНКЦИИ ДОБАВЛЕНИЯ ГОСТЯ ===
+        
+        function updateAddGuestCalendar() {
+            const monthNames = [
+                'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+            ];
+            
+            const calendarContainer = document.getElementById('addGuestCalendar');
+            if (!calendarContainer) return;
+            
+            calendarContainer.innerHTML = '';
+            
+            // Создаем заголовок календаря
+            const calendarHeader = document.createElement('div');
+            calendarHeader.className = 'calendar-header';
+            calendarHeader.innerHTML = `
+                <div class="calendar-nav">
+                    <button onclick="changeAddGuestMonth(-1)">‹</button>
+                    <button onclick="changeAddGuestMonth(1)">›</button>
+                </div>
+                <h3>${monthNames[addGuestMonth]} ${addGuestYear}</h3>
+            `;
+            calendarContainer.appendChild(calendarHeader);
+            
+            // Создаем сетку календаря
+            const calendarGrid = document.createElement('div');
+            calendarGrid.className = 'calendar-grid';
+            
+            const firstDay = new Date(addGuestYear, addGuestMonth, 1);
+            const lastDay = new Date(addGuestYear, addGuestMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startingDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+            
+            // Заголовки дней недели
+            const dayHeaders = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            dayHeaders.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Пустые дни в начале месяца
+            for (let i = 0; i < startingDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day other-month';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            const today = new Date();
+            const selectedDate = document.getElementById('newGuestDate').value;
+            
+            // Дни месяца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                const dateStr = `${addGuestYear}-${String(addGuestMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                // Проверяем, занята ли дата
+                const bookingsForDate = bookings.filter(booking => booking.date === dateStr);
+                const allPlacesBusy = bookingsForDate.length >= 5;
+                
+                if (allPlacesBusy) {
+                    dayElement.classList.add('busy');
+                    dayElement.title = 'Все места заняты';
+                } else {
+                    dayElement.classList.add('free');
+                    dayElement.onclick = function() {
+                        selectDateForAddGuest(this, dateStr);
+                    };
+                }
+                
+                // Отмечаем сегодняшний день
+                if (day === today.getDate() && 
+                    addGuestMonth === today.getMonth() && 
+                    addGuestYear === today.getFullYear()) {
+                    dayElement.classList.add('today');
+                }
+                
+                // Отмечаем выбранную дату
+                if (selectedDate === dateStr) {
+                    dayElement.classList.add('selected');
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+            
+            calendarContainer.appendChild(calendarGrid);
+        }
+        
+        function changeAddGuestMonth(direction) {
+            addGuestMonth += direction;
+            
+            if (addGuestMonth < 4) {
+                addGuestMonth = 8;
+                addGuestYear--;
+            }
+            
+            if (addGuestMonth > 8) {
+                addGuestMonth = 4;
+                addGuestYear++;
+            }
+            
+            updateAddGuestCalendar();
+        }
+        
+        function selectDateForAddGuest(cell, dateStr) {
+            const allCells = document.querySelectorAll('#addGuestCalendar .calendar-day');
+            allCells.forEach(cell => {
+                cell.classList.remove('selected');
+            });
+            
+            cell.classList.add('selected');
+            document.getElementById('newGuestDate').value = dateStr;
+            updateAddGuestSummary();
+        }
+        
+        function selectTodayForNewGuest() {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            document.getElementById('newGuestDate').value = todayStr;
+            updateAddGuestCalendar();
+        }
+        
+        function addNewGuest() {
+            const name = document.getElementById('newGuestName').value.trim();
+            const phone = document.getElementById('newGuestPhone').value.trim();
+            const date = document.getElementById('newGuestDate').value;
+            const place = document.getElementById('newGuestPlace').value;
+            
+            if (!name) {
+                showNotification('Введите имя гостя');
+                return;
+            }
+            
+            if (!phone) {
+                showNotification('Введите телефон гостя');
+                return;
+            }
+            
+            if (!date) {
+                showNotification('Выберите дату бронирования');
+                return;
+            }
+            
+            if (!place) {
+                showNotification('Выберите место');
+                return;
+            }
+            
+            // Проверяем, свободно ли место на эту дату
+            const isPlaceBusy = bookings.some(booking => 
+                booking.date === date && booking.place === place
+            );
+            
+            if (isPlaceBusy) {
+                showNotification(`Место "${place}" уже занято на ${formatDate(date)}`);
+                return;
+            }
+            
+            const bookingsForDate = bookings.filter(booking => booking.date === date);
+            if (bookingsForDate.length >= 5) {
+                showNotification(`На ${formatDate(date)} все места уже заняты`);
+                return;
+            }
+            
+            // Собираем заказ
+            let total = DEPOSIT_AMOUNT;
+            const orderItems = [];
+            
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`add-guest-${item}-quantity`);
+                if (quantityElement) {
+                    const quantity = parseInt(quantityElement.textContent) || 0;
+                    if (quantity > 0) {
+                        const itemTotal = prices[item] * quantity;
+                        total += itemTotal;
+                        orderItems.push({
+                            name: getItemName(item),
+                            itemId: item,
+                            quantity: quantity,
+                            price: prices[item],
+                            total: itemTotal
+                        });
+                        
+                        if (stock[item] !== undefined) {
+                            stock[item] -= quantity;
+                        }
+                    }
+                }
+            }
+            
+            const booking = {
+                id: generateGuestId(),
+                place: place,
+                date: date,
+                items: orderItems,
+                total: total,
+                deposit: DEPOSIT_AMOUNT,
+                timestamp: new Date().toLocaleString(),
+                guestName: name,
+                guestPhone: phone,
+                whatsappSent: false,
+                createdAt: new Date(),
+                lastModified: new Date(),
+                addedByAdmin: true
+            };
+            
+            bookings.push(booking);
+            bookingsRevenue += total;
+            totalRevenue = bookingsRevenue + storeRevenue;
+            
+            updateAdminStats();
+            updateStockDisplay();
+            updateMenuDisplay();
+            updatePlaceStatuses();
+            updateViewGuestsCalendar();
+            
+            showNotification(`Гость "${name}" добавлен! Место: ${place}, Дата: ${formatDate(date)}, Сумма: ${total} сом`);
+            
+            clearGuestForm();
+            saveToLocalStorage();
+        }
+        
+        function clearGuestForm() {
+            document.getElementById('newGuestName').value = '';
+            document.getElementById('newGuestPhone').value = '';
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            document.getElementById('newGuestDate').value = todayStr;
+            document.getElementById('newGuestPlace').value = 'Юрта 1';
+            
+            // Сбрасываем количество товаров
+            for (const item in prices) {
+                const quantityElement = document.getElementById(`add-guest-${item}-quantity`);
+                if (quantityElement) {
+                    quantityElement.textContent = '0';
+                }
+            }
+            
+            updateAddGuestCalendar();
+            updateAddGuestSummary();
         }
         
         // === ФУНКЦИИ КАССЫ ===
@@ -3426,7 +3723,8 @@
             
             updateCalendarGrid('viewGuestsCalendarGrid', viewGuestsMonth, viewGuestsYear, false);
             
-            const monthButtons = document.querySelectorAll('#viewGuestsCalendarView .month-btn');
+            // Обновляем активные кнопки месяцев
+            const monthButtons = document.querySelectorAll('#viewGuestsTab .month-btn');
             monthButtons.forEach(btn => {
                 btn.classList.remove('active');
                 const month = parseInt(btn.getAttribute('data-month'));
@@ -3667,8 +3965,8 @@
                                             </div>
                                         ` : ''}
                                         <div class="guest-actions">
-                                            <button class="btn-warning" onclick="editBooking(${bookings.indexOf(booking)})">✏️ Редактировать</button>
-                                            <button class="btn-danger" onclick="deleteBooking(${bookings.indexOf(booking)})">🗑️ Удалить</button>
+                                            <button class="btn-warning" onclick="editGuest('${booking.id}')">✏️ Редактировать</button>
+                                            <button class="btn-danger" onclick="deleteGuest('${booking.id}')">🗑️ Удалить</button>
                                         </div>
                                     </div>
                                 `).join('')}
@@ -3693,215 +3991,59 @@
             }
         }
         
-        // === ФУНКЦИИ РЕДАКТИРОВАНИЯ БРОНИРОВАНИЙ ===
+        // === ФУНКЦИИ РЕДАКТИРОВАНИЯ ГОСТЕЙ ===
         
-        function loadAllBookings() {
-            const bookingsList = document.getElementById('bookingsList');
-            if (!bookingsList) return;
-            
-            if (bookings.length === 0) {
-                bookingsList.innerHTML = `
-                    <div class="no-guests" style="text-align: center; padding: 20px;">
-                        <p>Нет бронирований</p>
-                    </div>
-                `;
+        function editGuest(guestId) {
+            const guestIndex = bookings.findIndex(b => b.id === guestId);
+            if (guestIndex === -1) {
+                showNotification('Гость не найден');
                 return;
             }
             
-            let bookingsHTML = `
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <strong>Всего бронирований:</strong> ${bookings.length}
-                </div>
-            `;
-            
-            // Сортируем бронирования по дате (сначала новые)
-            const sortedBookings = [...bookings].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            sortedBookings.forEach((booking, index) => {
-                const originalIndex = bookings.indexOf(booking);
-                
-                bookingsHTML += `
-                    <div class="booking-item" onclick="selectBooking(this, ${originalIndex})" id="booking-${originalIndex}">
-                        <div class="booking-info">
-                            <div class="booking-details">
-                                <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 8px;">
-                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📅 ${formatDate(booking.date)}</div>
-                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">🏕️ ${booking.place}</div>
-                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
-                                </div>
-                            </div>
-                            <div class="booking-amount">
-                                ${booking.total} сом
-                            </div>
-                        </div>
-                        
-                        ${booking.items && booking.items.length > 0 ? `
-                            <div class="booking-items-list">
-                                <div style="font-weight: bold; margin-bottom: 8px; color: #8b5a2b;">Состав заказа:</div>
-                                ${booking.items.map(item => `
-                                    <div class="booking-item-row">
-                                        <span>${item.name}</span>
-                                        <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                        
-                        <div class="booking-item-actions">
-                            <button class="btn-warning" onclick="editBooking(${originalIndex}); event.stopPropagation();">✏️ Редактировать</button>
-                            <button class="btn-danger" onclick="deleteBooking(${originalIndex}); event.stopPropagation();">🗑️ Удалить</button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            bookingsList.innerHTML = bookingsHTML;
-            selectedBookingIndex = null;
-        }
-        
-        function selectBooking(element, index) {
-            const allBookings = document.querySelectorAll('.booking-item');
-            allBookings.forEach(booking => {
-                booking.style.background = 'rgba(139, 90, 43, 0.2)';
-            });
-            
-            element.style.background = 'rgba(217, 165, 102, 0.3)';
-            selectedBookingIndex = index;
-        }
-        
-        function filterBookingsByDate(dateStr) {
-            if (!dateStr) {
-                loadAllBookings();
-                return;
-            }
-            
-            const filteredBookings = bookings.filter(booking => booking.date === dateStr);
-            const bookingsList = document.getElementById('bookingsList');
-            
-            if (filteredBookings.length === 0) {
-                bookingsList.innerHTML = `
-                    <div class="no-guests" style="text-align: center; padding: 20px;">
-                        <p>Нет бронирований на ${formatDate(dateStr)}</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let bookingsHTML = `
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <strong>Бронирования на ${formatDate(dateStr)}:</strong> ${filteredBookings.length}
-                </div>
-            `;
-            
-            filteredBookings.forEach((booking, index) => {
-                const originalIndex = bookings.indexOf(booking);
-                
-                bookingsHTML += `
-                    <div class="booking-item" onclick="selectBooking(this, ${originalIndex})" id="booking-${originalIndex}">
-                        <div class="booking-info">
-                            <div class="booking-details">
-                                <div style="font-weight: bold; font-size: 1.1em; color: #d9a566;">${booking.guestName}</div>
-                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-top: 8px;">
-                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">🏕️ ${booking.place}</div>
-                                    <div style="background: rgba(139, 90, 43, 0.1); padding: 6px; border-radius: 5px; font-size: 0.9em;">📞 ${booking.guestPhone}</div>
-                                </div>
-                            </div>
-                            <div class="booking-amount">
-                                ${booking.total} сом
-                            </div>
-                        </div>
-                        
-                        ${booking.items && booking.items.length > 0 ? `
-                            <div class="booking-items-list">
-                                <div style="font-weight: bold; margin-bottom: 8px; color: #8b5a2b;">Состав заказа:</div>
-                                ${booking.items.map(item => `
-                                    <div class="booking-item-row">
-                                        <span>${item.name}</span>
-                                        <span>${item.quantity} x ${item.price} = ${item.total} сом</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        ` : ''}
-                        
-                        <div class="booking-item-actions">
-                            <button class="btn-warning" onclick="editBooking(${originalIndex}); event.stopPropagation();">✏️ Редактировать</button>
-                            <button class="btn-danger" onclick="deleteBooking(${originalIndex}); event.stopPropagation();">🗑️ Удалить</button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            bookingsList.innerHTML = bookingsHTML;
-            selectedBookingIndex = null;
-        }
-        
-        function clearDateFilter() {
-            document.getElementById('filterDate').value = '';
-            loadAllBookings();
-        }
-        
-        function editSelectedBooking() {
-            if (selectedBookingIndex === null) {
-                showNotification('Выберите бронирование для редактирования');
-                return;
-            }
-            
-            editBooking(selectedBookingIndex);
-        }
-        
-        function deleteSelectedBooking() {
-            if (selectedBookingIndex === null) {
-                showNotification('Выберите бронирование для удаления');
-                return;
-            }
-            
-            deleteBooking(selectedBookingIndex);
-        }
-        
-        function editBooking(bookingIndex) {
-            if (bookingIndex < 0 || bookingIndex >= bookings.length) {
-                showNotification('Ошибка: бронирование не найдено');
-                return;
-            }
-            
-            const booking = bookings[bookingIndex];
-            editingBookingId = booking.id;
+            const guest = bookings[guestIndex];
+            editingGuestId = guestId;
             
             // Заполняем форму редактирования
-            document.getElementById('editCustomerName').value = booking.guestName;
-            document.getElementById('editCustomerPhone').value = booking.guestPhone;
-            document.getElementById('editBookingDate').value = booking.date;
-            document.getElementById('editBookingPlace').value = booking.place;
+            document.getElementById('editGuestName').value = guest.guestName;
+            document.getElementById('editGuestPhone').value = guest.guestPhone;
+            document.getElementById('editGuestDate').value = guest.date;
+            document.getElementById('editGuestPlace').value = guest.place;
             
             // Генерируем меню с текущими значениями
-            generateEditMenuForBooking(booking);
+            generateEditMenuForGuest(guest);
             
             // Обновляем сводку заказа
-            updateEditOrderSummary();
+            updateEditGuestSummary();
             
             // Показываем модальное окно редактирования
-            document.getElementById('editBookingModal').style.display = 'flex';
+            document.getElementById('guestEditModal').style.display = 'flex';
             
-            showNotification(`Редактирование бронирования: ${booking.guestName}`);
+            showNotification(`Редактирование гостя: ${guest.guestName}`);
         }
         
-        function saveEditedBooking() {
-            if (editingBookingId === null) {
-                showNotification('Ошибка: не выбрано бронирование для редактирования');
+        function closeGuestEditModal() {
+            document.getElementById('guestEditModal').style.display = 'none';
+            editingGuestId = null;
+        }
+        
+        function saveGuestEdit() {
+            if (editingGuestId === null) {
+                showNotification('Ошибка: не выбран гость для редактирования');
                 return;
             }
             
-            const bookingIndex = bookings.findIndex(b => b.id === editingBookingId);
-            if (bookingIndex === -1) {
-                showNotification('Ошибка: бронирование не найдено');
+            const guestIndex = bookings.findIndex(b => b.id === editingGuestId);
+            if (guestIndex === -1) {
+                showNotification('Ошибка: гость не найден');
                 return;
             }
             
-            const oldBooking = bookings[bookingIndex];
+            const oldGuest = bookings[guestIndex];
             
-            const guestName = document.getElementById('editCustomerName').value.trim();
-            const guestPhone = document.getElementById('editCustomerPhone').value.trim();
+            const guestName = document.getElementById('editGuestName').value.trim();
+            const guestPhone = document.getElementById('editGuestPhone').value.trim();
+            const guestDate = document.getElementById('editGuestDate').value;
+            const guestPlace = document.getElementById('editGuestPlace').value;
             
             if (!guestName) {
                 showNotification('Введите имя гостя');
@@ -3913,9 +4055,42 @@
                 return;
             }
             
+            if (!guestDate) {
+                showNotification('Выберите дату');
+                return;
+            }
+            
+            if (!guestPlace) {
+                showNotification('Выберите место');
+                return;
+            }
+            
+            // Проверяем, если изменилась дата или место, что новое место свободно
+            if (guestDate !== oldGuest.date || guestPlace !== oldGuest.place) {
+                const isPlaceBusy = bookings.some((booking, index) => 
+                    index !== guestIndex && 
+                    booking.date === guestDate && 
+                    booking.place === guestPlace
+                );
+                
+                if (isPlaceBusy) {
+                    showNotification(`Место "${guestPlace}" уже занято на ${formatDate(guestDate)}`);
+                    return;
+                }
+                
+                const bookingsForDate = bookings.filter((booking, index) => 
+                    index !== guestIndex && booking.date === guestDate
+                );
+                
+                if (bookingsForDate.length >= 5) {
+                    showNotification(`На ${formatDate(guestDate)} все места уже заняты`);
+                    return;
+                }
+            }
+            
             // Возвращаем старые запасы
-            if (oldBooking.items) {
-                oldBooking.items.forEach(item => {
+            if (oldGuest.items) {
+                oldGuest.items.forEach(item => {
                     if (stock[item.itemId] !== undefined) {
                         stock[item.itemId] += item.quantity;
                     }
@@ -3927,7 +4102,7 @@
             const orderItems = [];
             
             for (const item in prices) {
-                const quantityElement = document.getElementById(`edit-${item}-quantity`);
+                const quantityElement = document.getElementById(`edit-guest-${item}-quantity`);
                 if (quantityElement) {
                     const quantity = parseInt(quantityElement.textContent) || 0;
                     if (quantity > 0) {
@@ -3948,13 +4123,15 @@
                 }
             }
             
-            // Обновляем бронирование
-            bookings[bookingIndex] = {
-                ...oldBooking,
+            // Обновляем гостя
+            bookings[guestIndex] = {
+                ...oldGuest,
                 items: orderItems,
                 total: total,
                 guestName: guestName,
                 guestPhone: guestPhone,
+                date: guestDate,
+                place: guestPlace,
                 lastModified: new Date(),
                 timestamp: new Date().toLocaleString()
             };
@@ -3967,29 +4144,35 @@
             updateStockDisplay();
             updateMenuDisplay();
             updatePlaceStatuses();
-            loadAllBookings();
+            updateViewGuestsCalendar();
             
             // Закрываем модальное окно
-            closeEditBookingModal();
+            closeGuestEditModal();
             
             // Сохраняем изменения
             saveToLocalStorage();
             
-            showNotification(`Бронирование "${guestName}" обновлено! Сумма: ${total} сом`);
+            showNotification(`Гость "${guestName}" обновлен! Сумма: ${total} сом`);
         }
         
-        function deleteBooking(bookingIndex) {
-            if (bookingIndex < 0 || bookingIndex >= bookings.length) {
-                showNotification('Ошибка: бронирование не найдено');
+        function deleteGuestBooking() {
+            if (editingGuestId === null) {
+                showNotification('Ошибка: не выбран гость для удаления');
                 return;
             }
             
-            const booking = bookings[bookingIndex];
+            const guestIndex = bookings.findIndex(b => b.id === editingGuestId);
+            if (guestIndex === -1) {
+                showNotification('Ошибка: гость не найден');
+                return;
+            }
             
-            if (confirm(`Удалить бронирование гостя "${booking.guestName}"?\nМесто: ${booking.place}\nДата: ${formatDate(booking.date)}\nСумма: ${booking.total} сом`)) {
+            const guest = bookings[guestIndex];
+            
+            if (confirm(`Удалить бронирование гостя "${guest.guestName}"?\nМесто: ${guest.place}\nДата: ${formatDate(guest.date)}\nСумма: ${guest.total} сом`)) {
                 // Возвращаем запасы
-                if (booking.items) {
-                    booking.items.forEach(item => {
+                if (guest.items) {
+                    guest.items.forEach(item => {
                         if (stock[item.itemId] !== undefined) {
                             stock[item.itemId] += item.quantity;
                         }
@@ -3997,7 +4180,7 @@
                 }
                 
                 // Удаляем бронирование
-                bookings.splice(bookingIndex, 1);
+                bookings.splice(guestIndex, 1);
                 
                 // Пересчитываем доходы
                 updateRevenue();
@@ -4007,12 +4190,54 @@
                 updateStockDisplay();
                 updateMenuDisplay();
                 updatePlaceStatuses();
-                loadAllBookings();
+                updateViewGuestsCalendar();
                 
                 // Сохраняем изменения
                 saveToLocalStorage();
                 
-                showNotification(`Бронирование гостя "${booking.guestName}" удалено`);
+                // Закрываем модальное окно
+                closeGuestEditModal();
+                
+                showNotification(`Бронирование гостя "${guest.guestName}" удалено`);
+            }
+        }
+        
+        function deleteGuest(guestId) {
+            if (confirm('Удалить этого гостя?')) {
+                const guestIndex = bookings.findIndex(b => b.id === guestId);
+                if (guestIndex === -1) {
+                    showNotification('Гость не найден');
+                    return;
+                }
+                
+                const guest = bookings[guestIndex];
+                
+                // Возвращаем запасы
+                if (guest.items) {
+                    guest.items.forEach(item => {
+                        if (stock[item.itemId] !== undefined) {
+                            stock[item.itemId] += item.quantity;
+                        }
+                    });
+                }
+                
+                // Удаляем бронирование
+                bookings.splice(guestIndex, 1);
+                
+                // Пересчитываем доходы
+                updateRevenue();
+                
+                // Обновляем отображение
+                updateAdminStats();
+                updateStockDisplay();
+                updateMenuDisplay();
+                updatePlaceStatuses();
+                updateViewGuestsCalendar();
+                
+                // Сохраняем изменения
+                saveToLocalStorage();
+                
+                showNotification(`Гость "${guest.guestName}" удален`);
             }
         }
         
@@ -4236,106 +4461,6 @@
             showNotification(`Продажи сохранены: ${total} сом`);
         }
         
-        // === ФУНКЦИИ ЛОГОТИПА ===
-        
-        function handleLogoUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            
-            if (!file.type.match('image.*')) {
-                showNotification('Пожалуйста, выберите изображение');
-                return;
-            }
-            
-            if (file.size > 5 * 1024 * 1024) {
-                showNotification('Размер файла не должен превышать 5MB');
-                return;
-            }
-            
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                logoData.url = e.target.result;
-                updateLogoDisplay();
-                saveToLocalStorage();
-                showNotification('Логотип успешно загружен');
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        function updateLogoDisplay() {
-            // Обновляем предпросмотр в настройках
-            const logoPreview = document.getElementById('logoPreview');
-            if (logoPreview && logoData.url) {
-                logoPreview.src = logoData.url;
-            }
-            
-            // Обновляем название логотипа
-            const logoNameElement = document.getElementById('logoName');
-            if (logoNameElement) {
-                logoNameElement.textContent = logoData.name || 'Название логотипа не задано';
-            }
-            
-            // Обновляем логотип на главном экране
-            const mainLogo = document.getElementById('mainLogo');
-            if (mainLogo && logoData.url) {
-                mainLogo.src = logoData.url;
-            }
-            
-            // Обновляем название на главном экране
-            const mainLogoName = document.getElementById('mainLogoName');
-            if (mainLogoName) {
-                mainLogoName.textContent = logoData.name || '';
-            }
-            
-            // Обновляем логотипы во всех секциях
-            updateAllLogos();
-        }
-        
-        function updateAllLogos() {
-            // Обновляем логотипы во всех секциях
-            const logoIds = [
-                'logoPlaces', 'logoGuest', 'logoAbout', 'logoMenu', 'logoSocial', 'logoContacts',
-                'logoPlacesKyrg', 'logoGuestKyrg', 'logoAboutKyrg', 'logoMenuKyrg', 'logoSocialKyrg', 'logoContactsKyrg'
-            ];
-            
-            logoIds.forEach(id => {
-                const element = document.getElementById(id);
-                if (element && logoData.url) {
-                    element.src = logoData.url;
-                }
-            });
-        }
-        
-        function saveLogoName() {
-            const logoNameInput = document.getElementById('logoNameInput');
-            if (!logoNameInput) return;
-            
-            const name = logoNameInput.value.trim();
-            if (name) {
-                logoData.name = name;
-                updateLogoDisplay();
-                saveToLocalStorage();
-                showNotification(`Название логотипа сохранено: ${name}`);
-                logoNameInput.value = '';
-            } else {
-                showNotification('Введите название логотипа');
-            }
-        }
-        
-        function removeLogo() {
-            if (confirm('Удалить логотип?')) {
-                logoData.url = '';
-                logoData.name = '';
-                updateLogoDisplay();
-                saveToLocalStorage();
-                showNotification('Логотип удален');
-            }
-        }
-        
-        function updateSettingsDisplay() {
-            updateLogoDisplay();
-        }
-        
         // === ФУНКЦИЯ ПЕЧАТИ ОТЧЕТА ===
         
         function printDayReport() {
@@ -4544,43 +4669,6 @@
                   `📊 ИТОГО: ${totalDay} сом`);
         }
         
-        // === СБРОС ВСЕХ ДАННЫХ ===
-        
-        function resetAllData() {
-            if (confirm('ВНИМАНИЕ: Это действие удалит ВСЕ данные!\n\n• Все бронирования\n• Все продажи\n• Все запасы\n• Логотип\n\nДействие нельзя отменить!\n\nПродолжить?')) {
-                if (confirm('Последнее предупреждение: Вы уверены, что хотите удалить ВСЕ данные?')) {
-                    // Сбрасываем все данные
-                    bookings = [];
-                    stock = {
-                        cola: 50, pepsi: 50, fanta: 50, sprite: 50, water: 100,
-                        kuurdak: 20, kymyz: 30, kuymak: 20, plov: 25, manty: 30, lagman: 25,
-                        nitro: 30, flash: 30, drive: 30
-                    };
-                    tempStoreSales = {};
-                    storeSalesByDate = {};
-                    storeRevenue = 0;
-                    bookingsRevenue = 0;
-                    totalRevenue = 0;
-                    smallItemsAmount = 0;
-                    logoData = { url: '', name: '' };
-                    
-                    // Обновляем отображение
-                    updateAdminStats();
-                    updateStockDisplay();
-                    updateStoreDisplay();
-                    updateMenuDisplay();
-                    updatePlaceStatuses();
-                    updateLogoDisplay();
-                    loadAllBookings();
-                    
-                    // Очищаем localStorage
-                    localStorage.removeItem('kocevnikData');
-                    
-                    showNotification('Все данные сброшены');
-                }
-            }
-        }
-        
         // === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
         
         function formatDate(dateStr) {
@@ -4615,7 +4703,6 @@
                     bookingsRevenue: bookingsRevenue,
                     totalRevenue: totalRevenue,
                     smallItemsAmount: smallItemsAmount,
-                    logoData: logoData,
                     lastSaved: new Date().toISOString()
                 };
                 
@@ -4643,13 +4730,11 @@
                     bookingsRevenue = data.bookingsRevenue || 0;
                     totalRevenue = data.totalRevenue || 0;
                     smallItemsAmount = data.smallItemsAmount || 0;
-                    logoData = data.logoData || { url: '', name: '' };
                     
                     updateRevenue();
                     updateMenuDisplay();
                     updatePlaceStatuses();
                     updateAdminStats();
-                    updateLogoDisplay();
                     
                     console.log('Данные загружены из localStorage');
                 }
@@ -4679,16 +4764,17 @@
             
             updateMenuDisplay();
             updatePlaceStatuses();
-            updateLogoDisplay();
             
             const today = new Date();
             const todayStr = today.toISOString().split('T')[0];
             
             const storeSaleDateInput = document.getElementById('storeSaleDate');
             const printDateInput = document.getElementById('printDate');
+            const newGuestDateInput = document.getElementById('newGuestDate');
             
             if (storeSaleDateInput) storeSaleDateInput.value = todayStr;
             if (printDateInput) printDateInput.value = todayStr;
+            if (newGuestDateInput) newGuestDateInput.value = todayStr;
             
             updateAdminStats();
             
