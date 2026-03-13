@@ -2738,6 +2738,28 @@
         });
         
         window.addEventListener('beforeunload', function() { saveToLocalStorage(); });
+
+        // БЫСТРОЕ РЕШЕНИЕ ДЛЯ ССЫЛОК
+function safeOpenLink(url) {
+    const win = window.open(url, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+        alert('⚠️ Не удалось открыть ссылку автоматически.\n\nПожалуйста, скопируйте и вставьте в браузер:\n' + url);
+    }
+}
+
+// Исправляем все социальные ссылки
+document.addEventListener('DOMContentLoaded', function() {
+    // Находим все ссылки в соцсетях
+    document.querySelectorAll('.social-links a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+            // Добавляем https если нужно
+            if (href.includes('wa.me')) {
+                link.setAttribute('href', 'https://' + href.replace(/^\/\//, ''));
+            }
+        }
+    });
+});
     </script>
 </body>
 </html>
