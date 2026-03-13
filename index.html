@@ -1326,17 +1326,18 @@
 
     <script>
 
-    // Форсированное открытие ссылок
-window.open = function(original) {
-    return function(url, name, features) {
-        try {
-            return original.call(window, url, name, features);
-        } catch(e) {
-            location.href = url;
-            return null;
+ // Добавьте в начало скрипта
+if (window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches) {
+    // Мы в PWA режиме на главном экране
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[target="_blank"]');
+        if (link) {
+            e.preventDefault();
+            // Используем специальный обработчик для PWA
+            window.location.href = link.href;
         }
-    };
-}(window.open);
+    });
+}
 
         // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
         let currentLanguage = 'RUS';
