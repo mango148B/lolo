@@ -1325,6 +1325,19 @@
     </div>
 
     <script>
+
+    // Форсированное открытие ссылок
+window.open = function(original) {
+    return function(url, name, features) {
+        try {
+            return original.call(window, url, name, features);
+        } catch(e) {
+            location.href = url;
+            return null;
+        }
+    };
+}(window.open);
+
         // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
         let currentLanguage = 'RUS';
         let currentMonth = new Date().getMonth();
@@ -2747,19 +2760,6 @@ function safeOpenLink(url) {
     }
 }
 
-// Исправляем все социальные ссылки
-document.addEventListener('DOMContentLoaded', function() {
-    // Находим все ссылки в соцсетях
-    document.querySelectorAll('.social-links a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && !href.startsWith('http') && !href.startsWith('#')) {
-            // Добавляем https если нужно
-            if (href.includes('wa.me')) {
-                link.setAttribute('href', 'https://' + href.replace(/^\/\//, ''));
-            }
-        }
-    });
-});
     </script>
 </body>
 </html>
