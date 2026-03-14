@@ -16,7 +16,7 @@
     <meta name="application-name" content="Кочевник">
     <link rel="manifest" href="manifest.json">
     <style>
-        /* ОСНОВНЫЕ СТИЛИ - оставляем твои стили без изменений */
+        /* ОСНОВНЫЕ СТИЛИ */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -1153,7 +1153,7 @@
         script.onload = () => {
             supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
             console.log('✅ Supabase подключен')
-            // Загружаем данные
+            // Загружаем данные после подключения
             loadFromSupabase()
         }
         document.head.appendChild(script)
@@ -1184,6 +1184,7 @@
                         whatsappSent: b.whatsapp_sent,
                         addedByAdmin: b.added_by_admin
                     }))
+                    console.log('✅ Загружено бронирований:', bookings.length)
                 }
                 
                 // Загружаем запасы
@@ -1197,6 +1198,7 @@
                             stock[item.id] = item.quantity
                         }
                     })
+                    console.log('✅ Загружены запасы')
                 }
                 
                 // Загружаем продажи
@@ -1216,18 +1218,19 @@
                             total: sale.total
                         })
                     })
+                    console.log('✅ Загружены продажи')
                 }
                 
-                // Обновляем статистику
+                // Обновляем интерфейс
                 updateRevenue()
                 updateMenuDisplay()
                 updatePlaceStatuses()
                 updateAdminStats()
                 updateStockDisplay()
                 
-                console.log('✅ Данные загружены из Supabase')
+                console.log('✅ Все данные загружены из Supabase')
             } catch (error) {
-                console.error('Ошибка загрузки из Supabase:', error)
+                console.error('❌ Ошибка загрузки из Supabase:', error)
                 // Если ошибка, грузим из localStorage
                 loadFromLocalStorage()
             }
@@ -1238,7 +1241,7 @@
             if (!supabase) return
             
             try {
-                // Сохраняем все бронирования
+                // Сохраняем бронирования
                 for (const booking of bookings) {
                     await supabase
                         .from('bookings')
@@ -1256,6 +1259,7 @@
                             added_by_admin: booking.addedByAdmin || false
                         })
                 }
+                console.log('✅ Бронирования сохранены')
                 
                 // Сохраняем запасы
                 for (const [itemId, quantity] of Object.entries(stock)) {
@@ -1264,10 +1268,10 @@
                         .update({ quantity })
                         .eq('id', itemId)
                 }
+                console.log('✅ Запасы сохранены')
                 
-                console.log('✅ Данные сохранены в Supabase')
             } catch (error) {
-                console.error('Ошибка сохранения в Supabase:', error)
+                console.error('❌ Ошибка сохранения в Supabase:', error)
             }
         }
 
