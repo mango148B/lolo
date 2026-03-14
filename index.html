@@ -16,7 +16,7 @@
     <meta name="application-name" content="Кочевник">
     <link rel="manifest" href="manifest.json">
     <style>
-        /* ОСНОВНЫЕ СТИЛИ */
+        /* ОСНОВНЫЕ СТИЛИ - оставляем твои стили без изменений */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -1140,6 +1140,137 @@
     </div>
 
     <script>
+        // === ПОДКЛЮЧЕНИЕ К SUPABASE ===
+        const SUPABASE_URL = 'https://vcfonhxjbtqghlzbcnux.supabase.co'
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZjZm9uaHhqYnRxZ2hsemJjbnV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NjQ1NTQsImV4cCI6MjA1NzQ0MDU1NH0.XJFRdCN0dC5te0UYOOtQmW07jE4ihPHb47aYqgJ1lYI'
+
+        // Создаем клиент Supabase
+        let supabase
+
+        // Загружаем Supabase
+        const script = document.createElement('script')
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'
+        script.onload = () => {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+            console.log('✅ Supabase подключен')
+            // Загружаем данные
+            loadFromSupabase()
+        }
+        document.head.appendChild(script)
+
+        // Функция загрузки данных из Supabase
+        async function loadFromSupabase() {
+            if (!supabase) return
+            
+            try {
+                // Загружаем бронирования
+                const { data: bookingsData, error } = await supabase
+                    .from('bookings')
+                    .select('*')
+                
+                if (error) throw error
+                
+                if (bookingsData && bookingsData.length > 0) {
+                    bookings = bookingsData.map(b => ({
+                        id: b.id,
+                        place: b.place,
+                        date: b.date,
+                        guestName: b.guest_name,
+                        guestPhone: b.guest_phone,
+                        total: b.total,
+                        deposit: b.deposit,
+                        items: b.items || [],
+                        timestamp: b.timestamp,
+                        whatsappSent: b.whatsapp_sent,
+                        addedByAdmin: b.added_by_admin
+                    }))
+                }
+                
+                // Загружаем запасы
+                const { data: stockData } = await supabase
+                    .from('stock')
+                    .select('*')
+                
+                if (stockData) {
+                    stockData.forEach(item => {
+                        if (stock[item.id] !== undefined) {
+                            stock[item.id] = item.quantity
+                        }
+                    })
+                }
+                
+                // Загружаем продажи
+                const { data: salesData } = await supabase
+                    .from('store_sales')
+                    .select('*')
+                
+                if (salesData) {
+                    storeSalesByDate = {}
+                    salesData.forEach(sale => {
+                        if (!storeSalesByDate[sale.date]) {
+                            storeSalesByDate[sale.date] = []
+                        }
+                        storeSalesByDate[sale.date].push({
+                            items: sale.items,
+                            smallItems: sale.small_items,
+                            total: sale.total
+                        })
+                    })
+                }
+                
+                // Обновляем статистику
+                updateRevenue()
+                updateMenuDisplay()
+                updatePlaceStatuses()
+                updateAdminStats()
+                updateStockDisplay()
+                
+                console.log('✅ Данные загружены из Supabase')
+            } catch (error) {
+                console.error('Ошибка загрузки из Supabase:', error)
+                // Если ошибка, грузим из localStorage
+                loadFromLocalStorage()
+            }
+        }
+
+        // Функция сохранения данных в Supabase
+        async function saveToSupabase() {
+            if (!supabase) return
+            
+            try {
+                // Сохраняем все бронирования
+                for (const booking of bookings) {
+                    await supabase
+                        .from('bookings')
+                        .upsert({
+                            id: booking.id,
+                            place: booking.place,
+                            date: booking.date,
+                            guest_name: booking.guestName,
+                            guest_phone: booking.guestPhone,
+                            total: booking.total,
+                            deposit: booking.deposit || 2000,
+                            items: booking.items || [],
+                            timestamp: booking.timestamp || new Date().toLocaleString(),
+                            whatsapp_sent: booking.whatsappSent || false,
+                            added_by_admin: booking.addedByAdmin || false
+                        })
+                }
+                
+                // Сохраняем запасы
+                for (const [itemId, quantity] of Object.entries(stock)) {
+                    await supabase
+                        .from('stock')
+                        .update({ quantity })
+                        .eq('id', itemId)
+                }
+                
+                console.log('✅ Данные сохранены в Supabase')
+            } catch (error) {
+                console.error('Ошибка сохранения в Supabase:', error)
+            }
+        }
+
         // === ИСПРАВЛЕНИЕ ДЛЯ PWA И ССЫЛОК ===
         (function() {
             // Функция для надежного открытия ссылок
@@ -1670,6 +1801,7 @@
                     showNotification(`Заказ отправлен в WhatsApp! ${selectedPlace} на ${selectedDate}. Сумма: ${total} сом`);
                     setTimeout(() => closeBookingModal(), 5000);
                     saveToLocalStorage();
+                    saveToSupabase(); // Сохраняем в Supabase
                 }
             } catch (error) {
                 showNotification('Ошибка при отправке в WhatsApp. Пожалуйста, свяжитесь с администратором по телефону.');
@@ -2003,6 +2135,7 @@
             showNotification(`Гость "${name}" добавлен! Место: ${place}, Дата: ${formatDate(date)}, Сумма: ${total} сом`);
             clearGuestForm();
             saveToLocalStorage();
+            saveToSupabase(); // Сохраняем в Supabase
         }
         
         function clearGuestForm() {
@@ -2302,6 +2435,7 @@
             updateViewGuestsCalendar();
             closeGuestEditModal();
             saveToLocalStorage();
+            saveToSupabase(); // Сохраняем в Supabase
             showNotification(`Гость "${guestName}" обновлен! Сумма: ${total} сом`);
         }
         
@@ -2321,6 +2455,7 @@
                 updateViewGuestsCalendar();
                 closeGuestEditModal();
                 saveToLocalStorage();
+                saveToSupabase(); // Сохраняем в Supabase
                 showNotification(`Бронирование гостя "${guest.guestName}" удалено`);
             }
         }
@@ -2340,6 +2475,7 @@
                 updatePlaceStatuses();
                 updateViewGuestsCalendar();
                 saveToLocalStorage();
+                saveToSupabase(); // Сохраняем в Supabase
                 showNotification(`Гость "${guest.guestName}" удален`);
             }
         }
@@ -2362,6 +2498,7 @@
                 updateStockDisplay();
                 updateMenuDisplay();
                 saveToLocalStorage();
+                saveToSupabase(); // Сохраняем в Supabase
                 showNotification(`${getItemName(item)} обновлен: ${stock[item]} шт.`);
             }
         }
@@ -2441,6 +2578,7 @@
             updateStoreDisplay();
             document.getElementById('storeSalesMessage').innerHTML = `<div style="color:#25D366;font-weight:bold;">✅ Продажи за ${formatDate(saleDate)} сохранены!<br>Общая сумма: ${salesData.total} сом</div>`;
             saveToLocalStorage();
+            saveToSupabase(); // Сохраняем в Supabase
             showNotification(`Продажи сохранены: ${salesData.total} сом`);
         }
         
@@ -2603,6 +2741,7 @@
         
         // === ИНИЦИАЛИЗАЦИЯ ===
         window.addEventListener('load', function() {
+            // Данные загружаются через Supabase, но на всякий случай грузим из localStorage
             loadFromLocalStorage();
             updateMenuDisplay();
             updatePlaceStatuses();
@@ -2615,7 +2754,9 @@
             showNotification('Добро пожаловать в ресторан "Кочевник"! 🎪');
         });
         
-        window.addEventListener('beforeunload', function() { saveToLocalStorage(); });
+        window.addEventListener('beforeunload', function() { 
+            saveToLocalStorage(); 
+        });
     </script>
 </body>
 </html>
